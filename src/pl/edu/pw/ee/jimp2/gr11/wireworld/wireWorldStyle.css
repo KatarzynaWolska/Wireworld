@@ -1,0 +1,13 @@
+@charset "iso-8859-1";
+
+.root{
+    -fx-background-color: rgba(41, 44, 67, 0.85);
+    -fx-padding: 10;
+}
+
+.button{
+
+}
+.custom_label{
+
+}

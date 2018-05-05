@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane alignment="CENTER" gridLinesVisible="true" hgap="10" prefHeight="661.0" prefWidth="696.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.pw.ee.jimp2.gr11.wireworld.WireWorldAppController">
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+   <children>
+      <Button fx:id="NewGameButton" alignment="CENTER" mnemonicParsing="false" onAction="#pressNewGameButton" prefHeight="100.0" prefWidth="168.0" text="Nowa Gra" GridPane.rowIndex="2" />
+      <Button fx:id="RulesButton" mnemonicParsing="false" onAction="#pressRulesButton" prefHeight="100.0" prefWidth="168.0" text="Zasady" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+      <Button fx:id="ExitButton" mnemonicParsing="false" onAction="#pressExitButton" prefWidth="70.0" text="Wyjście" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="BOTTOM" />
+   </children>
+</GridPane>
