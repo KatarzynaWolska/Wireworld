@@ -4,7 +4,7 @@ public class WireWorld {
 
 
     public static void main (String []args){
-
+        System.out.println("ww");
     }
 }
 
