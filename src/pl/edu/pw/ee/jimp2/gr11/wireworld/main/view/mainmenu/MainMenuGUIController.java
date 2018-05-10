@@ -1,8 +1,8 @@
-package pl.edu.pw.ee.jimp2.gr11.wireworld;
+package pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.mainmenu;
 
 import javafx.event.ActionEvent;
 
-public class WireWorldAppController {
+public class MainMenuGUIController {
 
     public void pressNewGameButton(ActionEvent event){
         System.out.println("tymczasowy napis");
@@ -13,6 +13,7 @@ public class WireWorldAppController {
     }
 
     public void pressExitButton(ActionEvent event){
+        System.exit(0);
 
     }
 }

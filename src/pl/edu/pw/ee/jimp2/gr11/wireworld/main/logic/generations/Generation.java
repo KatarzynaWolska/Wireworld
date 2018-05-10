@@ -1,18 +1,21 @@
-package pl.edu.pw.ee.jimp2.gr11.wireworld.generations;
+package pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations;
 
 
 import com.sun.prism.paint.Color;
-import pl.edu.pw.ee.jimp2.gr11.wireworld.generations.cells.Cell;
-import pl.edu.pw.ee.jimp2.gr11.wireworld.generations.cells.Head;
+import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells.Cell;
+import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells.Head;
 
 import java.util.List;
-import java.util.Set;
-//wzorzec fasada!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//wzorzec fasada!
 
 public class Generation {
     private int numberOfGeneration;
     private List<Cell> allCells; // Set<Cell> allCells;//=new HashSet();
     private List<Cell> activeCells;
+
+    public Generation(int numberOfGeneration) {
+        this.numberOfGeneration = numberOfGeneration;
+    }
 
     public void setStateOfCell(int x, int y, Color state){
         //sprawdzać czy Cell to instanceof Head, Tail, ...
