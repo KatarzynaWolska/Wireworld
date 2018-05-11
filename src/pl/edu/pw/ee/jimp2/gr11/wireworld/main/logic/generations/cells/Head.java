@@ -1,8 +1,19 @@
 package pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells;
 
-public class Head extends Cell implements ConfigurationOfState {
+import com.sun.prism.paint.Color;
 
-    public void changeState() {
+public class Head extends Cell implements ConfigurationOfState {
+    private String nextState;
+
+    public String getNextState() {
+        return nextState;
+    }
+
+    public Head(int x, int y, Color colorOfCell) {
+        super(x, y, colorOfCell);
+    }
+
+    public void checkStateOfNextGeneration() {
 
     }
 
