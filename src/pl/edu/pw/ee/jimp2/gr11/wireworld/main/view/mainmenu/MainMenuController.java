@@ -9,20 +9,26 @@ import javafx.stage.Stage;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.rules.RulesController;
 
 public class MainMenuController extends Application {
+    private Stage stage; //test
 
     public void pressNewGameButton(ActionEvent event){
         System.out.println("tymczasowy napis");
     }
 
-    public void pressRulesButton (ActionEvent event){
-        RulesController r = new RulesController();
+    public void pressRulesButton(ActionEvent event) {
+        RulesController r = new RulesController(this);
     }
 
     public void pressExitButton(ActionEvent event){
         System.exit(0);
     }
 
+    public Stage getStage() {
+        return stage;
+    }
+
     public void start(Stage primaryStage) throws Exception {
+        this.stage = primaryStage;//test
         Parent root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
         //tu (^) nie moze być całej ściezki typu pl/edu/pw/ee/jimp2/gr11/wireworld/main/view/mainmenu/MainMenu.fxml
         // bo nie zadziała ;v

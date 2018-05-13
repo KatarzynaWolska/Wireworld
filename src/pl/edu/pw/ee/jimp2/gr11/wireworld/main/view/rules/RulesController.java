@@ -5,10 +5,22 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.mainmenu.MainMenuController;
 
 public class RulesController extends Application {
+    private MainMenuController mainMenuWindow;
+
+    public RulesController(MainMenuController m) {
+        this.mainMenuWindow = m;
+        try {
+            start(m.getStage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public void start(Stage primaryStage) throws Exception {
+
         Parent root = FXMLLoader.load(getClass().getResource("Rules.fxml"));
         root.getStyleClass().add("root");
         Scene scene = new Scene(root, 696, 661);
@@ -19,14 +31,6 @@ public class RulesController extends Application {
 
         // scene.getStylesheets().add("pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.wireWorldStyle");
 
-    }
-
-    public RulesController() {
-        try {
-            this.start(new Stage());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
 
