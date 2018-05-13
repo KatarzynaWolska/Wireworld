@@ -6,7 +6,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.TilePane?>
 
-<GridPane alignment="CENTER" gridLinesVisible="true" hgap="10" prefHeight="661.0" prefWidth="696.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.mainmenu.MainMenuGUIController">
+<GridPane alignment="CENTER" hgap="10" prefHeight="661.0" prefWidth="696.0" xmlns="http://javafx.com/javafx/8.0.121"
+          xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.mainmenu.MainMenuController">
    <columnConstraints>
       <ColumnConstraints />
    </columnConstraints>
