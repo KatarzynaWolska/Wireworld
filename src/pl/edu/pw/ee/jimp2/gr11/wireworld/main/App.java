@@ -1,22 +1,25 @@
 package pl.edu.pw.ee.jimp2.gr11.wireworld.main;
 
+import javafx.application.Application;
 import javafx.stage.Stage;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.mainmenu.MainMenuController;
 
 import static javafx.application.Application.launch;
 
 
-public class App {
+public class App extends Application {
 
     public static void main(String[] args) {
+
         MainMenuController menu = new MainMenuController();
-        try {
-            menu.start(new Stage());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        menu.launch(args);
 
 
-        launch(args);
+
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+
     }
 }

@@ -4,16 +4,16 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.mainmenu.MainMenuController;
 
-public class RulesController extends Application {
+public class RulesController {
     private MainMenuController mainMenuWindow;
 
     public RulesController(MainMenuController m) {
         this.mainMenuWindow = m;
         try {
-            start(m.getStage());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -32,6 +32,5 @@ public class RulesController extends Application {
         // scene.getStylesheets().add("pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.wireWorldStyle");
 
     }
-
 
 }
