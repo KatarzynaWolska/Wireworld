@@ -6,7 +6,7 @@ import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells.Cell;
 import java.util.List;
 
 public class Game extends Thread {
-    private int totalNumberOfGenerations;
+    /*private int totalNumberOfGenerations;
     private boolean isEarlyEndMonitDisplayed = false;
     private Generation currentGeneration;
     private List<Cell> cellsOfFirstGeneration;//dla tego trzeba bedzie stworzyć tablice przechwyconych kolorów i
@@ -41,6 +41,49 @@ public class Game extends Thread {
 
 
     //metoda inicjujaca piersza generacje i zapisujaca ja do cellsOfFirstGeneration
+    */
+    private Generation actualGeneration;
+    private Generation nextGeneration;
+    private int numberOfGenerations;
 
+    public Game(Generation actualGeneration, int numberOfGeneration) {
+        this.actualGeneration = actualGeneration;
+        this.numberOfGenerations = numberOfGeneration;
+    }
+
+    public Generation getActualGeneration() {
+        return actualGeneration;
+    }
+
+    public void setActualGeneration(Generation actualGeneration) {
+        this.actualGeneration = actualGeneration;
+    }
+
+    public Generation getNextGeneration() {
+        return nextGeneration;
+    }
+
+    public void setNextGeneration(Generation nextGeneration) {
+        this.nextGeneration = nextGeneration;
+    }
+
+    public int getNumberOfGenerations() {
+        return numberOfGenerations;
+    }
+
+    public void setNumberOfGenerations(int numberOfGenerations) {
+        this.numberOfGenerations = numberOfGenerations;
+    }
+
+    public void performGame() {
+        actualGeneration.print(actualGeneration);
+        System.out.println(" ");
+        for (int i = 0; i < numberOfGenerations; i++) {
+            setNextGeneration(actualGeneration.createNextGeneration(actualGeneration));
+            setActualGeneration(this.nextGeneration);
+            actualGeneration.print(actualGeneration);
+            System.out.println(" ");
+        }
+    }
 
 }
