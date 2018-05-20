@@ -3,9 +3,22 @@ package pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells;
 import com.sun.prism.paint.Color;
 
 public class Tail extends Cell implements ConfigurationOfState {
-    private String nextState;
+    //private String nextState;
 
-    public String getNextState() {
+    public Tail(int x, int y) {
+        super(x, y);
+    }
+
+    public Tail () {
+        super();
+    }
+
+    @Override
+    public Cell checkStateOfNextGeneration() {
+        return new Conductor(getX(), getY());
+    }
+
+    /*public String getNextState() {
         return nextState;
     }
 
@@ -15,5 +28,5 @@ public class Tail extends Cell implements ConfigurationOfState {
 
     public void checkStateOfNextGeneration() {
 
-    }
+    }*/
 }
