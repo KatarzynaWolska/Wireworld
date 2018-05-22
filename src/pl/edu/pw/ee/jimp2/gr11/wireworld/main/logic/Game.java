@@ -45,7 +45,7 @@ public class Game extends Thread {
     private Generation actualGeneration;
     private Generation nextGeneration;
     private int numberOfGenerations;
-    GameGui gg;
+    GameController gg;
 
     public Game(Generation actualGeneration, int numberOfGeneration) {
         this.actualGeneration = actualGeneration;
@@ -76,7 +76,7 @@ public class Game extends Thread {
         this.numberOfGenerations = numberOfGenerations;
     }
 
-    public void setGameGui(GameGui gg) {
+    public void setGameController(GameController gg) {
         this.gg = gg;
     }
 
