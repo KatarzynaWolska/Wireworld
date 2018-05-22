@@ -45,6 +45,7 @@ public class Game extends Thread {
     private Generation actualGeneration;
     private Generation nextGeneration;
     private int numberOfGenerations;
+    GameGui gg;
 
     public Game(Generation actualGeneration, int numberOfGeneration) {
         this.actualGeneration = actualGeneration;
@@ -75,14 +76,26 @@ public class Game extends Thread {
         this.numberOfGenerations = numberOfGenerations;
     }
 
+    public void setGameGui(GameGui gg) {
+        this.gg = gg;
+    }
+
     public void performGame() {
-        actualGeneration.print(actualGeneration);
-        System.out.println(" ");
+        gg.setMatrixColors(actualGeneration);
+        setNextGeneration(actualGeneration.createNextGeneration(actualGeneration));
+        setActualGeneration(this.nextGeneration);
+
+    }
+
+    @Override
+    public void run() {
         for (int i = 0; i < numberOfGenerations; i++) {
-            setNextGeneration(actualGeneration.createNextGeneration(actualGeneration));
-            setActualGeneration(this.nextGeneration);
-            actualGeneration.print(actualGeneration);
-            System.out.println(" ");
+            performGame();
+            try {
+                sleep(1000);
+            } catch (InterruptedException e) {
+                System.exit(0);
+            }
         }
     }
 

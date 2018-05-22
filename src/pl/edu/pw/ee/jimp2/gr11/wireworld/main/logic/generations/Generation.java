@@ -311,7 +311,7 @@ public class Generation {
 
         List<Cell> nextActiveCells = new ArrayList<>();
 
-        for (Cell c : new ArrayList<Cell>(last.getActiveCells())) {
+        for (Cell c : new ArrayList<Cell>(last.getCells())) {
             if (c instanceof Conductor) {
                 ((Conductor) c).setNumberOfHeadNeighbours(countNeighbours(c.getX(), c.getY()));
             }
