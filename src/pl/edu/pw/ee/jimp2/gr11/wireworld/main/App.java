@@ -14,19 +14,33 @@ public class App extends Application {
         MainMenuController menu = new MainMenuController();
         menu.launch(args);
 
-        /*ConfigFileReader r = new ConfigFileReader();
+        //zakomentowane jest wywoływanie
+
+        /*
+            public static void main(String[] args) throws IOException {
+        ConfigFileReader r = new ConfigFileReader();
         try {
             ArrayList<Cell> cells = r.readFile(args[0]);
             Generation g = new Generation(r.getHeightOfMatrix(), r.getWidthOfMatrix(), cells);
-            g.print(g);
-            System.out.println(" ");
-            Game game = new Game(g, 5);
-            game.performGame();
+            //g.print(g);
+            //System.out.println(" ");
+            Game game = new Game(g, 10);
+            //game.performGame();
+            java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                AllGui a = new AllGui(game);
+            }
+           });
+
+            //game.run();
         } catch (IOException e) {
             System.out.println("Nie mogę znaleźć pliku");
             System.exit(1);
-        }*/
-        //sprawdzanie czy działa
+        }
+
+
+    }
+         */
 
 
     }
