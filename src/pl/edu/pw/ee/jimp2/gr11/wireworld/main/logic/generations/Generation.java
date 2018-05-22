@@ -5,6 +5,7 @@ import com.sun.prism.paint.Color;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells.*;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells.Cell;
 
+import java.util.ArrayList;
 import java.util.List;
 //wzorzec fasada!
 
@@ -306,29 +307,30 @@ public class Generation {
         return counter;
     }
 
-    public Generation createNextGeneration(Generation last) {
-        Generation next = new Generation (last.getHeight(), last.getWidth(), new ArrayList<Cell>(last.getCells()));
+    /*
+        public Generation createNextGeneration(Generation last) {
+            Generation next = new Generation (last.getHeight(), last.getWidth(), new ArrayList<Cell>(last.getCells()));
 
-        List<Cell> nextActiveCells = new ArrayList<>();
+            List<Cell> nextActiveCells = new ArrayList<>();
 
-        for (Cell c : new ArrayList<Cell>(last.getCells())) {
-            if (c instanceof Conductor) {
-                ((Conductor) c).setNumberOfHeadNeighbours(countNeighbours(c.getX(), c.getY()));
+            for (Cell c : new ArrayList<Cell>(last.getCells())) {
+                if (c instanceof Conductor) {
+                    ((Conductor) c).setNumberOfHeadNeighbours(countNeighbours(c.getX(), c.getY()));
+                }
+                Cell newCell = c.checkStateOfNextGeneration();
+                nextActiveCells.add(newCell);
+                next.getCells().remove(c.getX() * getWidth() + c.getY());
+                next.getCells().add(c.getX() * getWidth() + c.getY(), newCell);
+
             }
-            Cell newCell = c.checkStateOfNextGeneration();
-            nextActiveCells.add(newCell);
-            next.getCells().remove(c.getX() * getWidth() + c.getY());
-            next.getCells().add(c.getX() * getWidth() + c.getY(), newCell);
+
+            next.setActiveCells(nextActiveCells);
+
+
+            return next;
 
         }
-
-        next.setActiveCells(nextActiveCells);
-
-
-        return next;
-
-    }
-
+    */
     //tylko żeby zobaczyć czy działa
     public void print(Generation g) {
         for (int j = 0; j < height; j++) {

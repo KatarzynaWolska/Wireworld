@@ -13,6 +13,11 @@ public class Cell {
 
     }
 
+    public Cell(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
     public Cell(int x, int y, Color colorOfCell) {
         this.x = x;
         this.y = y;
@@ -35,8 +40,8 @@ public class Cell {
         this.colorOfCell = colorOfCell;
     }*/
 
-    @Override
+  /*  @Override
     public Cell checkStateOfNextGeneration() { //chyba lepiej zrobić to jako metodę a nie interfejs
         return new Cell(getX(), getY());
-    }
+    }*/
 }

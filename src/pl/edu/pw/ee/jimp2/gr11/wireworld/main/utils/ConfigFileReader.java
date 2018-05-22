@@ -1,6 +1,6 @@
 package pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils;
 
-public class ConfigFileReader {
+public class ConfigFileReader {/*
     private int heightOfMatrix = 0;
     private int widthOfMatrix = 0;
 
@@ -84,5 +84,5 @@ public class ConfigFileReader {
         fr.close();
 
         return readCells;
-    }
+    }*/
 }

@@ -6,40 +6,56 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.rules.RulesController;
 
+import java.awt.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MainMenuController extends Application implements Initializable {
-    private Stage primaryStage; //test
 
-    public void pressNewGameButton(ActionEvent event){
-        System.out.println("tymczasowy napis");
-    }
+    private class Tile extends Button {
+        private int x, y;
+        private Color color;
 
-    public void pressRulesButton(ActionEvent event) {
-        RulesController r = new RulesController(this);
-    }
+        public Tile(int x, int y, Color color) {
+            this.x = x;
+            this.y = y;
+            this.color = color;
+        }
 
-    public void pressExitButton(ActionEvent event){
-        System.exit(0);
-    }
+        public int getX() {
+            return x;
+        }
 
-    /*public Stage getStage() {
-        return stage;
-    }*/
+        public void setX(int x) {
+            this.x = x;
+        }
 
-    public MainMenuController() {
+        public int getY() {
+            return y;
+        }
 
+        public void setY(int y) {
+            this.y = y;
+        }
+
+        public Color getColor() {
+            return color;
+        }
+
+        public void setColor(Color color) {
+            this.color = color;
+        }
     }
 
     public void start(Stage primaryStage) throws Exception {
-        //this.stage = primaryStage;//test
         Parent root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
-        //tu (^) nie moze być całej ściezki typu pl/edu/pw/ee/jimp2/gr11/wireworld/main/view/mainmenu/MainMenu.fxml
-        // bo nie zadziała ;v
+
         root.getStyleClass().add("root");
 /*
 //dodawanie roznej ilosci kolumn i wierszy
@@ -59,6 +75,7 @@ public class MainMenuController extends Application implements Initializable {
             gridPane.getRowConstraints().add(rowConst);
         }
 */
+
 
         Scene scene = new Scene(root, 800, 900);
 

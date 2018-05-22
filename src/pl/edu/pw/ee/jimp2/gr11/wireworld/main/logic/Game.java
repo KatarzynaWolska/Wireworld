@@ -2,6 +2,7 @@ package pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic;
 
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.Generation;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells.Cell;
+import pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.game.GameController;
 
 import java.util.List;
 
@@ -80,17 +81,18 @@ public class Game extends Thread {
         this.gg = gg;
     }
 
-    public void performGame() {
-        gg.setMatrixColors(actualGeneration);
-        setNextGeneration(actualGeneration.createNextGeneration(actualGeneration));
-        setActualGeneration(this.nextGeneration);
+    /*
+        public void performGame() {
+            gg.setMatrixColors(actualGeneration);
+            setNextGeneration(actualGeneration.createNextGeneration(actualGeneration));
+            setActualGeneration(this.nextGeneration);
 
-    }
-
+        }
+    */
     @Override
     public void run() {
         for (int i = 0; i < numberOfGenerations; i++) {
-            performGame();
+            //performGame();
             try {
                 sleep(1000);
             } catch (InterruptedException e) {

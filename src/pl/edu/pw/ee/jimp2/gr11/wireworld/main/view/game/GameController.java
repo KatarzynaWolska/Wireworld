@@ -1,7 +1,14 @@
 package pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.game;
 
-public class GameController extends JPanel{
+import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.Generation;
+import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells.Cell;
 
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+
+public class GameController extends JPanel{
+/*
     private List<JButton> matrix;
     private Generation g;
     private JPanel grid;
@@ -158,7 +165,7 @@ public class AllGui extends JFrame {
 
         }
     }
-
+*/
 }
 
- */
+
