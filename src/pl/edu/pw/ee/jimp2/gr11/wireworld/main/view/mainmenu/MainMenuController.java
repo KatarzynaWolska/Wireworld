@@ -41,8 +41,27 @@ public class MainMenuController extends Application implements Initializable {
         //tu (^) nie moze być całej ściezki typu pl/edu/pw/ee/jimp2/gr11/wireworld/main/view/mainmenu/MainMenu.fxml
         // bo nie zadziała ;v
         root.getStyleClass().add("root");
-        // StackPane stackPane = loader.load();
-        Scene scene = new Scene(root, 696, 661);
+/*
+//dodawanie roznej ilosci kolumn i wierszy
+        GridPane gridPane = new GridPane();
+        final int numCols = 50 ;
+        final int numRows = 50 ;
+
+        for (int i = 0; i < numCols; i++) {
+            ColumnConstraints colConst = new ColumnConstraints();
+            colConst.setPercentWidth(100.0 / numCols);
+            gridPane.getColumnConstraints().add(colConst);
+        }
+
+        for (int i = 0; i < numRows; i++) {
+            RowConstraints rowConst = new RowConstraints();
+            rowConst.setPercentHeight(100.0 / numRows);
+            gridPane.getRowConstraints().add(rowConst);
+        }
+*/
+
+        Scene scene = new Scene(root, 800, 900);
+
         primaryStage.setTitle("Wire World");
         primaryStage.setScene(scene);
         primaryStage.show();
