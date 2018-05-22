@@ -116,7 +116,7 @@ public class GameController extends JPanel{
 /*
 public class AllGui extends JFrame {
 
-    GameGui gg;
+    GameController gg;
     private JButton start;
     private int height = 500;
     private int width = 500;
@@ -135,7 +135,7 @@ public class AllGui extends JFrame {
         all = new JPanel(new GridLayout(2, 1));
         add(all);
 
-        gg = new GameGui(g.getActualGeneration());
+        gg = new GameController(g.getActualGeneration());
         all.add(gg);
         start = new JButton("Start");
         start.addActionListener(new StartGame());
@@ -144,7 +144,7 @@ public class AllGui extends JFrame {
 
         this.g = g;
 
-        g.setGameGui(gg);
+        g.setGameController(gg);
 
 
         setVisible(true);
