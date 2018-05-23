@@ -1,14 +1,5 @@
 package pl.edu.pw.ee.jimp2.gr11.wireworld.test;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.Generation;
-import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells.*;
-import pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils.ConfigFileSaver;
-
-import java.util.List;
-
 
 public class ConfigFileSaverTest {/*
     private String path1 = "src/pl/edu/pw/ee/jimp2/gr11/wireworld/test/testfiles/file.txt";

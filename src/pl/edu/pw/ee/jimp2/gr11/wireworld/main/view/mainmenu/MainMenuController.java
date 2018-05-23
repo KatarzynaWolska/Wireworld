@@ -1,18 +1,12 @@
 package pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.mainmenu;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.rules.RulesController;
 
-import java.awt.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 

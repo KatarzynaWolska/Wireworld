@@ -1,6 +1,5 @@
 package pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils;
 
-import com.sun.prism.paint.Color;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.Generation;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells.*;
 
@@ -16,23 +15,32 @@ public class ImageSaver {
     private String formatName;
     private String pathToFile = "src/pl/edu/pw/ee/jimp2/gr11/wireworld/test/testfiles/image.bmp";
     private int tileSize;
+    private File imageFile;
 
     public ImageSaver(Generation gen, String formatName, String path) {
         currentGen = gen;
         this.formatName = formatName;
         this.pathToFile = path;
         this.tileSize = 20;
+        makeImage();
     }
 
-    public void makeImage() {
-        BufferedImage image = new BufferedImage(currentGen.getWidth() * tileSize, currentGen.getHeight() * tileSize,
+    private void makeImage() {
+        BufferedImage dataOfImage = new BufferedImage(currentGen.getWidth() * tileSize, currentGen.getHeight() * tileSize,
                 BufferedImage.TYPE_INT_RGB);
+        fillImage(dataOfImage);
 
-        fillImage(image);
         try {
-            ImageIO.write(image, formatName, new File(pathToFile));
+            imageFile = new File(pathToFile);
+
+            if (imageFile.isFile() == false) {
+                imageFile.createNewFile();
+            } else {
+                System.out.println("Plik już istniał, zatem został on nadpisany.");
+            }
+            ImageIO.write(dataOfImage, formatName, imageFile);
         } catch (IOException e) {
-            System.err.println("IOException! - ImageSaver");
+            System.err.println("Błąd zapisu pliku " + formatName + ".");
             e.printStackTrace();
         }
 
@@ -76,6 +84,5 @@ public class ImageSaver {
         cells.add(new Conductor(1, 1));
 
         ImageSaver is = new ImageSaver(testGen, "PNG", "src/pl/edu/pw/ee/jimp2/gr11/wireworld/test/testfiles/image.png");
-        is.makeImage();
     }
 }

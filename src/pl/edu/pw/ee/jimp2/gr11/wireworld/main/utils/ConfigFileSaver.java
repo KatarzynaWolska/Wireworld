@@ -18,27 +18,28 @@ public class ConfigFileSaver {
         pathToSaveFile = pathToFile;
         genToSave = currentGeneration;
         this.cells = genToSave.getCells();
-        initFile();
+        makeConfigFile();
     }
 
-    private void initFile() {
+    private void makeConfigFile() {
+        file = new File(pathToSaveFile);
 
-        if (pathToSaveFile != null) {
+        if (file.isFile() == false) {
             try {
-                file = new File(pathToSaveFile);
+                file.createNewFile();
                 configFile = new PrintWriter(file);
-                saveConfigInfoToFile();
+                saveDataToFile();
                 configFile.close();
             } catch (IOException e) {
-                //configFile.close();
                 System.out.println("Nie udało się zapisać pliku.");
-            } catch (NullPointerException e) {
-
             }
+        } else {
+            System.out.println("Plik już istniał, zatem został on nadpisany.");
         }
+
     }
 
-    private void saveConfigInfoToFile() {//macierz cell
+    private void saveDataToFile() {//macierz cell
         int i = 0;
         StringBuilder line = new StringBuilder("");
         for (Cell c : cells) {
@@ -51,9 +52,9 @@ public class ConfigFileSaver {
 
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) {//tego maina trzeba przerzucić do testów
 
-        Generation testGen = new Generation();//tego maina trzeba przerzucić do testów
+        Generation testGen = new Generation();
         testGen.setHeight(1);
         testGen.setWidth(2);
         List<Cell> cells = new ArrayList<Cell>();
