@@ -1,17 +1,13 @@
 package pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells;
 
-import com.sun.prism.paint.Color;
 
 public class Tail extends Cell implements ConfigurationOfState {
     //private String nextState;
 
     public Tail(int x, int y) {
-        super(x, y);
+        super(x, y, 3);
     }
 
-    public Tail () {
-        super();
-    }
 
     @Override
     public Cell checkStateOfNextGeneration() {

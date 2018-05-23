@@ -6,9 +6,8 @@ public class Conductor extends Cell implements ConfigurationOfState {
     private int numberOfHeadNeighbours = 0;
 
     public Conductor(int x, int y) {
-        super(x, y);
+        super(x, y, 1);
     }
-
 
     public void setNumberOfHeadNeighbours(int numberOfHeads) {
         this.numberOfHeadNeighbours = numberOfHeads;

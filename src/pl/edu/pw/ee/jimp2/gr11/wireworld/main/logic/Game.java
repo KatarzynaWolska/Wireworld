@@ -7,12 +7,12 @@ import pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.game.GameController;
 import java.util.List;
 
 public class Game extends Thread {
-    /*private int totalNumberOfGenerations;
+    private int totalNumberOfGenerations;
     private boolean isEarlyEndMonitDisplayed = false;
     private Generation currentGeneration;
     private List<Cell> cellsOfFirstGeneration;//dla tego trzeba bedzie stworzyć tablice przechwyconych kolorów i
     // zamienić to na liste obiektów Color
-
+/*
     public Game(int totalNumberOfGenerations) {//to bedziemy wywoływać w GUI po naciśnięciu "start"
         this.totalNumberOfGenerations = totalNumberOfGenerations;
         goThroughGenerations();

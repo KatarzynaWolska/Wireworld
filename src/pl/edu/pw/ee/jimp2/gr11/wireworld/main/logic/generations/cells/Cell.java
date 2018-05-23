@@ -1,15 +1,12 @@
 package pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells;
 
-import com.sun.prism.paint.Color;
-
 public class Cell {
     private int x, y;
-    //private Color colorOfCell;
+    private int color;
 
     public Cell() {
         this.x = 0;
         this.y = 0;
-        //this.colorOfCell = BLACK;
 
     }
 
@@ -18,10 +15,10 @@ public class Cell {
         this.y = y;
     }
 
-    public Cell(int x, int y, Color colorOfCell) {
+    public Cell(int x, int y, int color) {
         this.x = x;
         this.y = y;
-        //this.colorOfCell = colorOfCell;
+        this.color = color;
     }
 
     public int getX() {
@@ -30,6 +27,10 @@ public class Cell {
 
     public int getY() {
         return y;
+    }
+
+    public int getColor() {
+        return color;
     }
 
     /*public Color getColorOfCell() {

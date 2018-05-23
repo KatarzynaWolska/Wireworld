@@ -1,7 +1,6 @@
 package pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations;
 
 
-import com.sun.prism.paint.Color;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells.*;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells.Cell;
 
@@ -10,8 +9,8 @@ import java.util.List;
 //wzorzec fasada!
 
 public class Generation {
-   /* private int height = 20;
-    private int width = 20;
+  /*  private int height = 20;
+    private int width = 24;//liczb kolumn
     private int numberOfGeneration;
     private List<Cell> allCells; // Set<Cell> allCells;//=new HashSet();
     //chyba lepiej zeby to była lista. do pol mozna sie przeciez odnosić za pomoca indeksu obiektu z listy

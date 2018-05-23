@@ -1,6 +1,6 @@
 package pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells;
 
-import com.sun.prism.paint.Color;
+
 
 public class Blank extends Cell implements ConfigurationOfState {
     //private String nextState;
@@ -13,10 +13,9 @@ public class Blank extends Cell implements ConfigurationOfState {
         super();
     }
 
-    public Blank (int x, int y) {
-        super(x, y);
+    public Blank(int x, int y) {
+        super(x, y, 0);
     }
-
 
     @Override
     public Cell checkStateOfNextGeneration() {
