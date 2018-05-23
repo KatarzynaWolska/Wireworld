@@ -19,6 +19,6 @@ public class Blank extends Cell implements ConfigurationOfState {
 
     @Override
     public Cell checkStateOfNextGeneration() {
-        return null;
+        return this;
     }
 }

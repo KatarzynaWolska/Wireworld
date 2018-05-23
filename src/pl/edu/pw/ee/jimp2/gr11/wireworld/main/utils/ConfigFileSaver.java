@@ -1,9 +1,10 @@
 package pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils;
 
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.Generation;
-import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells.Cell;
+import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells.*;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ConfigFileSaver {
@@ -52,6 +53,18 @@ public class ConfigFileSaver {
 
     public static void main(String[] args) {
 
+        Generation testGen = new Generation();//tego maina trzeba przerzucić do testów
+        testGen.setHeight(1);
+        testGen.setWidth(2);
+        List<Cell> cells = new ArrayList<Cell>();
+        testGen.setCells(cells);
+
+        cells.add(new Tail(0, 0));
+        cells.add(new Head(0, 1));
+        cells.add(new Blank(1, 0));
+        cells.add(new Conductor(1, 1));
+
+        ConfigFileSaver c = new ConfigFileSaver("src/pl/edu/pw/ee/jimp2/gr11/wireworld/test/testfiles/file.txt", testGen);
     }
 
 }

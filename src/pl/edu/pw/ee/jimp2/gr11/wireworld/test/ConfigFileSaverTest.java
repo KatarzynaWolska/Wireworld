@@ -10,7 +10,7 @@ import pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils.ConfigFileSaver;
 import java.util.List;
 
 
-public class ConfigFileSaverTest {
+public class ConfigFileSaverTest {/*
     private String path1 = "src/pl/edu/pw/ee/jimp2/gr11/wireworld/test/testfiles/file.txt";
     private String nullPath = "";
     Generation testGen;
@@ -43,5 +43,5 @@ public class ConfigFileSaverTest {
 
 
     }
-
+*/
 }

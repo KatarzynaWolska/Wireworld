@@ -17,7 +17,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MainMenuController extends Application implements Initializable {
-
+/*
     private class Tile extends Button {
         private int x, y;
         private Color color;
@@ -51,7 +51,7 @@ public class MainMenuController extends Application implements Initializable {
         public void setColor(Color color) {
             this.color = color;
         }
-    }
+    }*/
 
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
@@ -89,7 +89,7 @@ public class MainMenuController extends Application implements Initializable {
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources) { //potrzebne?
 
     }
 }

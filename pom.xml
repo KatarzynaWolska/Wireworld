@@ -20,7 +20,6 @@
                 </configuration>
             </plugin>
         </plugins>
-        <testSourceDirectory>src/test</testSourceDirectory>
 
     </build>
 
