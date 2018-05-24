@@ -13,7 +13,7 @@ import java.util.List;
 public class ImageSaver {
     private Generation currentGen;
     private String formatName;
-    private String pathToFile = "src/pl/edu/pw/ee/jimp2/gr11/wireworld/test/testfiles/image.bmp";
+    private String pathToFile = "src/pl/edu/pw/ee/jimp2/gr11/wireworld/test/java.testfiles/image.bmp";
     private int tileSize;
     private File imageFile;
 
@@ -83,6 +83,6 @@ public class ImageSaver {
         cells.add(new Blank(1, 0));
         cells.add(new Conductor(1, 1));
 
-        ImageSaver is = new ImageSaver(testGen, "PNG", "src/pl/edu/pw/ee/jimp2/gr11/wireworld/test/testfiles/image.png");
+        ImageSaver is = new ImageSaver(testGen, "PNG", "src/pl/edu/pw/ee/jimp2/gr11/wireworld/test/java.testfiles/image.png");
     }
 }

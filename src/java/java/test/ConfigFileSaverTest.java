@@ -1,16 +1,14 @@
-package test.java;
+package java.test;
 
-
-import org.junit.BeforeClass;
-import org.junit.Test;
+//import org.junit.BeforeClass;
+//import org.junit.Test;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.Generation;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells.*;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils.ConfigFileSaver;
-
 import java.util.List;
 
 public class ConfigFileSaverTest {
-    private String path1 = "src/pl/edu/pw/ee/jimp2/gr11/wireworld/test/testfiles/file.txt";
+  /*  private String path1 = "src/pl/edu/pw/ee/jimp2/gr11/wireworld/test/java.testfiles/file.txt";
     private String nullPath = "";
     Generation testGen;
     private List<Cell> cells;
@@ -42,5 +40,5 @@ public class ConfigFileSaverTest {
 
 
     }
-
+*/
 }

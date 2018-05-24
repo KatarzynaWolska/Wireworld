@@ -2,18 +2,40 @@ package pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.mainmenu;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Background;
+import javafx.scene.control.Label;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.Game;
+import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.Generation;
+import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells.*;
+import pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils.ConfigFileSaver;
+import pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils.GifFileSaver;
+import pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils.ImageSaver;
 
+
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
-public class MainMenuController extends Application implements Initializable {
+public class MainMenuController {
+    Parent root;
+    private Button cellButton;
+    public Button saver;
+    public Scene scene;
+    private Game game;
+    @FXML
+    private Label warningLabel;
 
     /*
     private class Tile extends Button {
@@ -50,54 +72,96 @@ public class MainMenuController extends Application implements Initializable {
             this.color = color;
         }
     }*/
-    public Button button;
 
     public void pressTile(ActionEvent event) {
-        button = (Button) event.getSource();
-        System.out.println(button.getBackground());
-        button.setBackground();
+        cellButton = (Button) event.getSource();
+
+
+        //cellButton.getStyleClass().add("headCell");//tak tez sie da ale tu trudniej bedzie zmienić paletę.
+
+        //wywołanie metody która zwraca kolor do ustawienia, a pobiera aktualny + fxid
+        //tam w sordku sobie ustawia komorke ktora trzeba na stan ktory powinna i zwraca kolor stanu
+        // czyli zwraca String np  "-fx-background-color: rgb(0, 0, 0)" do zmiennej lokalnej jakiejs
+        //i wywoluje się dalej: cellButton.setStyle(newColorForCell);
+        // cos w tym stylu :
+        // cellButton.setStyle("-fx-background-color: rgb(0, 0, 0)");
+
 
     }
 
+    public void pressSave(ActionEvent event) {
+        //saver = (Button) event.getSource();
+        Node node = (Node) event.getSource();
 
-    public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
 
-        root.getStyleClass().add("root");
+        FileChooser dir = new FileChooser();
+        dir.setTitle("Zapisz " + node.getId());
 
-/*
-//dodawanie roznej ilosci kolumn i wierszy
-        GridPane gridPane = new GridPane();
-        final int numCols = 50 ;
-        final int numRows = 50 ;
 
-        for (int i = 0; i < numCols; i++) {
-            ColumnConstraints colConst = new ColumnConstraints();
-            colConst.setPercentWidth(100.0 / numCols);
-            gridPane.getColumnConstraints().add(colConst);
+        if (node.getId().equals("konfigurację")) {
+            //tak to będzie wyglądać. jesli ktoś kliknął stop to moze zapisac konfigurację. opcjonalnie mozemy
+            //to usunąć i pozwolic uzytkownikowi zawsze ją zapisać
+            if (true) {//game.isStopped() == false
+                showWarning("Aby zapisać generację do pliku należy napierw zatrzymać grę przycieskiem.");
+            } else {
+                //Generation genToSaveIntoConfigFile = game.getCurrentGeneration();
+
+
+                //testowa generacja
+                Generation testGen = new Generation();
+                testGen.setHeight(1);
+                testGen.setWidth(2);
+                List<Cell> cells = new ArrayList<Cell>();
+                testGen.setCells(cells);
+
+                cells.add(new Tail(0, 0));
+                cells.add(new Head(0, 1));
+                cells.add(new Blank(1, 0));
+                cells.add(new Conductor(1, 1));
+                //koniec testGen
+
+                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("tekstowy (*.txt)",
+                        " *.txt");
+                dir.getExtensionFilters().add(extFilter);
+
+
+                File file = dir.showSaveDialog(new Stage());
+                //System.out.println(file.getAbsolutePath());
+                ConfigFileSaver s = new ConfigFileSaver(file.getAbsolutePath(), testGen);//tu zmienic potem generacje
+            }
+
+        } else if (node.getId().equals("animację")) {
+            //gif
+        } else {
+            int numberOfGeneration = game.getCurrentGeneration().getNumberOfGeneration();
+            //ImageSaver i = new ImageSaver()
+            //obraz
         }
 
-        for (int i = 0; i < numRows; i++) {
-            RowConstraints rowConst = new RowConstraints();
-            rowConst.setPercentHeight(100.0 / numRows);
-            gridPane.getRowConstraints().add(rowConst);
+
+    }
+
+    @FXML
+    private void initialize() {
+        //warningLabel.setText("kdkdkkdkd");
+    }
+
+    public void showWarning(String text) {
+        try {
+            root = FXMLLoader.load(getClass().getResource("DialogWindow.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Uwaga:");
+            stage.setScene(new Scene(root, 400, 200));
+            //warningLabel.setText(text);
+            //trzeba jakos zrobic zmiane teksu labela
+            stage.show();
+            // Hide this current window (if this is what you want)
+            //((Node)(event.getSource())).getScene().getWindow().hide();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-*/
-
-
-        Scene scene = new Scene(root, 800, 900);
-
-        primaryStage.setTitle("Wire World");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
-
-        scene.getStylesheets().add("pl/edu/pw/ee/jimp2/gr11/wireworld/main/view/wireWorldStyle.css");
 
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) { //potrzebne?
 
-    }
 }

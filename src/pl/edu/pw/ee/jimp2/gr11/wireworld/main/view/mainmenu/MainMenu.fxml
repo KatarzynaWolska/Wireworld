@@ -3475,10 +3475,11 @@
                     </font>
                 </Label>
                 <ToggleButton mnemonicParsing="false" text="Zapętlenie generacji"/>
-                <Button mnemonicParsing="false" text="Zapisz animację..."/>
+                <Button fx:id="animację" onAction="#pressSave" mnemonicParsing="false" text="Zapisz animację..."/>
                 <Button mnemonicParsing="false" text="START/STOP"/>
-                <Button mnemonicParsing="false" text="Zapisz obraz..."/>
-                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="58.0"
+                <Button fx:id="obraz" onAction="#pressSave" mnemonicParsing="false" text="Zapisz obraz..."/>
+                <Button fx:id="konfigurację" onAction="#pressSave" alignment="CENTER" contentDisplay="CENTER"
+                        mnemonicParsing="false" prefHeight="58.0"
                         prefWidth="140.0" text="Zapisz plik konfiguracyjny" textAlignment="CENTER" wrapText="true"/>
             </children>
         </HBox>

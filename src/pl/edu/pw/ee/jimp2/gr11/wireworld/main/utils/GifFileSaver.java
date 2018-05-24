@@ -63,8 +63,8 @@ public class GifFileSaver {//każdy obraz z generacji musi zostać zapisany jako
 
     public static void main(String[] args) { //przeniesc do testów!
 
-        GifFileSaver gfs = new GifFileSaver("src/pl/edu/pw/ee/jimp2/gr11/wireworld/test/images",
-                "src/pl/edu/pw/ee/jimp2/gr11/wireworld/test/testfiles/ani.gif");
+        GifFileSaver gfs = new GifFileSaver("src/pl/edu/pw/ee/jimp2/gr11/wireworld/test/java.images",
+                "src/pl/edu/pw/ee/jimp2/gr11/wireworld/test/java.testfiles/ani.gif");
 
     }
 }

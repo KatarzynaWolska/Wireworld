@@ -9,9 +9,21 @@ import java.util.List;
 public class Game extends Thread {
     private int totalNumberOfGenerations;
     private boolean isEarlyEndMonitDisplayed = false;
+    private boolean isStopped = true;
+
+    public Generation getCurrentGeneration() {
+        return currentGeneration;
+    }
+
+    public boolean isStopped() {
+        return isStopped;
+    }
+
     private Generation currentGeneration;
-    private List<Cell> cellsOfFirstGeneration;//dla tego trzeba bedzie stworzyć tablice przechwyconych kolorów i
-    // zamienić to na liste obiektów Color
+    private List<Cell> cellsOfFirstGeneration;
+
+
+
 /*
     public Game(int totalNumberOfGenerations) {//to bedziemy wywoływać w GUI po naciśnięciu "start"
         this.totalNumberOfGenerations = totalNumberOfGenerations;

@@ -9,18 +9,19 @@ import java.util.List;
 //wzorzec fasada!
 
 public class Generation {
-  /*  private int height = 20;
+    private int height = 20;
     private int width = 24;//liczb kolumn
     private int numberOfGeneration;
-    private List<Cell> allCells; // Set<Cell> allCells;//=new HashSet();
-    //chyba lepiej zeby to była lista. do pol mozna sie przeciez odnosić za pomoca indeksu obiektu z listy
-    // odpowiednio mnożąc x i y komórki
-    private List<Cell> activeCells;
 
+    /* private List<Cell> allCells; // Set<Cell> allCells;//=new HashSet();
+     //chyba lepiej zeby to była lista. do pol mozna sie przeciez odnosić za pomoca indeksu obiektu z listy
+     // odpowiednio mnożąc x i y komórki
+     private List<Cell> activeCells;
+ */
     public int getNumberOfGeneration() {
         return numberOfGeneration;
     }
-
+/*
     public Generation(int numberOfGeneration) {
         this.numberOfGeneration = numberOfGeneration;
     }
@@ -78,8 +79,8 @@ public class Generation {
         return false;
     }*/
 
-    private int height;
-    private int width;
+    //private int height;
+    //private int width;
     private List<Cell> cells;
     private List<Cell> activeCells;
     //jeszcze trzeba dodać numberOfGeneration
