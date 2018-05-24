@@ -16,7 +16,7 @@ public class Generator {
                     b.append(0);
                 b.append(j);
 
-                b.append("\" maxHeight=\"1.7976931348623157E308\" maxWidth=\"1.7976931348623157E308\" mnemonicParsing=\"false\"\n");
+                b.append("\" maxHeight=\"1.7976931348623157E308\" maxWidth=\"1.7976931348623157E308\" onAction=\"#pressTile\" mnemonicParsing=\"false\"\n");
                 b.append("                        prefHeight=\"0.0\" prefWidth=\"5.0\" GridPane.columnIndex=\"").append(j).append("\" GridPane.rowIndex=\"").append(i).append("\" >\n <font>\n <Font size=\"10.0\"/>\n </font>\n </Button>");
 
                 System.out.println(b.toString());

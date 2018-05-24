@@ -1,11 +1,13 @@
 package pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.mainmenu;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Background;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -48,13 +50,15 @@ public class MainMenuController extends Application implements Initializable {
             this.color = color;
         }
     }*/
-    private Button button;
+    public Button button;
 
-    public void pressTile() {
-        button = new Button();
-        button.get
-        System.out.println(button.getId());
+    public void pressTile(ActionEvent event) {
+        button = (Button) event.getSource();
+        System.out.println(button.getBackground());
+        button.setBackground();
+
     }
+
 
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
@@ -88,7 +92,7 @@ public class MainMenuController extends Application implements Initializable {
         primaryStage.show();
 
 
-        // scene.getStylesheets().add("pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.wireWorldStyle");
+        scene.getStylesheets().add("pl/edu/pw/ee/jimp2/gr11/wireworld/main/view/wireWorldStyle.css");
 
     }
 
