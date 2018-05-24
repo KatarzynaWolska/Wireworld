@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -47,11 +48,19 @@ public class MainMenuController extends Application implements Initializable {
             this.color = color;
         }
     }*/
+    private Button button;
+
+    public void pressTile() {
+        button = new Button();
+        button.get
+        System.out.println(button.getId());
+    }
 
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
 
         root.getStyleClass().add("root");
+
 /*
 //dodawanie roznej ilosci kolumn i wierszy
         GridPane gridPane = new GridPane();
