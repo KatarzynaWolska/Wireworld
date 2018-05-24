@@ -11,7 +11,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MainMenuController extends Application implements Initializable {
-/*
+
+    /*
     private class Tile extends Button {
         private int x, y;
         private Color color;
