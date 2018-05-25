@@ -12,13 +12,5 @@ public class Head extends Cell implements ConfigurationOfState {
     }
 
 
-    /*public String getNextState() {
-        return nextState;
-    }
 
-    public Cell checkStateOfNextGeneration() {
-        return new Tail (this.x, this.y);
-    }
-
-    */
 }

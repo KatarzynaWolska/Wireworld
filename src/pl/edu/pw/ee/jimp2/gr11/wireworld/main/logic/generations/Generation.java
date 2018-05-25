@@ -307,7 +307,7 @@ public class Generation {
         return counter;
     }
 
-    /*
+
         public Generation createNextGeneration(Generation last) {
             Generation next = new Generation (last.getHeight(), last.getWidth(), new ArrayList<Cell>(last.getCells()));
 
@@ -330,24 +330,8 @@ public class Generation {
             return next;
 
         }
-    */
-    //tylko żeby zobaczyć czy działa
-    public void print(Generation g) {
-        for (int j = 0; j < height; j++) {
-            for (int i = 0; i < width; i++) {
-                if (g.getCell(j, i) instanceof Blank) {
-                    System.out.print("0");
-                } else if (g.getCell(j, i) instanceof Conductor) {
-                    System.out.print("1");
-                } else if (g.getCell(j, i) instanceof Tail) {
-                    System.out.print("2");
-                } else if (g.getCell(j, i) instanceof Head) {
-                    System.out.print("3");
-                }
-            }
-            System.out.println(" ");
-        }
-    }
+
+
 
 
 }
