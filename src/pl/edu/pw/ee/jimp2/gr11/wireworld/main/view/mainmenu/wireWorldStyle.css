@@ -1,7 +1,47 @@
 @charset "iso-8859-1";
-#root {
+.root {
     -fx-background-color: rgba(59, 90, 195, 0.56);
-    -fx-padding: 10;
+}
+
+.scene {
+    -fx-background-color: rgba(65, 74, 108, 0.64);
+}
+
+.grid {
+    -fx-padding: 1.5;
+    -fx-background-color: rgb(0, 0, 0);
+}
+
+.mylabel {
+    -fx-background-color: rgb(255, 255, 255);
+    -fx-padding: 2;
+    -fx-border-color: rgb(0, 0, 0);
+
+}
+
+.buttons {
+    -fx-padding: 2;
+    -fx-border-color: rgb(0, 0, 0);
+    -fx-background-color: rgba(34, 34, 78, 0.45);
+    /*-fx-color-label-visible: rgba(52, 64, 255, 0.07);*/
+}
+
+.color-picker {
+    -fx-background-color: rgba(34, 34, 78, 0.45);
+    /*-fx-color-label-visible: rgba(52, 64, 255, 0.07);*/
+    -fx-padding: 2;
+    -fx-border-color: rgb(0, 0, 0);
+}
+
+.toggle-button {
+
+}
+
+.menu-bar {
+    -fx-padding: 2;
+    -fx-background-color: rgb(91, 96, 114);
+    -fx-text-fill: rgb(255, 253, 255);
+    -fx-highlight-text-fill: rgba(78, 78, 76, 0.45);
 }
 
 .blankCell {

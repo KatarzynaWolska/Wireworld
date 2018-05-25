@@ -69,7 +69,7 @@ public class ConfigFileSaver {
         cells.add(new Blank(1, 0));
         cells.add(new Conductor(1, 1));
 
-        ConfigFileSaver c = new ConfigFileSaver("src/pl/edu/pw/ee/jimp2/gr11/wireworld/test/java.testfiles/file.txt", testGen);
+        ConfigFileSaver c = new ConfigFileSaver("src/pl/edu/pw/ee/jimp2/gr11/wireworld/test/java.files.testfiles/file.txt", testGen);
     }
 
 }

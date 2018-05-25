@@ -101,7 +101,7 @@ public class MainMenuController {
         if (node.getId().equals("konfigurację")) {
             //tak to będzie wyglądać. jesli ktoś kliknął stop to moze zapisac konfigurację. opcjonalnie mozemy
             //to usunąć i pozwolic uzytkownikowi zawsze ją zapisać
-            if (true) {//game.isStopped() == false
+            if (false) {//game.isStopped() == false
                 showWarning("Aby zapisać generację do pliku należy napierw zatrzymać grę przycieskiem.");
             } else {
                 //Generation genToSaveIntoConfigFile = game.getCurrentGeneration();
@@ -133,7 +133,7 @@ public class MainMenuController {
         } else if (node.getId().equals("animację")) {
             //gif
         } else {
-            int numberOfGeneration = game.getCurrentGeneration().getNumberOfGeneration();
+            //int numberOfGeneration = game.getCurrentGeneration().getNumberOfGeneration();
             //ImageSaver i = new ImageSaver()
             //obraz
         }

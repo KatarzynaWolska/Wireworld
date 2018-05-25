@@ -1,6 +1,7 @@
 package pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.mainmenu;
 
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -17,7 +18,9 @@ import static javafx.application.Application.launch;
 
 
 public class App extends Application {
-    Parent root;
+    @FXML
+    public Parent root;
+    @FXML
     public Scene scene;
 
 
@@ -29,12 +32,12 @@ public class App extends Application {
 
         primaryStage.setTitle("Wire World");
         primaryStage.setScene(scene);
+        //scene.getStylesheets().add(MainMenuController.class.getResource("wireWorldStyle.css").toExternalForm());
 
-        scene.getStylesheets().add("pl/edu/pw/ee/jimp2/gr11/wireworld/main/view/wireWorldStyle.css");
-        root.getStylesheets().add("pl/edu/pw/ee/jimp2/gr11/wireworld/main/view/wireWorldStyle.css");
-        root.getStyleClass().add("root");
+        scene.getStylesheets().add("pl/edu/pw/ee/jimp2/gr11/wireworld/main/view/mainmenu/wireWorldStyle.css");
+        //  root.getStylesheets().add("pl/edu/pw/ee/jimp2/gr11/wireworld/main/view/wireWorldStyle.css");
+        root.getStyleClass().add("scene");
         primaryStage.show();
-
     }
 
     public static void main(String[] args) {
