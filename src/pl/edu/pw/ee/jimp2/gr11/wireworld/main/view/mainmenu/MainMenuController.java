@@ -80,7 +80,7 @@ public class MainMenuController {
         }
     }*/
 
-    public String newColorForCell (Color color, String id) {
+    public String newColorForCell (Color color, String id) { //na razie nie działa jak powinno, jutro poprawię
         String [] coords = id.split(("(?!^)"));
         int x = 10*Integer.parseInt(coords[0])+Integer.parseInt(coords[1]);
         int y = 10*Integer.parseInt(coords[2])+Integer.parseInt(coords[3]);
