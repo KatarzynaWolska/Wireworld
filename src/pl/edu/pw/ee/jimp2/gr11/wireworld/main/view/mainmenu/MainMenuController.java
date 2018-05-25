@@ -10,6 +10,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -36,6 +42,7 @@ public class MainMenuController {
     private Game game;
     @FXML
     private Label warningLabel;
+
 
     /*
     private class Tile extends Button {
@@ -73,9 +80,44 @@ public class MainMenuController {
         }
     }*/
 
+    public String newColorForCell (Color color, String id) { //na razie nie działa jak powinno, jutro poprawię
+        String [] coords = id.split(("(?!^)"));
+        int x = 10*Integer.parseInt(coords[0])+Integer.parseInt(coords[1]);
+        int y = 10*Integer.parseInt(coords[2])+Integer.parseInt(coords[3]);
+
+        Cell c = game.getActualGeneration().getCell(x,y);
+        int i = game.getActualGeneration().getCells().indexOf(c);
+        game.getActualGeneration().getCells().remove(i);
+
+        if(color == Color.BLACK) {
+            game.getActualGeneration().getCells().add(i, new Conductor(x,y));
+            return "-fx-background-color: rgb(255, 255, 0)";
+        }
+        else if(color == Color.YELLOW) {
+            game.getActualGeneration().getCells().add(i, new Tail(x,y));
+            return "-fx-background-color: rgb(255, 0, 0)";
+        }
+        else if(color == Color.RED) {
+            game.getActualGeneration().getCells().add(i, new Head(x,y));
+            return "-fx-background-color: rgb(0, 0, 255)";
+        }
+        else if(color == Color.BLUE) {
+            game.getActualGeneration().getCells().add(i, new Blank(x,y));
+            return "-fx-background-color: rgb(0, 0, 0)";
+        }
+        else {
+            game.getActualGeneration().getCells().add(i, new Blank(x,y));
+            return "-fx-background-color: rgb(0, 0, 0)";
+        }
+    }
+
     public void pressTile(ActionEvent event) {
         cellButton = (Button) event.getSource();
 
+        Color color = (Color)cellButton.getBackground().getFills().get(0).getFill();
+        String id = cellButton.getId();
+
+        cellButton.setStyle(newColorForCell(color, id));
 
         //cellButton.getStyleClass().add("headCell");//tak tez sie da ale tu trudniej bedzie zmienić paletę.
 

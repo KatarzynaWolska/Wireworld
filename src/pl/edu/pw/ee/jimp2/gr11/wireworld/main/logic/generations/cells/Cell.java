@@ -33,16 +33,8 @@ public class Cell {
         return color;
     }
 
-    /*public Color getColorOfCell() {
-        return colorOfCell;
-    }*/
-
-    /*public void setColorOfCell(Color colorOfCell) {
-        this.colorOfCell = colorOfCell;
-    }*/
-
-  /*  @Override
+    /*@Override*/
     public Cell checkStateOfNextGeneration() { //chyba lepiej zrobić to jako metodę a nie interfejs
         return new Cell(getX(), getY());
-    }*/
+    }
 }

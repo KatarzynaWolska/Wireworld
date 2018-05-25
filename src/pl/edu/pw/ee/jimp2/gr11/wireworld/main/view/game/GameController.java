@@ -7,32 +7,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class GameController extends JPanel{
+public class GameController {
 /*
-    private List<JButton> matrix;
     private Generation g;
-    private JPanel grid;
-
-    public GameController() {
-        super(new GridLayout());
-
-        this.g = g;
-
-        this.matrix = new ArrayList<JButton>(g.getCells().size());
-
-        grid = new JPanel(new GridLayout(g.getHeight(), g.getWidth()));
-
-        for (Cell c : g.getCells()) {
-            JButton j = new JButton();
-            j.setBackground(setColor(c));
-            j.addMouseListener(new changeColor());
-            matrix.add(j);
-            grid.add(j);
-        }
-
-        add(grid);
-        setVisible(true);
-    }
 
     public void setMatrixColors(Generation ge) {
         for (Cell c : ge.getCells()) {
@@ -118,54 +95,9 @@ public class GameController extends JPanel{
             }
         }
     }
+}*/
+
 }
-//tu jest ta klasa, której nie mogłam dodać jako osobnej
-/*
-public class AllGui extends JFrame {
 
-    GameController gg;
-    private JButton start;
-    private int height = 500;
-    private int width = 500;
-    private JPanel all;
-    private Game g;
-
-    public AllGui(Game g) {
-
-        super("WireWorld");
-        setBounds(height, width, height, width);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setDefaultLookAndFeelDecorated(true);
-        setResizable(false);
-
-        all = new JPanel(new GridLayout(2, 1));
-        add(all);
-
-        gg = new GameController(g.getActualGeneration());
-        all.add(gg);
-        start = new JButton("Start");
-        start.addActionListener(new StartGame());
-
-        all.add(start);
-
-        this.g = g;
-
-        g.setGameController(gg);
-
-
-        setVisible(true);
-    }
-
-    class StartGame implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-             g.start();
-
-        }
-    }
-*/
-}
 
 

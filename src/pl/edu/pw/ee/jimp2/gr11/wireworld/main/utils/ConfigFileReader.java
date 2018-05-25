@@ -1,6 +1,18 @@
 package pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils;
 
-public class ConfigFileReader {/*
+import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.Generation;
+import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells.Cell;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+
+public class ConfigFileReader {
+
+    private static final int prefferedHeight = 20;
+    private static final int prefferedWidth = 24;
     private int heightOfMatrix = 0;
     private int widthOfMatrix = 0;
 
@@ -32,7 +44,7 @@ public class ConfigFileReader {/*
         for (int i = 0; i < line.length; i++) {
             if ((!"0".equals(line[i])) && (!"1".equals(line[i])) && (!"2".equals(line[i])) && (!"3".equals(line[i]))) {
                 return false;
-            } else if (line.length != this.widthOfMatrix) {
+            } else if (line.length != this.prefferedWidth) {
                 return false;
             }
         }
@@ -47,23 +59,6 @@ public class ConfigFileReader {/*
         FileReader fr = new FileReader(configFile);
         BufferedReader br = new BufferedReader(fr);
         String line = null;
-
-        if ((line = br.readLine()) != null) { // oddzieliłam od pętli while pierwszą iterację z pierwszą linią pliku aby ustalić długość linii
-            String[] data = line.split("\\s+"); // i potem sprawdzać w checkLine czy jest ona inna
-            setWidthOfMatrix(data.length);
-            if (checkLine(data) == false) {
-                System.out.println("Błędny format pliku konfiguracyjnego.");
-                br.close();
-                fr.close();
-                System.exit(1);
-            }
-
-            for (int i = 0; i < data.length; i++) {
-                readCells.add(g.setCell(this.heightOfMatrix, i, Integer.parseInt(data[i])));
-            }
-
-            incrementHeight();
-        }
 
         while ((line = br.readLine()) != null) {
             String[] data = line.split("\\s+");
@@ -80,9 +75,16 @@ public class ConfigFileReader {/*
             incrementHeight();
         }
 
+        if (this.prefferedHeight != this.heightOfMatrix) {
+          System.out.println("Błędny format pliku kofiguracyjnego.");
+          System.exit(1);
+        }
+
         br.close();
         fr.close();
 
         return readCells;
-    }*/
+    }
+
+
 }
