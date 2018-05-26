@@ -36,6 +36,7 @@ public class MainMenuController {
     private Game game;
     private ColorPicker colorPicker;
     private WarningWindowController warningWindow;//= new WarningWindowController(root);
+    private Thread thread;
 
     @FXML
     private Label warningLabel;//= new Label("nana");
@@ -47,6 +48,9 @@ public class MainMenuController {
 
     @FXML
     private List<Button> buttons;
+
+    @FXML
+    private Button startStop;
 
     public void handleColor(ActionEvent event) {
         colorPicker = (ColorPicker) event.getSource();
@@ -112,8 +116,8 @@ public class MainMenuController {
         Color color = (Color) cellButton.getBackground().getFills().get(0).getFill();
         String id = cellButton.getId();
 
-        cellButton.setStyle(game.newColorForCell(color.toString(), id));
-        cellButton.setStyle(newColorForCell(color.toString(), id));
+        cellButton.setStyle(game.newColorForCell(color.toString(), id, game));
+        //cellButton.setStyle(newColorForCell(color.toString(), id));
 
         //System.out.println(color.toString());
 
@@ -212,10 +216,17 @@ public class MainMenuController {
     }
 
     public void pressStart(ActionEvent event) {
+        if(thread == null) {
+            GameStarter startGame = new GameStarter();
 
-        GameStarter startGame = new GameStarter();
+            thread = new Thread(startGame);
 
-        startGame.start();
+            thread.start();
+        }
+        else {
+            thread.interrupt();
+            thread = null;
+        }
 
     }
 
@@ -256,6 +267,9 @@ public class MainMenuController {
                 buttons.add(b);
                 grid.add(b, j, i);
             }
+
+            startStop = new Button();
+            startStop.setOnAction(this::pressStart);
         }
 
     }
@@ -286,23 +300,24 @@ public class MainMenuController {
 
     }
 
-    class GameStarter extends Thread {
+    class GameStarter implements Runnable {
         @Override
         public void run() {
-            while (game.performGame()) {
+            try{
+                while (game.performGame()) {
 
-                for (Cell c : game.getActualGeneration().getCells()) {
-                    int index = game.getActualGeneration().getCells().indexOf(c);
-                    buttons.get(index).setStyle(game.setColor(c));
+                    for (Cell c : game.getActualGeneration().getCells()) {
+                        int index = game.getActualGeneration().getCells().indexOf(c);
+                        buttons.get(index).setStyle(game.setColor(c));
+                    }
+
+                    Thread.sleep(1000);
+
                 }
-
-                try {
-                    sleep(1000);
-                } catch (InterruptedException e) {
-                    //System.exit(0);
-                    e.printStackTrace();
-                }
-
+            } catch (InterruptedException e) {
+                //System.exit(0);
+                Thread.currentThread().interrupt();
+                //e.printStackTrace();
             }
 
         }
