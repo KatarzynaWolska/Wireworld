@@ -9,81 +9,15 @@ import java.util.List;
 //wzorzec fasada!
 
 public class Generation {
-    private int height = 20;
-    private int width = 24;//liczb kolumn
+    private int height = 20; //20
+    private int width = 24; // liczba kolumn 24
     private int numberOfGeneration;
+    private List<Cell> cells;
+    private List<Cell> activeCells;
 
-    /* private List<Cell> allCells; // Set<Cell> allCells;//=new HashSet();
-     //chyba lepiej zeby to była lista. do pol mozna sie przeciez odnosić za pomoca indeksu obiektu z listy
-     // odpowiednio mnożąc x i y komórki
-     private List<Cell> activeCells;
- */
     public int getNumberOfGeneration() {
         return numberOfGeneration;
     }
-/*
-    public Generation(int numberOfGeneration) {
-        this.numberOfGeneration = numberOfGeneration;
-    }
-
-    public void setStateOfCell(Color state) {
-        //sprawdzać czy Cell to instanceof Head, Tail, ...
-
-        //a potem ustawiac kolor
-
-        //ale chyba można za pomocą checkNext... z interfejsu
-
-        //bez senu w sumie: robi to przecież konstruktor(w sensie ustawia x, y i kolor)
-        //wiec usuwam int x i int  y ^
-
-        //wgl ta metoda chyba nie jest  potrzebna
-    }
-    public Color checkState(Color state){
-        Color result = new Color(12, 23, 34, 12);//przyklad
-        return result;// jest w interfejsie
-    }
-
-    public void setStateOfCellsForGeneration(List<Color> colors) {
-        int x = 0;
-        int y = 0;
-        for (Color c : colors) {
-            if (c.equals("blank")) {//tymczasowo - powinno  byc np. (1, 2, 3,3)
-                allCells.add(new Blank(x, y, new Color(1, 2, 3, 3)));
-                x++;
-                y++;
-            } else if (c.equals("red")) {
-                Head h = new Head(x, y, new Color(1, 2, 2, 3));
-                allCells.add(h);
-                activeCells.add(h);//tak samo dla Tail i Conductor
-                x++;
-                y++;
-            }
-            //(...)
-        }
-
-    }
-
-    public List<Cell> getAllCells() {
-        return allCells;
-    }
-
-    public boolean isAnyHeadOrTailInActiveCells() {
-
-        //liczenie czy sa jakies głowy lub ogony
-        for (Cell c : this.activeCells) {
-            c = c instanceof Tail ? ((Tail) c) : null;
-            if (c != null) {
-                return true;
-            } //zrobic tak by uwzględniało jeszcze head
-        }
-        return false;
-    }*/
-
-    //private int height;
-    //private int width;
-    private List<Cell> cells;
-    private List<Cell> activeCells;
-    //jeszcze trzeba dodać numberOfGeneration
 
     public int getHeight() {
         return height;
@@ -101,16 +35,22 @@ public class Generation {
         this.width = width;
     }
 
-    public Generation() {
-        this.height = 0;
-        this.width = 0;
-    }
 
     public Generation(int height, int width, List<Cell> cells, List<Cell> activeCells) {
         this.height = height;
         this.width = width;
         this.cells = cells;
         this.activeCells = activeCells;
+    }
+
+    public Generation() {
+        this.cells = new ArrayList<>();
+
+        for(int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                cells.add(new Blank(i,j));
+            }
+        }
     }
 
     public void setCells(List<Cell> cells) {
@@ -307,31 +247,28 @@ public class Generation {
         return counter;
     }
 
+    public Generation createNextGeneration(Generation last) {
+        Generation next = new Generation (last.getHeight(), last.getWidth(), new ArrayList<Cell>(last.getCells()));
 
-        public Generation createNextGeneration(Generation last) {
-            Generation next = new Generation (last.getHeight(), last.getWidth(), new ArrayList<Cell>(last.getCells()));
+        List<Cell> nextActiveCells = new ArrayList<>();
 
-            List<Cell> nextActiveCells = new ArrayList<>();
-
-            for (Cell c : new ArrayList<Cell>(last.getCells())) {
-                if (c instanceof Conductor) {
-                    ((Conductor) c).setNumberOfHeadNeighbours(countNeighbours(c.getX(), c.getY()));
-                }
-                Cell newCell = c.checkStateOfNextGeneration();
-                nextActiveCells.add(newCell);
-                next.getCells().remove(c.getX() * getWidth() + c.getY());
-                next.getCells().add(c.getX() * getWidth() + c.getY(), newCell);
-
+        for (Cell c : new ArrayList<Cell>(last.getCells())) {
+            if (c instanceof Conductor) {
+                ((Conductor) c).setNumberOfHeadNeighbours(countNeighbours(c.getX(), c.getY()));
             }
-
-            next.setActiveCells(nextActiveCells);
-
-
-            return next;
+            Cell newCell = c.checkStateOfNextGeneration();
+            nextActiveCells.add(newCell);
+            next.getCells().remove(c.getX() * getWidth() + c.getY());
+            next.getCells().add(c.getX() * getWidth() + c.getY(), newCell);
 
         }
 
+        next.setActiveCells(nextActiveCells);
 
+
+        return next;
+
+    }
 
 
 }

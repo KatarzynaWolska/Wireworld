@@ -37,9 +37,9 @@ import java.util.ResourceBundle;
 public class MainMenuController {
     Parent root;
     private Button cellButton;
+    private Game game;
     public Button saver;
     public Scene scene;
-    private Game game;
     @FXML
     private Label warningLabel;
 
@@ -80,28 +80,29 @@ public class MainMenuController {
         }
     }*/
 
-    public String newColorForCell (Color color, String id) { //na razie nie działa jak powinno, jutro poprawię
+    public String newColorForCell (String color, String id) { //na razie nie działa jak powinno, jutro poprawię
         String [] coords = id.split(("(?!^)"));
-        int x = 10*Integer.parseInt(coords[0])+Integer.parseInt(coords[1]);
-        int y = 10*Integer.parseInt(coords[2])+Integer.parseInt(coords[3]);
+        int x = 10*Integer.parseInt(coords[4])+Integer.parseInt(coords[5]);
+        int y = 10*Integer.parseInt(coords[6])+Integer.parseInt(coords[7]);
+
 
         Cell c = game.getActualGeneration().getCell(x,y);
         int i = game.getActualGeneration().getCells().indexOf(c);
         game.getActualGeneration().getCells().remove(i);
 
-        if(color == Color.BLACK) {
+        if(color.equals("0x000000ff")) {
             game.getActualGeneration().getCells().add(i, new Conductor(x,y));
             return "-fx-background-color: rgb(255, 255, 0)";
         }
-        else if(color == Color.YELLOW) {
+        else if(color.equals("0xffff00ff")) {
             game.getActualGeneration().getCells().add(i, new Tail(x,y));
             return "-fx-background-color: rgb(255, 0, 0)";
         }
-        else if(color == Color.RED) {
+        else if(color.equals("0xff0000ff")) {
             game.getActualGeneration().getCells().add(i, new Head(x,y));
             return "-fx-background-color: rgb(0, 0, 255)";
         }
-        else if(color == Color.BLUE) {
+        else if(color.equals("0xff0000ff")) {
             game.getActualGeneration().getCells().add(i, new Blank(x,y));
             return "-fx-background-color: rgb(0, 0, 0)";
         }
@@ -112,12 +113,15 @@ public class MainMenuController {
     }
 
     public void pressTile(ActionEvent event) {
+
         cellButton = (Button) event.getSource();
 
-        Color color = (Color)cellButton.getBackground().getFills().get(0).getFill();
+        Color color = (Color) cellButton.getBackground().getFills().get(0).getFill();
         String id = cellButton.getId();
 
-        cellButton.setStyle(newColorForCell(color, id));
+        cellButton.setStyle(newColorForCell(color.toString(), id));
+
+            System.out.println(color.toString());
 
         //cellButton.getStyleClass().add("headCell");//tak tez sie da ale tu trudniej bedzie zmienić paletę.
 
@@ -186,6 +190,7 @@ public class MainMenuController {
     @FXML
     private void initialize() {
         //warningLabel.setText("kdkdkkdkd");
+        this.game = new Game(5);
     }
 
     public void showWarning(String text) {
