@@ -16,16 +16,36 @@ public class ImageSaver {
     private String pathToFile = "src/pl/edu/pw/ee/jimp2/gr11/wireworld/test/java.files.testfiles/image.bmp";
     private int tileSize;
     private File imageFile;
+    private String headColor;
+    private String tailColor;
+    private String conductorColor;
+    private String blankColor;
 
     public ImageSaver(Generation gen, String formatName, String path) {
         currentGen = gen;
         this.formatName = formatName;
         this.pathToFile = path;
         this.tileSize = 20;
-        makeImage();
     }
 
-    private void makeImage() {
+    public void setHeadColor(String headColor) {
+        this.headColor = headColor;
+    }
+
+    public void setTailColor(String tailColor) {
+        this.tailColor = tailColor;
+    }
+
+    public void setConductorColor(String conductorColor) {
+        this.conductorColor = conductorColor;
+    }
+
+    public void setBlankColor(String blankColor) {
+        this.blankColor = blankColor;
+    }
+
+
+    public void makeImage() {
         BufferedImage dataOfImage = new BufferedImage(currentGen.getWidth() * tileSize, currentGen.getHeight() * tileSize,
                 BufferedImage.TYPE_INT_RGB);
         fillImage(dataOfImage);
@@ -53,14 +73,13 @@ public class ImageSaver {
                 ri = i % tileSize;
                 rj = j % tileSize;
                 image.setRGB(i, j, defineColor(currentGen.getCell((i - ri) / tileSize, (j - rj) / tileSize)));
+
             }
         }
     }
 
 
-    private int defineColor(Cell c) { //potrzebne?
-        //int color = c.getColor();
-        //System.out.println(color);
+    private int defineColor(Cell c) {
         if (c instanceof Tail)
             return 1330687;//(new Color(29, 101, 254, 255)).getIntArgbPre();   //70130180;//niebieski
         else if (c instanceof Head)
@@ -83,6 +102,7 @@ public class ImageSaver {
         cells.add(new Blank(1, 0));
         cells.add(new Conductor(1, 1));
 
-        ImageSaver is = new ImageSaver(testGen, "PNG", "src/pl/edu/pw/ee/jimp2/gr11/wireworld/test/java.files.testfiles/image.png");
+        ImageSaver is = new ImageSaver(testGen, "PNG", "src/files/image.png");
+        is.makeImage();
     }
 }

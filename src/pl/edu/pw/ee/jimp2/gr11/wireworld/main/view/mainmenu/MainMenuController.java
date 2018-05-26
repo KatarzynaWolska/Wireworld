@@ -3,10 +3,10 @@ package pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.mainmenu;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
@@ -16,6 +16,8 @@ import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.Game;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.Generation;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells.*;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils.ConfigFileSaver;
+import pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils.GifFileSaver;
+import pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils.ImageSaver;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.warning.WarningWindowController;
 
 
@@ -28,11 +30,6 @@ public class MainMenuController {
     Parent root;
     private Button cellButton;
     private Game game;
-    public Button saver;
-    public Scene scene;
-    private WarningWindowController warningWindow;//= new WarningWindowController(root);
-    @FXML
-    private Label warningLabel;//= new Label("nana");
     @FXML
     private Label currentGenNumber;
 
@@ -75,7 +72,7 @@ public class MainMenuController {
     }*/
 
     public String newColorForCell(String color, String id) { //na razie nie działa jak powinno, jutro poprawię
-        String [] coords = id.split(("(?!^)"));
+        String[] coords = id.split(("(?!^)"));
         int x = 10 * Integer.parseInt(coords[4]) + Integer.parseInt(coords[5]);
         int y = 10 * Integer.parseInt(coords[6]) + Integer.parseInt(coords[7]);
 //TODO: zamien te stringi w nawiasach na zmienne. BTW lepiej by było przenisc te metode do Game. zmienne kolorów też.
@@ -83,26 +80,24 @@ public class MainMenuController {
 // kolory w łatwy sposob przechwycić do pickera
 
 
-
-        Cell c = game.getActualGeneration().getCell(x,y);
+        Cell c = game.getActualGeneration().getCell(x, y);
         int i = game.getActualGeneration().getCells().indexOf(c);
         game.getActualGeneration().getCells().remove(i);
 
         if (color.equals("0x000000ff")) {
-            game.getActualGeneration().getCells().add(i, new Conductor(x,y));
+            game.getActualGeneration().getCells().add(i, new Conductor(x, y));
             return "-fx-background-color: rgb(255, 255, 0)";
         } else if (color.equals("0xffff00ff")) {
-            game.getActualGeneration().getCells().add(i, new Tail(x,y));
+            game.getActualGeneration().getCells().add(i, new Tail(x, y));
             return "-fx-background-color: rgb(255, 0, 0)";
         } else if (color.equals("0xff0000ff")) {
-            game.getActualGeneration().getCells().add(i, new Head(x,y));
+            game.getActualGeneration().getCells().add(i, new Head(x, y));
             return "-fx-background-color: rgb(0, 0, 255)";
         } else if (color.equals("0xff0000ff")) {
-            game.getActualGeneration().getCells().add(i, new Blank(x,y));
+            game.getActualGeneration().getCells().add(i, new Blank(x, y));
             return "-fx-background-color: rgb(0, 0, 0)";
-        }
-        else {
-            game.getActualGeneration().getCells().add(i, new Blank(x,y));
+        } else {
+            game.getActualGeneration().getCells().add(i, new Blank(x, y));
             return "-fx-background-color: rgb(0, 0, 0)";
         }
     }
@@ -116,7 +111,7 @@ public class MainMenuController {
 
         cellButton.setStyle(newColorForCell(color.toString(), id));
 
-        System.out.println(color.toString());
+        //System.out.println(color.toString());
 
         //cellButton.getStyleClass().add("headCell");//tak tez sie da ale tu trudniej bedzie zmienić paletę.
 
@@ -130,58 +125,86 @@ public class MainMenuController {
 
     }
 
-    public void pressSave(ActionEvent event) {
+
+    public void pressSaveConfigurationFile(ActionEvent event) {
         //saver = (Button) event.getSource();
-        warningWindow = new WarningWindowController(root);
         Node node = (Node) event.getSource();
 
-        FileChooser dir = new FileChooser();
-        dir.setTitle("Zapisz " + node.getId());
 
+        if (game.isStopped() == false) {
+            makeAlert("Wire World", "Nie można teraz zapisać pliku konfiguracyjnego.",
+                    "Aby to zrobić musisz najpierw zatrzymać grę przyciskiem \"STOP\" na wybranej generacji.");
 
-        if (node.getId().equals("konfigurację")) {
-            //tak to będzie wyglądać. jesli ktoś kliknął stop to moze zapisac konfigurację. opcjonalnie mozemy
-            //to usunąć i pozwolic uzytkownikowi zawsze ją zapisać
-            if (true) {//game.isStopped() == false
-
-                showWarning("Aby zapisać generację do pliku należy napierw zatrzymać grę przycieskiem.", event);
-
-            } else {
-                Generation genToSaveIntoConfigFile = game.getCurrentGeneration();
-
-
-                //testowa generacja
-                Generation testGen = new Generation();
-                testGen.setHeight(1);
-                testGen.setWidth(2);
-                List<Cell> cells = new ArrayList<Cell>();
-                testGen.setCells(cells);
-
-                cells.add(new Tail(0, 0));
-                cells.add(new Head(0, 1));
-                cells.add(new Blank(1, 0));
-                cells.add(new Conductor(1, 1));
-                //koniec testGen
-
-                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("tekstowy (*.txt)",
-                        " *.txt");
-                dir.getExtensionFilters().add(extFilter);
-
-
-                File file = dir.showSaveDialog(new Stage());
-                //System.out.println(file.getAbsolutePath());
-                ConfigFileSaver s = new ConfigFileSaver(file.getAbsolutePath(), testGen);//tu zmienic potem generacje
-            }
-
-        } else if (node.getId().equals("animację")) {
-            //gif
         } else {
-            //int numberOfGeneration = game.getCurrentGeneration().getNumberOfGeneration();
-            //ImageSaver i = new ImageSaver()
-            //obraz
+            Generation genToSaveIntoConfigFile = game.getCurrentGeneration();
+
+            FileChooser dir = new FileChooser();
+            dir.setTitle("Zapisz plik konfiguracyjny:");
+
+            //testowa generacja
+            Generation testGen = new Generation();
+            testGen.setHeight(1);
+            testGen.setWidth(2);
+            List<Cell> cells = new ArrayList<Cell>();
+            testGen.setCells(cells);
+
+            cells.add(new Tail(0, 0));
+            cells.add(new Head(0, 1));
+            cells.add(new Blank(1, 0));
+            cells.add(new Conductor(1, 1));
+            //koniec testGen
+
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("tekstowy (*.txt)",
+                    " *.txt");
+            dir.getExtensionFilters().add(extFilter);
+
+
+            File file = dir.showSaveDialog(new Stage());
+            //System.out.println(file.getAbsolutePath());
+            ConfigFileSaver configFileSaver = new ConfigFileSaver(file.getAbsolutePath(), testGen);//tu zmienic potem generacje
         }
 
 
+    }
+
+    public void pressSaveAnimation(ActionEvent event) {
+        Node node = (Node) event.getSource();
+
+        FileChooser dir = new FileChooser();
+        dir.setTitle("Zapisz animację:");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("plik GIF (*.gif)",
+                " *.gif");
+        dir.getExtensionFilters().add(extFilter);
+
+
+        File file = dir.showSaveDialog(new Stage());
+        GifFileSaver gifFileSaver = new GifFileSaver("src/files/images", file.getAbsolutePath());
+
+    }
+
+    public void pressSaveImage(ActionEvent event) {
+        Node node = (Node) event.getSource();
+
+
+        if (game.isStopped() == false) {
+            makeAlert("Wire World", "Nie można teraz zapisać obrazu.",
+                    "Aby to zrobić musisz najpierw zatrzymać grę przyciskiem \"STOP\" na wybranej generacji.");
+
+        } else {
+            FileChooser dir = new FileChooser();
+            dir.setTitle("Zapisz obraz:");
+
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("plik PNG (*.png)",
+                    " *.png");
+            dir.getExtensionFilters().add(extFilter);
+            //extFilter = new FileChooser.ExtensionFilter("plik jpg (*.jpg)", " *.jpg");
+
+            File file = dir.showSaveDialog(new Stage());
+            ImageSaver imageSaver = new ImageSaver(game.getCurrentGeneration(), "PNG", file.getAbsolutePath());
+            //imageSaver.setHeadColor(game.getHeadColor());
+            //...
+            imageSaver.makeImage();
+        }
     }
 
     @FXML
@@ -195,21 +218,26 @@ public class MainMenuController {
 
     }
 
+    private void makeAlert(String title, String header, String content) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
 
-    public void showWarning(String text, ActionEvent event) {
+        alert.showAndWait();
+    }
+
+
+    public void showRules(ActionEvent event) {
         try {
-            root = FXMLLoader.load(getClass().getResource("WarningWindow.fxml"));
+            root = FXMLLoader.load(getClass().getResource("RulesWindow.fxml"));
             Stage stage = new Stage();
             stage.setResizable(false);
-            stage.setTitle("Uwaga:");
-            Scene scene = new Scene(root, 400, 200);
+            stage.setTitle("Zasady gry WireWorld");
+            Scene scene = new Scene(root, 500, 800);
             stage.setScene(scene);
-            //warningLabel = new Label("inicjacja");
-            //warningLabel.setText("dd");
-            //trzeba jakos zrobic zmiane teksu labela
             stage.show();
-            // Hide this current window (if this is what you want)
-            //((Node) (event.getSource())).getScene().getWindow().fireEvent(event);
+
         } catch (IOException e) {
             e.printStackTrace();
         }

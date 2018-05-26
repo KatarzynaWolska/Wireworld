@@ -21,26 +21,6 @@
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="739.0" prefWidth="1006.0" styleClass="scene"
             xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.mainmenu.MainMenuController">
-    <top>
-        <MenuBar prefHeight="4.0" prefWidth="900.0" BorderPane.alignment="CENTER">
-            <menus>
-                <Menu mnemonicParsing="false" text="Wstaw...">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="Bramkę1"/>
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Ustawienia">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="Wybierz paletę barw"/>
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Zasady">
-                </Menu>
-                <Menu mnemonicParsing="false" text="Pomoc">
-                </Menu>
-            </menus>
-        </MenuBar>
-    </top>
     <center>
         <GridPane alignment="CENTER" gridLinesVisible="true" maxHeight="-Infinity" maxWidth="-Infinity"
                   prefHeight="511.0" prefWidth="719.0" styleClass="grid" stylesheets="@wireWorldStyle.css"
@@ -3473,11 +3453,9 @@
         </HBox>
     </bottom>
     <right>
-        <FlowPane alignment="CENTER" columnHalignment="CENTER" prefHeight="610.0" prefWidth="215.0" vgap="40.0"
+        <FlowPane alignment="CENTER" columnHalignment="CENTER" prefHeight="608.0" prefWidth="240.0" vgap="40.0"
                   BorderPane.alignment="CENTER">
             <children>
-                <CheckBox alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="60.0"
-                          prefWidth="160.0" text="zapętlenie animacji"/>
                 <Label id="currentGenNumber" fx:id="currentGenNumber" alignment="CENTER" prefHeight="60.0"
                        prefWidth="160.0" styleClass="mylabel" text="&lt;nr gen&gt;" textAlignment="CENTER">
                     <font>
@@ -3486,21 +3464,51 @@
                 </Label>
                 <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="160.0" styleClass="buttons"
                         text="START/STOP" textAlignment="CENTER"/>
-                <Button fx:id="animację" mnemonicParsing="false" onAction="#pressSave" prefHeight="60.0"
+                <Button fx:id="animation" mnemonicParsing="false" onAction="#pressSaveAnimation" prefHeight="60.0"
                         prefWidth="160.0" styleClass="buttons" text="Zapisz animację..."/>
-                <Button fx:id="obraz" mnemonicParsing="false" onAction="#pressSave" prefHeight="60.0" prefWidth="160.0"
-                        styleClass="buttons" text="Zapisz obraz..."/>
-                <Button fx:id="konfigurację" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"
-                        onAction="#pressSave" prefHeight="60.0" prefWidth="160.0" styleClass="buttons"
+                <Button fx:id="image" mnemonicParsing="false" onAction="#pressSaveImage" prefHeight="60.0"
+                        prefWidth="160.0" styleClass="buttons" text="Zapisz obraz..."/>
+                <Button fx:id="configuration" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"
+                        onAction="#pressSaveConfigurationFile" prefHeight="60.0" prefWidth="160.0" styleClass="buttons"
                         text="Zapisz plik konfiguracyjny" textAlignment="CENTER" wrapText="true"/>
             </children>
         </FlowPane>
     </right>
     <stylesheets>
         <URL value="@wireWorldStyle.css"/>
-        <URL value="@wireWorldStyle.css"/>
     </stylesheets>
     <left>
-        <Pane prefHeight="580.0" prefWidth="58.0" BorderPane.alignment="CENTER"/>
+        <Pane prefHeight="608.0" prefWidth="30.0" BorderPane.alignment="CENTER"/>
     </left>
+    <top>
+        <HBox prefHeight="29.0" prefWidth="1006.0" BorderPane.alignment="CENTER">
+            <children>
+                <MenuBar minHeight="43.0" minWidth="170.0" prefHeight="43.0" prefWidth="431.0" HBox.hgrow="ALWAYS">
+                    <menus>
+                        <Menu mnemonicParsing="false" text="Wstaw">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="Bramkę1"/>
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Ustawienia">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="coś"/>
+                            </items>
+                        </Menu>
+
+                    </menus>
+                </MenuBar>
+                <FlowPane prefHeight="43.0" prefWidth="914.0" styleClass="menu-bar">
+                    <children>
+                        <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#showRules"
+                                styleClass="menu-item" text="Zasady gry" textAlignment="CENTER"/>
+                        <Button contentDisplay="CENTER" mnemonicParsing="false" styleClass="menu-item" text="Pomoc"
+                                textAlignment="CENTER"/>
+                        <CheckBox alignment="CENTER_RIGHT" contentDisplay="CENTER" mnemonicParsing="false"
+                                  prefHeight="39.0" prefWidth="165.0" text="zapętlenie animacji"/>
+                    </children>
+                </FlowPane>
+            </children>
+        </HBox>
+    </top>
 </BorderPane>

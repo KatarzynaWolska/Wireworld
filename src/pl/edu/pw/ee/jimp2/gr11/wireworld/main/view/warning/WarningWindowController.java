@@ -21,7 +21,7 @@ public class WarningWindowController {//niepotrzeebna
 
     public void showWarning(String text) {
         try {
-            root = FXMLLoader.load(getClass().getResource("../mainmenu/WarningWindow.fxml"));
+            root = FXMLLoader.load(getClass().getResource("../mainmenu/RulesWindow.fxml"));
             Stage stage = new Stage();
             stage.setTitle("Uwaga:");
             stage.setScene(new Scene(root, 400, 200));

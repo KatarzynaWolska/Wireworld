@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class GifFileSaver {//każdy obraz z generacji musi zostać zapisany jako png do jednego folderu w naszym projekcie
+    //
     private String pathToImagesDir;
     private Game currentGame;
     private String pathToGifFile;
@@ -47,7 +48,7 @@ public class GifFileSaver {//każdy obraz z generacji musi zostać zapisany jako
             writer.writeToSequence(image);
 
 
-            for (int i = 1; i < currentGame.getNumberOfGenerations(); i++) {
+            for (int i = 1; i < 6/*currentGame.getNumberOfGenerations()*/; i++) {
                 image = ImageIO.read(new File(pathToImagesDir + "/image" + i + ".png"));
                 writer.writeToSequence(image);
             }
