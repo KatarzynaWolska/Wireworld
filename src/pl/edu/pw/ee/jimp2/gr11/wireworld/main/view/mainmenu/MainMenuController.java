@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -19,10 +20,12 @@ import pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils.ConfigFileSaver;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.warning.WarningWindowController;
 
 
+import javax.xml.stream.events.Namespace;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class MainMenuController {
     Parent root;
@@ -31,50 +34,49 @@ public class MainMenuController {
     public Button saver;
     public Scene scene;
     private WarningWindowController warningWindow;//= new WarningWindowController(root);
+
     @FXML
     private Label warningLabel;//= new Label("nana");
     @FXML
     private Label currentGenNumber;
 
+    @FXML
+    private GridPane grid;
 
+    @FXML
+    private List<Button> buttons;
 
-    /*
-    private class Tile extends Button {
-        private int x, y;
-        private Color color;
-
-        public Tile(int x, int y, Color color) {
-            this.x = x;
-            this.y = y;
-            this.color = color;
+    public String setColor (Cell c) {
+        if(c instanceof Blank) {
+            return "-fx-background-color: rgb(0, 0, 0)";
         }
-
-        public int getX() {
-            return x;
+        else if(c instanceof Conductor) {
+            return "-fx-background-color: rgb(255, 255, 0)";
         }
-
-        public void setX(int x) {
-            this.x = x;
+        else if(c instanceof Tail) {
+            return "-fx-background-color: rgb(255, 0, 0)";
         }
-
-        public int getY() {
-            return y;
+        else if(c instanceof Head) {
+            return "-fx-background-color: rgb(0, 0, 255)";
         }
-
-        public void setY(int y) {
-            this.y = y;
+        else {
+            return "-fx-background-color: rgb(0, 0, 0)";
         }
-
-        public Color getColor() {
-            return color;
-        }
-
-        public void setColor(Color color) {
-            this.color = color;
-        }
-    }*/
+    }
 
     public String newColorForCell(String color, String id) { //na razie nie działa jak powinno, jutro poprawię
+        /*
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
+        try {
+            Parent r = loader.load();
+
+        Map<String, Object> namespace = loader.getNamespace();
+        //System.out.println(namespace.get("tile0101"));
+        Button b = (Button)namespace.get("tile0000");
+        }catch (IOException e) {
+            e.printStackTrace();
+        }*/
+
         String [] coords = id.split(("(?!^)"));
         int x = 10 * Integer.parseInt(coords[4]) + Integer.parseInt(coords[5]);
         int y = 10 * Integer.parseInt(coords[6]) + Integer.parseInt(coords[7]);
@@ -116,7 +118,7 @@ public class MainMenuController {
 
         cellButton.setStyle(newColorForCell(color.toString(), id));
 
-        System.out.println(color.toString());
+        /*System.out.println(color.toString());*/
 
         //cellButton.getStyleClass().add("headCell");//tak tez sie da ale tu trudniej bedzie zmienić paletę.
 
@@ -184,6 +186,14 @@ public class MainMenuController {
 
     }
 
+    public void pressStart(ActionEvent event) {
+
+        GameStarter startGame = new GameStarter();
+
+        startGame.start();
+
+    }
+
     @FXML
     private void initialize() {
 
@@ -193,6 +203,40 @@ public class MainMenuController {
         // z labelem do wyswietlania aktualnej.) i jak ktoś ustali to wtedy dopiero zmienić.
         //currentGenNumber.setText("00");
 
+        //warningLabel.setText("kdkdkkdkd");*/
+        buttons = new ArrayList<>();
+
+        for (int i = 0; i < 20; i++) {
+            for(int j = 0; j < 24; j++) {
+                Button b = new Button();
+                b.setMaxHeight(1.7976931348623157E308);
+                b.setMaxWidth(1.7976931348623157E308);
+                b.setMnemonicParsing(false);
+                b.setOnAction(this::pressTile);
+                b.setPrefHeight(0.0);
+                b.setPrefWidth(5.0);
+                if(i < 10) {
+                    if(j < 10) {
+                        b.setId("tile0"+i+"0"+j);
+                    }
+                    else {
+                        b.setId("tile0"+i+j);
+                    }
+                }
+                else {
+                    if(j < 10) {
+                        b.setId("tile"+i+"0"+j);
+                    }
+                    else {
+                        b.setId("tile"+i+j);
+                    }
+                }
+                buttons.add(b);
+                grid.add(b,j,i);
+            }
+        }
+
+//tu trzeba pokolorowac komorki
     }
 
 
@@ -214,6 +258,28 @@ public class MainMenuController {
             e.printStackTrace();
         }
 
+    }
+
+    class GameStarter extends Thread {
+        @Override
+        public void run() {
+            for(int i = 0; i< game.getNumberOfGenerations(); i++) {
+                game.performGame();
+
+                for (Cell c : game.getActualGeneration().getCells()) {
+                    int index = game.getActualGeneration().getCells().indexOf(c);
+                    buttons.get(index).setStyle(setColor(c));
+                }
+
+                try {
+                    sleep(1000);
+                } catch (InterruptedException e) {
+                    //System.exit(0);
+                    e.printStackTrace();
+                }
+            }
+
+        }
     }
 
 

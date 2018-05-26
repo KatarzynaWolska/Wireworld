@@ -38,7 +38,6 @@ public class App extends Application {
         scene.getStylesheets().add("pl/edu/pw/ee/jimp2/gr11/wireworld/main/view/mainmenu/wireWorldStyle.css");
         //  root.getStylesheets().add("pl/edu/pw/ee/jimp2/gr11/wireworld/main/view/wireWorldStyle.css");
         root.getStyleClass().add("root");
-
         //System.out.println( root.isResizable());
 
         primaryStage.show();
