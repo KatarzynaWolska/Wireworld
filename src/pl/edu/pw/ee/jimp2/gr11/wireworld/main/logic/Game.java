@@ -1,26 +1,13 @@
 package pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic;
 
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.Generation;
-import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells.Cell;
+import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells.*;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.game.GameController;
 
 import java.util.List;
 
 public class Game extends Thread {
-    private int totalNumberOfGenerations;
-    private boolean isEarlyEndMonitDisplayed = false;
-    private boolean isStopped = true;
 
-    public Generation getCurrentGeneration() {
-        return currentGeneration;
-    }
-
-    public boolean isStopped() {
-        return isStopped;
-    }
-
-    private Generation currentGeneration;
-    private List<Cell> cellsOfFirstGeneration;
 
 
     /*
@@ -57,6 +44,10 @@ public class Game extends Thread {
     private Generation actualGeneration;
     private Generation nextGeneration;
     private int numberOfGenerations;
+    private String blankColor = "-fx-background-color: rgb(0, 0, 0)";
+    private String conductorColor = "-fx-background-color: rgb(255, 255, 0)";
+    private String tailColor = "-fx-background-color: rgb(255, 0, 0)";
+    private String headColor = "-fx-background-color: rgb(0, 0, 255)";
     //GameController gg;
 
     public Game(Generation actualGeneration, int numberOfGeneration) {
@@ -68,6 +59,11 @@ public class Game extends Thread {
         this.actualGeneration = new Generation();
         this.nextGeneration = new Generation();
         this.numberOfGenerations = numberOfGenerations;
+    }
+
+    public Game( ) {
+        this.actualGeneration = new Generation();
+        this.nextGeneration = new Generation();
     }
 
     public Generation getActualGeneration() {
@@ -94,27 +90,92 @@ public class Game extends Thread {
         this.numberOfGenerations = numberOfGenerations;
     }
 
-    /*public void setGameController(GameController gg) {
-        this.gg = gg;
-    }*/
 
-    /*
-        public void performGame() {
-            gg.setMatrixColors(actualGeneration);
-            setNextGeneration(actualGeneration.createNextGeneration(actualGeneration));
-            setActualGeneration(this.nextGeneration);
-
+    public boolean checkEqualityOfGenerations(List<Cell> first, List<Cell> second) {
+        for(Cell c : first) {
+            int index = first.indexOf(c);
+            if(c.getClass().equals(second.get(index).getClass())) {
+                continue;
+            }
+            else {
+                return false;
+            }
         }
-    */
+        return true;
+    }
+
+
+    public boolean performGame() {
+        setNextGeneration(actualGeneration.createNextGeneration(actualGeneration));
+        if(checkEqualityOfGenerations(actualGeneration.getCells(), nextGeneration.getCells())) {
+            return false;
+        }
+        setActualGeneration(this.nextGeneration);
+        return true;
+    }
+
     @Override
     public void run() {
-        for (int i = 0; i < numberOfGenerations; i++) {
-            //performGame();
+            performGame();
             try {
                 sleep(1000);
             } catch (InterruptedException e) {
-                System.exit(0);
+                e.printStackTrace();
             }
+
+    }
+
+    public String setColor (Cell c) {
+        if(c instanceof Blank) {
+            return blankColor;
+        }
+        else if(c instanceof Conductor) {
+            return conductorColor;
+        }
+        else if(c instanceof Tail) {
+            return tailColor;
+        }
+        else if(c instanceof Head) {
+            return headColor;
+        }
+        else {
+            return blankColor;
+        }
+    }
+
+    public String newColorForCell(String color, String id) {
+
+        String [] coords = id.split(("(?!^)"));
+
+        String xFirstCoordinate = coords[4];
+        String xSecondCoordinate = coords[5];
+
+        String yFirstCoordinate = coords[6];
+        String ySecondCoordinate = coords[7];
+
+        int x = 10 * Integer.parseInt(xFirstCoordinate) + Integer.parseInt(xSecondCoordinate);
+        int y = 10 * Integer.parseInt(yFirstCoordinate) + Integer.parseInt(ySecondCoordinate);
+
+        Cell c = getActualGeneration().getCell(x,y);
+        int i = getActualGeneration().getCells().indexOf(c);
+        getActualGeneration().getCells().remove(i);
+
+        if (color.equals("0x000000ff")) {
+            getActualGeneration().getCells().add(i, new Conductor(x,y));
+            return conductorColor;
+        } else if (color.equals("0xffff00ff")) {
+            getActualGeneration().getCells().add(i, new Tail(x,y));
+            return tailColor;
+        } else if (color.equals("0xff0000ff")) {
+            getActualGeneration().getCells().add(i, new Head(x,y));
+            return headColor;
+        } else if (color.equals("0xff0000ff")) {
+            getActualGeneration().getCells().add(i, new Blank(x,y));
+            return blankColor;
+        }
+        else {
+            getActualGeneration().getCells().add(i, new Blank(x,y));
+            return blankColor;
         }
     }
 
