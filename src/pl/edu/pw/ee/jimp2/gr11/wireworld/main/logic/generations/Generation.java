@@ -73,6 +73,16 @@ public class Generation {
         return cells.get(x * width + y);//jesli x to numer wiersza to chyba powinno być x*height? moze mi sie cos pomylilo, nw
     }
 
+
+    public Cell getCellFromList(int x, int y) {
+
+        for (Cell c : cells) {
+            if (c.getX() == x && c.getY() == y)
+                return c;
+        }
+        return null;
+    }
+
     public Cell setCell(int x, int y, int state) {
         if (state == 0) {
             return new Blank(x, y);

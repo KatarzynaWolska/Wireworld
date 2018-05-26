@@ -83,7 +83,7 @@ public class ImageSaver {
             for (int j = 0; j < currentGen.getHeight() * tileSize; j++) {
                 ri = i % tileSize;
                 rj = j % tileSize;
-                image.setRGB(i, j, defineColor(currentGen.getCell((i - ri) / tileSize, (j - rj) / tileSize)));
+                image.setRGB(i, j, defineColor(currentGen.getCellFromList((i - ri) / tileSize, (j - rj) / tileSize)));
 
             }
         }

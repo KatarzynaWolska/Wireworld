@@ -103,6 +103,7 @@ public class Game extends Thread {
         this.nextGeneration = new Generation();
     }
 
+
     public Generation getActualGeneration() {
         return actualGeneration;
     }

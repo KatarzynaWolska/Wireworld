@@ -6,10 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
@@ -17,6 +14,7 @@ import javafx.stage.Stage;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.Game;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.Generation;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells.*;
+import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells.Cell;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils.ConfigFileSaver;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils.GifFileSaver;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils.ImageSaver;
@@ -35,12 +33,7 @@ public class MainMenuController {
     private Button cellButton;
     private Game game;
     private ColorPicker colorPicker;
-    private WarningWindowController warningWindow;//= new WarningWindowController(root);
 
-    @FXML
-    private Label warningLabel;//= new Label("nana");
-    @FXML
-    private Label currentGenNumber;
 
     @FXML
     private GridPane grid;
@@ -283,6 +276,23 @@ public class MainMenuController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+    }
+
+    public void handleConfigFile(ActionEvent event) {
+        MenuItem item = (MenuItem) event.getSource();
+        //System.out.println("doks");
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Wybierz plik konfiguracyjny:");
+        //FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("tekstowy (*.txt)",
+        //     " *.txt");
+        //fileChooser.getExtensionFilters().add(extFilter);
+        //fileChooser.setInitialDirectory(new File(System.getProperty("src/files/configfiles")));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("tekstowy (*.txt)",
+                " *.txt"));
+        fileChooser.showOpenDialog(new Stage());
+        
+        //tu trzeba podpiąć readera i monit jesli jest zly plik konfiguracyjny
 
     }
 

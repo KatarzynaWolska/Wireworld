@@ -2,39 +2,19 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.text.Text?>
-<?import javafx.scene.text.TextFlow?>
 
 <FlowPane alignment="CENTER" columnHalignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-          minWidth="-Infinity" prefHeight="631.0" prefWidth="453.0" styleClass="scene" stylesheets="@wireWorldStyle.css"
+          minWidth="-Infinity" prefHeight="404.0" prefWidth="477.0" styleClass="scene" stylesheets="@wireWorldStyle.css"
           xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.mainmenu.MainMenuController">
 
     <children>
         <Label id="rulesLabel" fx:id="rulesLabel" alignment="CENTER" contentDisplay="CENTER"
-               nodeOrientation="LEFT_TO_RIGHT" prefHeight="276.0" prefWidth="379.0" styleClass="mylabel"
+               nodeOrientation="LEFT_TO_RIGHT" prefHeight="365.0" prefWidth="438.0" styleClass="mylabel"
                stylesheets="@wireWorldStyle.css"
-               text="Projekt jest symulatorem automatu komórkowego 'WireWorld' autorstwa Briana Silvermana.                        Każda komórka może znajdować się w jednym z czterech następujących stanów, które domyślnie oznacza się następującymi kolorami:                        * Pusta - kolor czarny                        * Głowa elektronu - kolor niebieski                        * Ogon elektronu - kolor czerwony                        * Przewodnik - kolor żółty                         W automacie stosuje się sąsiedztwo Moore'a, które za sąsiada traktuje każdą komórkę położoną na: północ, północny-wschód, wschód, południowy-wschód, południe, południowy-zachód, zachód i północny-zachód od danej komórki. W 'WireWorld' stosuje się następujące zasady:                        * Komórka pozostaje pusta jeśli była pusta.                        * Komórka staje się ogonem elektronu, jeśli była głową elektronu.                        * Komórka staje się przewodnikiem, jeśli była ogonem elektronu.                        * Komórka staje się głową elektronu tylko wtedy, gdy dokładnie 1 lub 2 sąsiadujące komórki są głowami elektronu.                        * Komórka staje się przewodnikiem w każdym innym wypadku."
+               text="Projekt jest symulatorem automatu komórkowego 'WireWorld' autorstwa Briana Silvermana. Każda komórka może znajdować się w jednym z czterech następujących stanów, które domyślnie oznacza się następującymi kolorami: Pusta - kolor czarny, Głowa elektronu - kolor czerwony, Ogon elektronu - kolor niebieski, Przewodnik - kolor żółty .W automacie stosuje się sąsiedztwo Moore'a, które za sąsiada traktuje każdą komórkę położoną na: północ, północny-wschód, wschód, południowy-wschód, południe, południowy-zachód, zachód i północny-zachód od danej komórki. W 'WireWorld' stosuje się następujące zasady: 1) Komórka pozostaje pusta jeśli była pusta. 2) Komórka staje się ogonem elektronu, jeśli była głową elektronu. 3) Komórka staje się przewodnikiem, jeśli była ogonem elektronu. 4) Komórka staje się głową elektronu tylko wtedy, gdy dokładnie 1 lub 2 sąsiadujące komórki są głowami elektronu. 5) Komórka staje się przewodnikiem w każdym innym wypadku."
                textAlignment="JUSTIFY" wrapText="true"/>
-        <TextFlow prefHeight="475.0" prefWidth="5470.0">
-            <Text text="Projekt jest symulatorem automatu komórkowego 'WireWorld' autorstwa Briana Silvermana. Każda komórka może znajdować się w jednym z czterech następujących stanów, które domyślnie oznacza się następującymi kolorami:"/>
-            <Text text="* Pusta - kolor czarny"/>
-            <Text text="* Głowa elektronu - kolor niebieski"/>
-            <Text text="* Ogon elektronu - kolor czerwony"/>
-            <Text text="* Przewodnik - kolor żółty"/>
-            <Text text=" "/>
-            <Text text="* Komórka staje się głową elektronu tylko wtedy, gdy dokładnie 1 lub 2 sąsiadujące komórki są głowami elektronu. "/>
-            <Text text="W automacie stosuje się sąsiedztwo Moore'a, które za sąsiada traktuje każdą komórkę położoną na: północ, północny-wschód, wschód, południowy-wschód, południe, południowy-zachód, zachód i północny-zachód od danej komórki. W 'WireWorld' stosuje się następujące zasady:"/>
-            <Text text="* Komórka pozostaje pusta jeśli była pusta. "/>
-            <Text text="* Komórka staje się ogonem elektronu, jeśli była głową elektronu."
-                  wrappingWidth="5448.9453125"/>
-            <Text text="* Komórka staje się przewodnikiem, jeśli była ogonem elektronu."/>
-            <Text text="* Komórka staje się przewodnikiem w każdym innym wypadku. "/>
 
-            <Text style="-fx-font-weight: bold" text="bold text and "/>
-            <Text style="-fx-font-style: italic" text="italic text and "/>
-            <Text style="-fx-stroke: red" text="red text."/>
-        </TextFlow>
 
     </children>
 </FlowPane>

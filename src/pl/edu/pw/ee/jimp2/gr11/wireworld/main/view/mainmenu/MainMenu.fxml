@@ -3544,7 +3544,8 @@
                     <menus>
                         <Menu mnemonicParsing="false" text="Wstaw">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Bramkę1"/>
+                                <MenuItem mnemonicParsing="false" onAction="#handleConfigFile"
+                                          text="Plik konfiguracyjny"/>
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Ustawienia">
