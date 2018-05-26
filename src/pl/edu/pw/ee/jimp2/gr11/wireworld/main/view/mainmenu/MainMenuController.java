@@ -291,7 +291,7 @@ public class MainMenuController {
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("tekstowy (*.txt)",
                 " *.txt"));
         fileChooser.showOpenDialog(new Stage());
-        
+
         //tu trzeba podpiąć readera i monit jesli jest zly plik konfiguracyjny
 
     }
