@@ -1,5 +1,6 @@
 package pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic;
 
+import javafx.scene.paint.Color;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.Generation;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells.*;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.game.GameController;
@@ -49,6 +50,48 @@ public class Game extends Thread {
     private String conductorColor = "rgb(255, 255, 0)";// "rgb(255, 255, 0)";
     private String tailColor = "rgb(255, 0 , 0)"; //"rgb(255, 0, 0)";
     private String headColor = "rgb(0, 0, 255)";// "rgb(0, 0, 255)";
+
+    private Color blank;//"rgb(0, 0, 0)";
+    private Color conductor;
+    private Color tail;
+    private Color head;
+
+    public Color getBlank() {
+        return blank;
+    }
+
+    public void setBlank(Color blank) {
+        this.blank = blank;
+    }
+
+    public Color getConductor() {
+        return conductor;
+    }
+
+    public void setConductor(Color conductor) {
+        this.conductor = conductor;
+    }
+
+    public Color getTail() {
+        return tail;
+    }
+
+    public void setTail(Color tail) {
+        this.tail = tail;
+    }
+
+    public Color getHead() {
+        return head;
+    }
+
+    public void setHead(Color head) {
+        this.head = head;
+    }
+
+    public void setStopped(boolean stopped) {
+        this.stopped = stopped;
+    }
+
     private boolean stopped = true;
 
     public String getBlankColor() {

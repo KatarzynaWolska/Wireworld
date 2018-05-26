@@ -3,10 +3,14 @@ package pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.mainmenu;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
@@ -33,9 +37,7 @@ public class MainMenuController {
     private Button cellButton;
     private Game game;
     private ColorPicker colorPicker;
-    private WarningWindowController warningWindow;//= new WarningWindowController(root);
     private Thread thread;
-
 
     @FXML
     private GridPane grid;
@@ -59,12 +61,17 @@ public class MainMenuController {
 
         if (colorPicker.getId().equals("tailColor")) {
             game.setTailColor(newColor.toString());
+            game.setTail(newColor);
 
         } else if (colorPicker.getId().equals("headColor")) {
             game.setHeadColor(newColor.toString());
+            game.setHead(newColor);
+
         } else if (colorPicker.getId().equals("conductorColor")) {
+            game.setConductor(newColor);
             game.setConductorColor(newColor.toString());
         } else {
+            game.setBlank(newColor);
             game.setBlankColor(newColor.toString());
         }
     }
@@ -85,7 +92,7 @@ public class MainMenuController {
         int i = game.getActualGeneration().getCells().indexOf(c);
         game.getActualGeneration().getCells().remove(i);
 
-        if (color.equals("0x000000ff")) {
+        if (color.equals("0x000000ff")) {/**/
             game.getActualGeneration().getCells().add(i, new Conductor(x, y));
             return "-fx-background-color: rgb(255, 255, 0)";
         } else if (color.equals("0xffff00ff")) {
@@ -109,6 +116,15 @@ public class MainMenuController {
 
         Color color = (Color) cellButton.getBackground().getFills().get(0).getFill();
         String id = cellButton.getId();
+
+        //newColorForCell by zwracało newColor np  Color(12,12,12,11))
+        //a tak by się ustawiało vvv
+        //cellButton.setBackground(new Background(new BackgroundFill(newColor, CornerRadii.EMPTY, Insets.EMPTY)));
+
+
+
+
+
 
         cellButton.setStyle(game.newColorForCell(color.toString(), id, game));
         //cellButton.setStyle(newColorForCell(color.toString(), id));
@@ -202,22 +218,26 @@ public class MainMenuController {
             //extFilter = new FileChooser.ExtensionFilter("plik jpg (*.jpg)", " *.jpg");
 
             File file = dir.showSaveDialog(new Stage());
-            ImageSaver imageSaver = new ImageSaver(game.getActualGeneration(), "PNG", file.getAbsolutePath());
-            //imageSaver.setHeadColor(game.getHeadColor());
-            //...
-            imageSaver.makeImage();
+            if (file != null) {
+                ImageSaver imageSaver = new ImageSaver(game.getActualGeneration(), "PNG", file.getAbsolutePath());
+                //imageSaver.setHeadColor(game.getHeadColor());
+                imageSaver.setBlankColor(game.getBlank());
+                imageSaver.setHeadColor(game.getBlank());
+                imageSaver.setTailColor(game.getConductor());
+                imageSaver.setConductorColor(game.getConductor());
+                imageSaver.makeImage();
+            }
         }
     }
 
     public void pressStart(ActionEvent event) {
-        if(thread == null) {
+        if (thread == null) {
             GameStarter startGame = new GameStarter();
 
             thread = new Thread(startGame);
 
             thread.start();
-        }
-        else {
+        } else {
             thread.interrupt();
             thread = null;
         }
@@ -298,22 +318,22 @@ public class MainMenuController {
         //System.out.println("doks");
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Wybierz plik konfiguracyjny:");
-        //FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("tekstowy (*.txt)",
-        //     " *.txt");
-        //fileChooser.getExtensionFilters().add(extFilter);
-        //fileChooser.setInitialDirectory(new File(System.getProperty("src/files/configfiles")));
+
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("tekstowy (*.txt)",
                 " *.txt"));
         fileChooser.showOpenDialog(new Stage());
 
-        //tu trzeba podpiąć readera i monit jesli jest zly plik konfiguracyjny
+        if (fileChooser != null) {
+            //tu trzeba podpiąć readera i monit jesli jest zly plik konfiguracyjny
+
+        }
 
     }
 
     class GameStarter implements Runnable {
         @Override
         public void run() {
-            try{
+            try {
                 while (game.performGame()) {
 
                     for (Cell c : game.getActualGeneration().getCells()) {
