@@ -48,7 +48,7 @@ public class GifFileSaver {//każdy obraz z generacji musi zostać zapisany jako
             writer.writeToSequence(image);
 
 
-            for (int i = 1; i < 6/*currentGame.getNumberOfGenerations()*/; i++) {
+            for (int i = 1; i < currentGame.getNumberOfGenerations(); i++) {
                 image = ImageIO.read(new File(pathToImagesDir + "/image" + i + ".png"));
                 writer.writeToSequence(image);
             }

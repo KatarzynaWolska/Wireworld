@@ -70,7 +70,7 @@ public class Generation {
     }
 
     public Cell getCell(int x, int y) {
-        return cells.get(x * width + y);
+        return cells.get(x * width + y);//jesli x to numer wiersza to chyba powinno być x*height? moze mi sie cos pomylilo, nw
     }
 
     public Cell setCell(int x, int y, int state) {

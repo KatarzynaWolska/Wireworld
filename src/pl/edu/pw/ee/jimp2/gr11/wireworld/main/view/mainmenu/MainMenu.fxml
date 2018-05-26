@@ -3502,10 +3502,10 @@
     <bottom>
         <HBox alignment="CENTER" prefHeight="95.0" prefWidth="1006.0">
             <children>
-                <ColorPicker/>
-                <ColorPicker/>
-                <ColorPicker/>
-                <ColorPicker/>
+                <ColorPicker fx:id="headColor" onAction="#handleColor"/>
+                <ColorPicker fx:id="tailColor" onAction="#handleColor"/>
+                <ColorPicker fx:id="conductorColor" onAction="#handleColor"/>
+                <ColorPicker fx:id="blankColor" onAction="#handleColor"/>
             </children>
         </HBox>
     </bottom>
@@ -3519,8 +3519,8 @@
                         <Font size="18.0"/>
                     </font>
                 </Label>
-                <Button mnemonicParsing="false" onAction="#pressStart" prefHeight="60.0" prefWidth="160.0" styleClass="buttons"
-                        text="START/STOP" textAlignment="CENTER"/>
+                <Button mnemonicParsing="false" onAction="#pressStart" prefHeight="60.0" prefWidth="160.0"
+                        styleClass="buttons" text="START/STOP" textAlignment="CENTER"/>
                 <Button fx:id="animation" mnemonicParsing="false" onAction="#pressSaveAnimation" prefHeight="60.0"
                         prefWidth="160.0" styleClass="buttons" text="Zapisz animację..."/>
                 <Button fx:id="image" mnemonicParsing="false" onAction="#pressSaveImage" prefHeight="60.0"

@@ -1,5 +1,6 @@
 package pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils;
 
+import javafx.scene.paint.Color;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.Generation;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells.*;
 
@@ -16,10 +17,10 @@ public class ImageSaver {
     private String pathToFile = "src/pl/edu/pw/ee/jimp2/gr11/wireworld/test/java.files.testfiles/image.bmp";
     private int tileSize;
     private File imageFile;
-    private String headColor;
-    private String tailColor;
-    private String conductorColor;
-    private String blankColor;
+    private int headColor;
+    private int tailColor;
+    private int conductorColor;
+    private int blankColor;
 
     public ImageSaver(Generation gen, String formatName, String path) {
         currentGen = gen;
@@ -28,20 +29,30 @@ public class ImageSaver {
         this.tileSize = 20;
     }
 
-    public void setHeadColor(String headColor) {
-        this.headColor = headColor;
+    public void setHeadColor(Color headColor) {
+        java.awt.Color transformation = new java.awt.Color((float) headColor.getRed(), (float) headColor.getGreen(),
+                (float) headColor.getBlue(), (float) headColor.getOpacity());
+        this.headColor = transformation.getRGB();
+
     }
 
-    public void setTailColor(String tailColor) {
-        this.tailColor = tailColor;
+    public void setTailColor(Color tailColor) {
+
+        java.awt.Color transformation = new java.awt.Color((float) tailColor.getRed(), (float) tailColor.getGreen(),
+                (float) tailColor.getBlue(), (float) tailColor.getOpacity());
+        this.tailColor = transformation.getRGB();
     }
 
-    public void setConductorColor(String conductorColor) {
-        this.conductorColor = conductorColor;
+    public void setConductorColor(Color conductorColor) {
+        java.awt.Color transformation = new java.awt.Color((float) conductorColor.getRed(), (float) conductorColor.getGreen(),
+                (float) conductorColor.getBlue(), (float) conductorColor.getOpacity());
+        this.conductorColor = transformation.getRGB();
     }
 
-    public void setBlankColor(String blankColor) {
-        this.blankColor = blankColor;
+    public void setBlankColor(Color blankColor) {
+        java.awt.Color transformation = new java.awt.Color((float) blankColor.getRed(), (float) blankColor.getGreen(),
+                (float) blankColor.getBlue(), (float) blankColor.getOpacity());
+        this.blankColor = transformation.getRGB();
     }
 
 
@@ -79,18 +90,21 @@ public class ImageSaver {
     }
 
 
+
     private int defineColor(Cell c) {
         if (c instanceof Tail)
-            return 1330687;//(new Color(29, 101, 254, 255)).getIntArgbPre();   //70130180;//niebieski
+            return tailColor;//70130180;//niebieski
         else if (c instanceof Head)
-            return 15734551;//(new Color(244, 11, 11, 1)).getIntArgbPre();
+            return headColor;//(new Color(244, 11, 11, 1)).getIntArgbPre();
         else if (c instanceof Conductor)
-            return 16772887;//(new Color(255, 235, 7, 255)).getIntArgbPre(); //zółty
+            return conductorColor;//(new Color(255, 235, 7, 255)).getIntArgbPre(); //zółty
         else
-            return 000000;//(new Color(0, 0, 0, 255)).getIntArgbPre();//czarny
+            return blankColor;//(new Color(0, 0, 0, 255)).getIntArgbPre();//czarny
     }
 
     public static void main(String[] args) {//przerzucić do testów
+
+
         Generation testGen = new Generation();//tego maina trzeba przerzucić do testów
         testGen.setHeight(2);
         testGen.setWidth(2);

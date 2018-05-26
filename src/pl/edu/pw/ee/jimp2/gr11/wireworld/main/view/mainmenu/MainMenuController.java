@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -33,8 +34,7 @@ public class MainMenuController {
     Parent root;
     private Button cellButton;
     private Game game;
-    public Button saver;
-    public Scene scene;
+    private ColorPicker colorPicker;
     private WarningWindowController warningWindow;//= new WarningWindowController(root);
 
     @FXML
@@ -48,7 +48,28 @@ public class MainMenuController {
     @FXML
     private List<Button> buttons;
 
+    public void handleColor(ActionEvent event) {
+        colorPicker = (ColorPicker) event.getSource();
+        Color newColor = colorPicker.getValue();
+        // System.out.println((new java.awt.Color((float)newColor.getRed(), (float)newColor.getGreen(),
+        //       (float)newColor.getBlue(), (float)newColor.getOpacity())));
+        //StringBuilder b = new StringBuilder("rgb(");
+        //b.append(newColor.getRed()).append(", ").append(newColor.getGreen()).append(", ").append(newColor.getBlue());
+        //b.append(")");
+        //System.out.println(b.toString());
+        //System.out.println(newColor.getBlue());
 
+        if (colorPicker.getId().equals("tailColor")) {
+            game.setTailColor(newColor.toString());
+
+        } else if (colorPicker.getId().equals("headColor")) {
+            game.setHeadColor(newColor.toString());
+        } else if (colorPicker.getId().equals("conductorColor")) {
+            game.setConductorColor(newColor.toString());
+        } else {
+            game.setBlankColor(newColor.toString());
+        }
+    }
 
 
 
@@ -118,8 +139,8 @@ public class MainMenuController {
             makeAlert("Wire World", "Nie można teraz zapisać pliku konfiguracyjnego.",
                     "Aby to zrobić musisz najpierw zatrzymać grę przyciskiem \"STOP\" na wybranej generacji.");
 
-            } else {
-                Generation genToSaveIntoConfigFile = game.getActualGeneration();
+        } else {
+            Generation genToSaveIntoConfigFile = game.getActualGeneration();
 
             FileChooser dir = new FileChooser();
             dir.setTitle("Zapisz plik konfiguracyjny:");
@@ -183,7 +204,7 @@ public class MainMenuController {
             //extFilter = new FileChooser.ExtensionFilter("plik jpg (*.jpg)", " *.jpg");
 
             File file = dir.showSaveDialog(new Stage());
-            ImageSaver imageSaver = new ImageSaver(game.getCurrentGeneration(), "PNG", file.getAbsolutePath());
+            ImageSaver imageSaver = new ImageSaver(game.getActualGeneration(), "PNG", file.getAbsolutePath());
             //imageSaver.setHeadColor(game.getHeadColor());
             //...
             imageSaver.makeImage();
@@ -211,7 +232,7 @@ public class MainMenuController {
         buttons = new ArrayList<>();
 
         for (int i = 0; i < 20; i++) {
-            for(int j = 0; j < 24; j++) {
+            for (int j = 0; j < 24; j++) {
                 Button b = new Button();
                 b.setMaxHeight(1.7976931348623157E308);
                 b.setMaxWidth(1.7976931348623157E308);
@@ -219,24 +240,21 @@ public class MainMenuController {
                 b.setOnAction(this::pressTile);
                 b.setPrefHeight(0.0);
                 b.setPrefWidth(5.0);
-                if(i < 10) {
-                    if(j < 10) {
-                        b.setId("tile0"+i+"0"+j);
+                if (i < 10) {
+                    if (j < 10) {
+                        b.setId("tile0" + i + "0" + j);
+                    } else {
+                        b.setId("tile0" + i + j);
                     }
-                    else {
-                        b.setId("tile0"+i+j);
-                    }
-                }
-                else {
-                    if(j < 10) {
-                        b.setId("tile"+i+"0"+j);
-                    }
-                    else {
-                        b.setId("tile"+i+j);
+                } else {
+                    if (j < 10) {
+                        b.setId("tile" + i + "0" + j);
+                    } else {
+                        b.setId("tile" + i + j);
                     }
                 }
                 buttons.add(b);
-                grid.add(b,j,i);
+                grid.add(b, j, i);
             }
         }
 
@@ -271,7 +289,7 @@ public class MainMenuController {
     class GameStarter extends Thread {
         @Override
         public void run() {
-            while(game.performGame()) {
+            while (game.performGame()) {
 
                 for (Cell c : game.getActualGeneration().getCells()) {
                     int index = game.getActualGeneration().getCells().indexOf(c);

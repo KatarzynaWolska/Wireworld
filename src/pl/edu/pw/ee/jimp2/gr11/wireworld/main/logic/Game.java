@@ -44,11 +44,48 @@ public class Game extends Thread {
     private Generation actualGeneration;
     private Generation nextGeneration;
     private int numberOfGenerations;
-    private String blankColor = "-fx-background-color: rgb(0, 0, 0)";
-    private String conductorColor = "-fx-background-color: rgb(255, 255, 0)";
-    private String tailColor = "-fx-background-color: rgb(255, 0, 0)";
-    private String headColor = "-fx-background-color: rgb(0, 0, 255)";
-    //GameController gg;
+    //newColor.toString() z pickera wywala coś takiego co masz niżej. a to w -fx nie działa :v
+    private String blankColor = "0x000000ff";//"rgb(0, 0, 0)";
+    private String conductorColor = "0xffff66ff";// "rgb(255, 255, 0)";
+    private String tailColor = "0x334db3ff"; //"rgb(255, 0, 0)";
+    private String headColor = "0xcc3333ff";// "rgb(0, 0, 255)";
+    private boolean stopped = true;
+
+    public String getBlankColor() {
+        return blankColor;
+    }
+
+    public void setBlankColor(String blankColor) {
+        this.blankColor = blankColor;
+    }
+
+    public String getConductorColor() {
+        return conductorColor;
+    }
+
+    public void setConductorColor(String conductorColor) {
+        this.conductorColor = conductorColor;
+    }
+
+    public String getTailColor() {
+        return tailColor;
+    }
+
+    public void setTailColor(String tailColor) {
+        this.tailColor = tailColor;
+    }
+
+    public String getHeadColor() {
+        return headColor;
+    }
+
+    public void setHeadColor(String headColor) {
+        this.headColor = headColor;
+    }
+
+    public boolean isStopped() {
+        return stopped;
+    }
 
     public Game(Generation actualGeneration, int numberOfGeneration) {
         this.actualGeneration = actualGeneration;
@@ -61,7 +98,7 @@ public class Game extends Thread {
         this.numberOfGenerations = numberOfGenerations;
     }
 
-    public Game( ) {
+    public Game() {
         this.actualGeneration = new Generation();
         this.nextGeneration = new Generation();
     }
@@ -92,12 +129,11 @@ public class Game extends Thread {
 
 
     public boolean checkEqualityOfGenerations(List<Cell> first, List<Cell> second) {
-        for(Cell c : first) {
+        for (Cell c : first) {
             int index = first.indexOf(c);
-            if(c.getClass().equals(second.get(index).getClass())) {
+            if (c.getClass().equals(second.get(index).getClass())) {
                 continue;
-            }
-            else {
+            } else {
                 return false;
             }
         }
@@ -107,7 +143,7 @@ public class Game extends Thread {
 
     public boolean performGame() {
         setNextGeneration(actualGeneration.createNextGeneration(actualGeneration));
-        if(checkEqualityOfGenerations(actualGeneration.getCells(), nextGeneration.getCells())) {
+        if (checkEqualityOfGenerations(actualGeneration.getCells(), nextGeneration.getCells())) {
             return false;
         }
         setActualGeneration(this.nextGeneration);
@@ -116,7 +152,7 @@ public class Game extends Thread {
 
     @Override
     public void run() {
-            performGame();
+        performGame();
             try {
                 sleep(1000);
             } catch (InterruptedException e) {
@@ -125,27 +161,23 @@ public class Game extends Thread {
 
     }
 
-    public String setColor (Cell c) {
-        if(c instanceof Blank) {
-            return blankColor;
-        }
-        else if(c instanceof Conductor) {
-            return conductorColor;
-        }
-        else if(c instanceof Tail) {
-            return tailColor;
-        }
-        else if(c instanceof Head) {
-            return headColor;
-        }
-        else {
-            return blankColor;
+    public String setColor(Cell c) {
+        if (c instanceof Blank) {
+            return "-fx-background-color: " + blankColor;
+        } else if (c instanceof Conductor) {
+            return "-fx-background-color: " + conductorColor;
+        } else if (c instanceof Tail) {
+            return "-fx-background-color: " + tailColor;
+        } else if (c instanceof Head) {
+            return "-fx-background-color: " + headColor;
+        } else {
+            return "-fx-background-color: " + blankColor;
         }
     }
 
     public String newColorForCell(String color, String id) {
 
-        String [] coords = id.split(("(?!^)"));
+        String[] coords = id.split(("(?!^)"));
 
         String xFirstCoordinate = coords[4];
         String xSecondCoordinate = coords[5];
@@ -156,25 +188,24 @@ public class Game extends Thread {
         int x = 10 * Integer.parseInt(xFirstCoordinate) + Integer.parseInt(xSecondCoordinate);
         int y = 10 * Integer.parseInt(yFirstCoordinate) + Integer.parseInt(ySecondCoordinate);
 
-        Cell c = getActualGeneration().getCell(x,y);
+        Cell c = getActualGeneration().getCell(x, y);
         int i = getActualGeneration().getCells().indexOf(c);
         getActualGeneration().getCells().remove(i);
 
         if (color.equals("0x000000ff")) {
-            getActualGeneration().getCells().add(i, new Conductor(x,y));
+            getActualGeneration().getCells().add(i, new Conductor(x, y));
             return conductorColor;
         } else if (color.equals("0xffff00ff")) {
-            getActualGeneration().getCells().add(i, new Tail(x,y));
+            getActualGeneration().getCells().add(i, new Tail(x, y));
             return tailColor;
         } else if (color.equals("0xff0000ff")) {
-            getActualGeneration().getCells().add(i, new Head(x,y));
+            getActualGeneration().getCells().add(i, new Head(x, y));
             return headColor;
         } else if (color.equals("0xff0000ff")) {
-            getActualGeneration().getCells().add(i, new Blank(x,y));
+            getActualGeneration().getCells().add(i, new Blank(x, y));
             return blankColor;
-        }
-        else {
-            getActualGeneration().getCells().add(i, new Blank(x,y));
+        } else {
+            getActualGeneration().getCells().add(i, new Blank(x, y));
             return blankColor;
         }
     }
