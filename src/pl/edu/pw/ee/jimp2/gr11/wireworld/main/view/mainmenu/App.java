@@ -28,7 +28,7 @@ public class App extends Application {
     public void start(Stage primaryStage) throws Exception {
         root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
 
-        scene = new Scene(root, 800, 900);
+        scene = new Scene(root, 800, 700);
 
         primaryStage.setTitle("Wire World");
         primaryStage.setScene(scene);
@@ -36,7 +36,9 @@ public class App extends Application {
 
         scene.getStylesheets().add("pl/edu/pw/ee/jimp2/gr11/wireworld/main/view/mainmenu/wireWorldStyle.css");
         //  root.getStylesheets().add("pl/edu/pw/ee/jimp2/gr11/wireworld/main/view/wireWorldStyle.css");
-        root.getStyleClass().add("scene");
+        root.getStyleClass().add("root");
+        //System.out.println( root.isResizable());
+
         primaryStage.show();
     }
 

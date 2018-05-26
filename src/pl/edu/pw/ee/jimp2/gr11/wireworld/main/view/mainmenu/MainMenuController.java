@@ -1,38 +1,27 @@
 package pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.mainmenu;
 
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.Game;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.Generation;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells.*;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils.ConfigFileSaver;
-import pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils.GifFileSaver;
-import pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils.ImageSaver;
+import pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.warning.WarningWindowController;
 
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 public class MainMenuController {
     Parent root;
@@ -40,8 +29,10 @@ public class MainMenuController {
     public Button saver;
     public Scene scene;
     private Game game;
+    private WarningWindowController warningWindow;//= new WarningWindowController(root);
     @FXML
-    private Label warningLabel;
+    private Label warningLabel;//= new Label("nana");
+
 
 
     /*
@@ -133,6 +124,7 @@ public class MainMenuController {
 
     public void pressSave(ActionEvent event) {
         //saver = (Button) event.getSource();
+        warningWindow = new WarningWindowController(root);
         Node node = (Node) event.getSource();
 
 
@@ -143,8 +135,10 @@ public class MainMenuController {
         if (node.getId().equals("konfigurację")) {
             //tak to będzie wyglądać. jesli ktoś kliknął stop to moze zapisac konfigurację. opcjonalnie mozemy
             //to usunąć i pozwolic uzytkownikowi zawsze ją zapisać
-            if (false) {//game.isStopped() == false
-                showWarning("Aby zapisać generację do pliku należy napierw zatrzymać grę przycieskiem.");
+            if (true) {//game.isStopped() == false
+
+                showWarning("Aby zapisać generację do pliku należy napierw zatrzymać grę przycieskiem.", event);
+
             } else {
                 //Generation genToSaveIntoConfigFile = game.getCurrentGeneration();
 
@@ -185,25 +179,29 @@ public class MainMenuController {
 
     @FXML
     private void initialize() {
-        //warningLabel.setText("kdkdkkdkd");
+//tu trzeba pokolorowac komorki
     }
 
-    public void showWarning(String text) {
+
+    public void showWarning(String text, ActionEvent event) {
         try {
-            root = FXMLLoader.load(getClass().getResource("DialogWindow.fxml"));
+            root = FXMLLoader.load(getClass().getResource("WarningWindow.fxml"));
             Stage stage = new Stage();
             stage.setTitle("Uwaga:");
             stage.setScene(new Scene(root, 400, 200));
-            //warningLabel.setText(text);
+
+            warningLabel = new Label("inicjacja");
+            //warningLabel.setId("warningLabel");
+
+            warningLabel.setText(text);
             //trzeba jakos zrobic zmiane teksu labela
             stage.show();
             // Hide this current window (if this is what you want)
-            //((Node)(event.getSource())).getScene().getWindow().hide();
+            ((Node) (event.getSource())).getScene().getWindow().fireEvent(event);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
-
 
 }
