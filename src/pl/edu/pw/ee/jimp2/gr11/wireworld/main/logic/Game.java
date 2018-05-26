@@ -45,10 +45,10 @@ public class Game extends Thread {
     private Generation nextGeneration;
     private int numberOfGenerations;
     //newColor.toString() z pickera wywala coś takiego co masz niżej. a to w -fx nie działa :v
-    private String blankColor = "0x000000ff";//"rgb(0, 0, 0)";
-    private String conductorColor = "0xffff66ff";// "rgb(255, 255, 0)";
-    private String tailColor = "0x334db3ff"; //"rgb(255, 0, 0)";
-    private String headColor = "0xcc3333ff";// "rgb(0, 0, 255)";
+    private String blankColor = "rgb(0, 0, 0)";//"rgb(0, 0, 0)";
+    private String conductorColor = "rgb(255, 255, 0)";// "rgb(255, 255, 0)";
+    private String tailColor = "rgb(255, 0 , 0)"; //"rgb(255, 0, 0)";
+    private String headColor = "rgb(0, 0, 255)";// "rgb(0, 0, 255)";
     private boolean stopped = true;
 
     public String getBlankColor() {
@@ -176,7 +176,7 @@ public class Game extends Thread {
         }
     }
 
-    public String newColorForCell(String color, String id) {
+    public String newColorForCell(String color, String id, Game game) {
 
         String[] coords = id.split(("(?!^)"));
 
@@ -189,25 +189,25 @@ public class Game extends Thread {
         int x = 10 * Integer.parseInt(xFirstCoordinate) + Integer.parseInt(xSecondCoordinate);
         int y = 10 * Integer.parseInt(yFirstCoordinate) + Integer.parseInt(ySecondCoordinate);
 
-        Cell c = getActualGeneration().getCell(x, y);
-        int i = getActualGeneration().getCells().indexOf(c);
-        getActualGeneration().getCells().remove(i);
+        Cell c = game.getActualGeneration().getCell(x, y);
+        int i = game.getActualGeneration().getCells().indexOf(c);
+        game.getActualGeneration().getCells().remove(i);
 
         if (color.equals("0x000000ff")) {
-            getActualGeneration().getCells().add(i, new Conductor(x, y));
-            return conductorColor;
+            game.getActualGeneration().getCells().add(i, new Conductor(x, y));
+            return "-fx-background-color: " + conductorColor;
         } else if (color.equals("0xffff00ff")) {
-            getActualGeneration().getCells().add(i, new Tail(x, y));
-            return tailColor;
+            game.getActualGeneration().getCells().add(i, new Tail(x, y));
+            return "-fx-background-color: " + tailColor;
         } else if (color.equals("0xff0000ff")) {
-            getActualGeneration().getCells().add(i, new Head(x, y));
-            return headColor;
+            game.getActualGeneration().getCells().add(i, new Head(x, y));
+            return "-fx-background-color: " + headColor;
         } else if (color.equals("0xff0000ff")) {
-            getActualGeneration().getCells().add(i, new Blank(x, y));
-            return blankColor;
+            game.getActualGeneration().getCells().add(i, new Blank(x, y));
+            return "-fx-background-color: " + blankColor;
         } else {
-            getActualGeneration().getCells().add(i, new Blank(x, y));
-            return blankColor;
+            game.getActualGeneration().getCells().add(i, new Blank(x, y));
+            return "-fx-background-color: " + blankColor;
         }
     }
 
