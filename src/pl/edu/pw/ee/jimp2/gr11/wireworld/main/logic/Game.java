@@ -7,7 +7,7 @@ import pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.game.GameController;
 import java.util.List;
 
 public class Game extends Thread {
-    private int totalNumberOfGenerations;
+    /*private int totalNumberOfGenerations;
     private boolean isEarlyEndMonitDisplayed = false;
     private boolean isStopped = true;
 
@@ -21,7 +21,7 @@ public class Game extends Thread {
 
     private Generation currentGeneration;
     private List<Cell> cellsOfFirstGeneration;
-
+*/
 
 
 /*
@@ -58,11 +58,17 @@ public class Game extends Thread {
     private Generation actualGeneration;
     private Generation nextGeneration;
     private int numberOfGenerations;
-    GameController gg;
+    //GameController gg;
 
     public Game(Generation actualGeneration, int numberOfGeneration) {
         this.actualGeneration = actualGeneration;
         this.numberOfGenerations = numberOfGeneration;
+    }
+
+    public Game (int numberOfGenerations) {
+        this.actualGeneration = new Generation();
+        this.nextGeneration = new Generation();
+        this.numberOfGenerations = numberOfGenerations;
     }
 
     public Generation getActualGeneration() {
@@ -89,9 +95,9 @@ public class Game extends Thread {
         this.numberOfGenerations = numberOfGenerations;
     }
 
-    public void setGameController(GameController gg) {
+    /*public void setGameController(GameController gg) {
         this.gg = gg;
-    }
+    }*/
 
     /*
         public void performGame() {
