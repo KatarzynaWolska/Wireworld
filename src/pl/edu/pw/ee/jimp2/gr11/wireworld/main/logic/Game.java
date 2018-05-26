@@ -65,7 +65,7 @@ public class Game extends Thread {
         this.numberOfGenerations = numberOfGeneration;
     }
 
-    public Game (int numberOfGenerations) {
+    public Game(int numberOfGenerations) {
         this.actualGeneration = new Generation();
         this.nextGeneration = new Generation();
         this.numberOfGenerations = numberOfGenerations;

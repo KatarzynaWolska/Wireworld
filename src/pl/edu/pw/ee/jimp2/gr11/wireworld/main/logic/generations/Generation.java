@@ -46,9 +46,9 @@ public class Generation {
     public Generation() {
         this.cells = new ArrayList<>();
 
-        for(int i = 0; i < height; i++) {
+        for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                cells.add(new Blank(i,j));
+                cells.add(new Blank(i, j));
             }
         }
     }
@@ -248,7 +248,7 @@ public class Generation {
     }
 
     public Generation createNextGeneration(Generation last) {
-        Generation next = new Generation (last.getHeight(), last.getWidth(), new ArrayList<Cell>(last.getCells()));
+        Generation next = new Generation(last.getHeight(), last.getWidth(), new ArrayList<Cell>(last.getCells()));
 
         List<Cell> nextActiveCells = new ArrayList<>();
 

@@ -71,29 +71,26 @@ public class MainMenuController {
         }
     }*/
 
-    public String newColorForCell (String color, String id) { //na razie nie działa jak powinno, jutro poprawię
+    public String newColorForCell(String color, String id) { //na razie nie działa jak powinno, jutro poprawię
         String [] coords = id.split(("(?!^)"));
-        int x = 10*Integer.parseInt(coords[4])+Integer.parseInt(coords[5]);
-        int y = 10*Integer.parseInt(coords[6])+Integer.parseInt(coords[7]);
+        int x = 10 * Integer.parseInt(coords[4]) + Integer.parseInt(coords[5]);
+        int y = 10 * Integer.parseInt(coords[6]) + Integer.parseInt(coords[7]);
 
 
         Cell c = game.getActualGeneration().getCell(x,y);
         int i = game.getActualGeneration().getCells().indexOf(c);
         game.getActualGeneration().getCells().remove(i);
 
-        if(color.equals("0x000000ff")) {
+        if (color.equals("0x000000ff")) {
             game.getActualGeneration().getCells().add(i, new Conductor(x,y));
             return "-fx-background-color: rgb(255, 255, 0)";
-        }
-        else if(color.equals("0xffff00ff")) {
+        } else if (color.equals("0xffff00ff")) {
             game.getActualGeneration().getCells().add(i, new Tail(x,y));
             return "-fx-background-color: rgb(255, 0, 0)";
-        }
-        else if(color.equals("0xff0000ff")) {
+        } else if (color.equals("0xff0000ff")) {
             game.getActualGeneration().getCells().add(i, new Head(x,y));
             return "-fx-background-color: rgb(0, 0, 255)";
-        }
-        else if(color.equals("0xff0000ff")) {
+        } else if (color.equals("0xff0000ff")) {
             game.getActualGeneration().getCells().add(i, new Blank(x,y));
             return "-fx-background-color: rgb(0, 0, 0)";
         }
@@ -112,7 +109,7 @@ public class MainMenuController {
 
         cellButton.setStyle(newColorForCell(color.toString(), id));
 
-            System.out.println(color.toString());
+        System.out.println(color.toString());
 
         //cellButton.getStyleClass().add("headCell");//tak tez sie da ale tu trudniej bedzie zmienić paletę.
 
