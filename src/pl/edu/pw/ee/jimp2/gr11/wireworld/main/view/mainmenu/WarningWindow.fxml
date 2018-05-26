@@ -9,9 +9,9 @@
             prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.mainmenu.MainMenuController">
     <header>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="199.0" prefWidth="400.0" styleClass="scene">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="206.0" prefWidth="400.0" styleClass="scene">
             <children>
-                <Label id="warning" fx:id="warningLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="58.0"
+                <Label id="warningLabel" fx:id="warningLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="58.0"
                        layoutY="25.0" prefHeight="155.0" prefWidth="284.0" styleClass="mylabel"
                        stylesheets="@wireWorldStyle.css" textAlignment="JUSTIFY" AnchorPane.topAnchor="25.0"/>
             </children>

@@ -27,6 +27,7 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+        primaryStage.setResizable(false);
 
         scene = new Scene(root, 800, 700);
 
@@ -37,6 +38,7 @@ public class App extends Application {
         scene.getStylesheets().add("pl/edu/pw/ee/jimp2/gr11/wireworld/main/view/mainmenu/wireWorldStyle.css");
         //  root.getStylesheets().add("pl/edu/pw/ee/jimp2/gr11/wireworld/main/view/wireWorldStyle.css");
         root.getStyleClass().add("root");
+
         //System.out.println( root.isResizable());
 
         primaryStage.show();

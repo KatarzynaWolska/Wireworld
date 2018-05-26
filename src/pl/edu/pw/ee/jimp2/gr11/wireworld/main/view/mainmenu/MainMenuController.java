@@ -3,6 +3,7 @@ package pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.mainmenu;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -32,6 +33,8 @@ public class MainMenuController {
     private WarningWindowController warningWindow;//= new WarningWindowController(root);
     @FXML
     private Label warningLabel;//= new Label("nana");
+    @FXML
+    private Label currentGenNumber;
 
 
 
@@ -75,6 +78,10 @@ public class MainMenuController {
         String [] coords = id.split(("(?!^)"));
         int x = 10 * Integer.parseInt(coords[4]) + Integer.parseInt(coords[5]);
         int y = 10 * Integer.parseInt(coords[6]) + Integer.parseInt(coords[7]);
+//TODO: zamien te stringi w nawiasach na zmienne. BTW lepiej by było przenisc te metode do Game. zmienne kolorów też.
+// np. "private String headColor = "-fx-background-color: rgb(0, 0, 255)". dzieki temu będzie można
+// kolory w łatwy sposob przechwycić do pickera
+
 
 
         Cell c = game.getActualGeneration().getCell(x,y);
@@ -128,7 +135,6 @@ public class MainMenuController {
         warningWindow = new WarningWindowController(root);
         Node node = (Node) event.getSource();
 
-
         FileChooser dir = new FileChooser();
         dir.setTitle("Zapisz " + node.getId());
 
@@ -138,10 +144,10 @@ public class MainMenuController {
             //to usunąć i pozwolic uzytkownikowi zawsze ją zapisać
             if (true) {//game.isStopped() == false
 
-                //showWarning("Aby zapisać generację do pliku należy napierw zatrzymać grę przycieskiem.", event);
+                showWarning("Aby zapisać generację do pliku należy napierw zatrzymać grę przycieskiem.", event);
 
             } else {
-                //Generation genToSaveIntoConfigFile = game.getCurrentGeneration();
+                Generation genToSaveIntoConfigFile = game.getCurrentGeneration();
 
 
                 //testowa generacja
@@ -180,9 +186,13 @@ public class MainMenuController {
 
     @FXML
     private void initialize() {
-        //warningLabel.setText("kdkdkkdkd");
-        this.game = new Game(5);
-//tu trzeba pokolorowac komorki
+
+        this.game = new Game(5);//NOTE: game powinno byc tu inicjowane, ale liczba generacji powinna
+        //być -1 albo cos( aby zaznaczyc ze maja sie wykonywac dopoki sie nie skoncza komorki). bo liczbe genracji
+        //bedziemy przecież przechwytywac przy starcie(najlepeij wyskakujace okno do tego, żeby nie mieszać poleceń
+        // z labelem do wyswietlania aktualnej.) i jak ktoś ustali to wtedy dopiero zmienić.
+        //currentGenNumber.setText("00");
+
     }
 
 
@@ -190,13 +200,12 @@ public class MainMenuController {
         try {
             root = FXMLLoader.load(getClass().getResource("WarningWindow.fxml"));
             Stage stage = new Stage();
+            stage.setResizable(false);
             stage.setTitle("Uwaga:");
-            stage.setScene(new Scene(root, 400, 200));
-
-            warningLabel = new Label("inicjacja");
-            //warningLabel.setId("warningLabel");
-
-            warningLabel.setText(text);
+            Scene scene = new Scene(root, 400, 200);
+            stage.setScene(scene);
+            //warningLabel = new Label("inicjacja");
+            //warningLabel.setText("dd");
             //trzeba jakos zrobic zmiane teksu labela
             stage.show();
             // Hide this current window (if this is what you want)

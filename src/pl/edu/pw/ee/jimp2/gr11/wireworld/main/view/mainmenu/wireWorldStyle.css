@@ -1,11 +1,6 @@
-@charset "iso-8859-1";
-
 .root {
-    -fx-font-size: 16pt;
-    -fx-font-family: "Courier New";
-    -fx-base: rgb(145, 22, 24);
-    -fx-background-color: rgba(59, 90, 195, 0.56);
-
+    -fx-font-size: 12pt;
+    -fx-font-family: "Calibri";
 }
 
 
@@ -14,8 +9,8 @@
 }
 
 .grid {
-    -fx-padding: 1.5;
-    -fx-background-color: rgb(0, 0, 0);
+    -fx-padding: 3;
+    -fx-background-color: rgba(34, 34, 78, 0.45);
     -fx-border-radius: 3;
     -fx-background-radius: 3;
 }
@@ -63,6 +58,7 @@
     -fx-border-color: rgb(0, 0, 0);
     -fx-border-radius: 10;
     -fx-background-radius: 10;
+    -fx-text-fill: rgb(255, 255, 255);
 }
 
 .color-picker:hover {
@@ -77,7 +73,6 @@
 
 .check-box {
     -fx-padding: 2;
-
     -fx-text-fill: rgb(0, 0, 0);
 }
 
@@ -90,10 +85,43 @@
 .menu-bar {
     -fx-padding: 2;
     -fx-background-color: rgba(34, 34, 78, 0.45);
+
+}
+
+.menu {
+    -fx-text-fill: rgb(255, 255, 255);
+    -fx-fill: rgb(255, 255, 255);
+}
+
+.menu:hover {
+    -fx-background-color: rgba(34, 34, 78, 0.60);
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+.menu:showing {
+    -fx-background-color: rgba(34, 34, 78, 0.60);
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+.menu-item:cancel /*TODO:<--wybra? co? innego po ":", to co jest nie dzia?a*/
+{
+    -fx-background-color: rgba(34, 34, 78, 0.60);
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
     -fx-text-fill: rgb(255, 255, 255);
 
 }
 
+.menu-item:hover {
+    -fx-background-color: rgba(34, 34, 78, 0.60);
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-text-fill: rgb(255, 255, 255);
+}
+
+/*
 .blankCell {
     -fx-background-color: rgba(0, 0, 0, 255);
 }
@@ -109,8 +137,10 @@
 .conductorCell {
     -fx-background-color: rgb(241, 237, 102);
 }
-
-/*
+*/
+#tile0000 {
+    -fx-background-color: rgba(0, 0, 0, 255);
+}
 #tile0001 {
     -fx-background-color: rgba(0,0,0, 255);
 }
@@ -1548,4 +1578,4 @@
 #tile1923 {
     -fx-background-color: rgba(0,0,0, 255);
 }
-*/
+
