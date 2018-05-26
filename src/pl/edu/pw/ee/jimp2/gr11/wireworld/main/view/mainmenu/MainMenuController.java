@@ -46,68 +46,9 @@ public class MainMenuController {
     @FXML
     private List<Button> buttons;
 
-    public String setColor (Cell c) {
-        if(c instanceof Blank) {
-            return "-fx-background-color: rgb(0, 0, 0)";
-        }
-        else if(c instanceof Conductor) {
-            return "-fx-background-color: rgb(255, 255, 0)";
-        }
-        else if(c instanceof Tail) {
-            return "-fx-background-color: rgb(255, 0, 0)";
-        }
-        else if(c instanceof Head) {
-            return "-fx-background-color: rgb(0, 0, 255)";
-        }
-        else {
-            return "-fx-background-color: rgb(0, 0, 0)";
-        }
-    }
-
-    public String newColorForCell(String color, String id) { //na razie nie działa jak powinno, jutro poprawię
-        /*
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
-        try {
-            Parent r = loader.load();
-
-        Map<String, Object> namespace = loader.getNamespace();
-        //System.out.println(namespace.get("tile0101"));
-        Button b = (Button)namespace.get("tile0000");
-        }catch (IOException e) {
-            e.printStackTrace();
-        }*/
-
-        String [] coords = id.split(("(?!^)"));
-        int x = 10 * Integer.parseInt(coords[4]) + Integer.parseInt(coords[5]);
-        int y = 10 * Integer.parseInt(coords[6]) + Integer.parseInt(coords[7]);
-//TODO: zamien te stringi w nawiasach na zmienne. BTW lepiej by było przenisc te metode do Game. zmienne kolorów też.
-// np. "private String headColor = "-fx-background-color: rgb(0, 0, 255)". dzieki temu będzie można
-// kolory w łatwy sposob przechwycić do pickera
 
 
 
-        Cell c = game.getActualGeneration().getCell(x,y);
-        int i = game.getActualGeneration().getCells().indexOf(c);
-        game.getActualGeneration().getCells().remove(i);
-
-        if (color.equals("0x000000ff")) {
-            game.getActualGeneration().getCells().add(i, new Conductor(x,y));
-            return "-fx-background-color: rgb(255, 255, 0)";
-        } else if (color.equals("0xffff00ff")) {
-            game.getActualGeneration().getCells().add(i, new Tail(x,y));
-            return "-fx-background-color: rgb(255, 0, 0)";
-        } else if (color.equals("0xff0000ff")) {
-            game.getActualGeneration().getCells().add(i, new Head(x,y));
-            return "-fx-background-color: rgb(0, 0, 255)";
-        } else if (color.equals("0xff0000ff")) {
-            game.getActualGeneration().getCells().add(i, new Blank(x,y));
-            return "-fx-background-color: rgb(0, 0, 0)";
-        }
-        else {
-            game.getActualGeneration().getCells().add(i, new Blank(x,y));
-            return "-fx-background-color: rgb(0, 0, 0)";
-        }
-    }
 
     public void pressTile(ActionEvent event) {
 
@@ -116,19 +57,7 @@ public class MainMenuController {
         Color color = (Color) cellButton.getBackground().getFills().get(0).getFill();
         String id = cellButton.getId();
 
-        cellButton.setStyle(newColorForCell(color.toString(), id));
-
-        /*System.out.println(color.toString());*/
-
-        //cellButton.getStyleClass().add("headCell");//tak tez sie da ale tu trudniej bedzie zmienić paletę.
-
-        //wywołanie metody która zwraca kolor do ustawienia, a pobiera aktualny + fxid
-        //tam w sordku sobie ustawia komorke ktora trzeba na stan ktory powinna i zwraca kolor stanu
-        // czyli zwraca String np  "-fx-background-color: rgb(0, 0, 0)" do zmiennej lokalnej jakiejs
-        //i wywoluje się dalej: cellButton.setStyle(newColorForCell);
-        // cos w tym stylu :
-        // cellButton.setStyle("-fx-background-color: rgb(0, 0, 0)");
-
+        cellButton.setStyle(game.newColorForCell(color.toString(), id));
 
     }
 
@@ -149,7 +78,7 @@ public class MainMenuController {
                 showWarning("Aby zapisać generację do pliku należy napierw zatrzymać grę przycieskiem.", event);
 
             } else {
-                Generation genToSaveIntoConfigFile = game.getCurrentGeneration();
+                Generation genToSaveIntoConfigFile = game.getActualGeneration();
 
 
                 //testowa generacja
@@ -197,7 +126,7 @@ public class MainMenuController {
     @FXML
     private void initialize() {
 
-        this.game = new Game(5);//NOTE: game powinno byc tu inicjowane, ale liczba generacji powinna
+        this.game = new Game();//NOTE: game powinno byc tu inicjowane, ale liczba generacji powinna
         //być -1 albo cos( aby zaznaczyc ze maja sie wykonywac dopoki sie nie skoncza komorki). bo liczbe genracji
         //bedziemy przecież przechwytywac przy starcie(najlepeij wyskakujace okno do tego, żeby nie mieszać poleceń
         // z labelem do wyswietlania aktualnej.) i jak ktoś ustali to wtedy dopiero zmienić.
@@ -236,7 +165,6 @@ public class MainMenuController {
             }
         }
 
-//tu trzeba pokolorowac komorki
     }
 
 
@@ -263,12 +191,11 @@ public class MainMenuController {
     class GameStarter extends Thread {
         @Override
         public void run() {
-            for(int i = 0; i< game.getNumberOfGenerations(); i++) {
-                game.performGame();
+            while(game.performGame()) {
 
                 for (Cell c : game.getActualGeneration().getCells()) {
                     int index = game.getActualGeneration().getCells().indexOf(c);
-                    buttons.get(index).setStyle(setColor(c));
+                    buttons.get(index).setStyle(game.setColor(c));
                 }
 
                 try {
@@ -277,6 +204,7 @@ public class MainMenuController {
                     //System.exit(0);
                     e.printStackTrace();
                 }
+
             }
 
         }
