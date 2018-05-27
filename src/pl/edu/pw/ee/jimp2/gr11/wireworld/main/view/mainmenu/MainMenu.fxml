@@ -3504,9 +3504,9 @@
             <HBox alignment="BOTTOM_CENTER" prefHeight="40.0" prefWidth="1006.0">
                 <children>
                     <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="160.0"
-                           styleClass="mylabel" text="Kolor Głowy" textAlignment="CENTER"/>
-                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="160.0"
                            styleClass="mylabel" text="Kolor Ogonu" textAlignment="CENTER"/>
+                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="160.0"
+                           styleClass="mylabel" text="Kolor Głowy" textAlignment="CENTER"/>
                     <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="160.0"
                            styleClass="mylabel" text="Kolor Przewodnika" textAlignment="CENTER"/>
                     <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="160.0"
@@ -3571,7 +3571,8 @@
                         </Menu>
                         <Menu mnemonicParsing="false" text="Ustawienia">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Zresetuj aktualną grę"/>
+                                <MenuItem mnemonicParsing="false" onAction="#resetGame" text="Zresetuj aktualną grę"/>
+                                <MenuItem mnemonicParsing="false" onAction="#setTotalGenerationsNumber" text="Ustaw liczbę generacji"/>
                             </items>
                         </Menu>
 

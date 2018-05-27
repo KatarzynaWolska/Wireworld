@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainMenuController implements Initializable {
@@ -81,22 +82,26 @@ public class MainMenuController implements Initializable {
         double blueColor = newColor.getBlue()*255;
         StringBuilder b = new StringBuilder("rgb( ");
         b.append(redColor).append(", ").append(greenColor).append(", ").append(blueColor);
-        b.append(")");
+        b.append(", 1)");
 
         if (colorPicker.getId().equals("tailColor")) {
             game.setTailColor(b.toString());
             game.setTail(newColor);
+            setStylesForCells();
 
         } else if (colorPicker.getId().equals("headColor")) {
             game.setHeadColor(b.toString());
             game.setHead(newColor);
+            setStylesForCells();
 
         } else if (colorPicker.getId().equals("conductorColor")) {
             game.setConductor(newColor);
             game.setConductorColor(b.toString());
+            setStylesForCells();
         } else {
             game.setBlank(newColor);
             game.setBlankColor(b.toString());
+            setStylesForCells();
         }
     }
 
@@ -278,6 +283,7 @@ public class MainMenuController implements Initializable {
         alert.setContentText(content);
         alert.setResizable(true);
 
+
         DialogPane dialogPane = alert.getDialogPane();
         dialogPane.getStylesheets().add(getClass().getResource("wireWorldStyle.css").toExternalForm());
         dialogPane.getStyleClass().add("myDialog");
@@ -290,7 +296,7 @@ public class MainMenuController implements Initializable {
                 "Aby zobaczyć zasady gry kliknij w przycisk \"Zasady gry\". \n Aby wstawić własną konfigurację kliknij " +
                 "Wstaw->Plik konfiguracyjny, a następnie wybierz plik w formacie tekstowym (*.txt).\n" +
                 "\nAby rozpocząć grę ustaw komórki na planszy za pomocą kliknięć. Plansza domyslnie ma wszytskie komórki puste." +
-                " Jedno kliknięcie na wybraną komórkę ustawia ją jako głowę, dwa - ogon, trzy - przewodnik, a cztery - " +
+                " Jedno kliknięcie na wybraną komórkę ustawia ją jako przewodnik, dwa - ogon, trzy - głowę, a cztery - " +
                 "ponownie jako pustą.\n\n Istnieje możliwość ustawienia własnych kolorów dla wybranych typów komórek." +
                 "" +
                 "\n";
@@ -304,8 +310,8 @@ public class MainMenuController implements Initializable {
 
         String content = "Gra jest symulatorem automatu komórkowego 'WireWorld' autorstwa Briana Silvermana.\n" +
                 " Każda komórka na planszy może znajdować się w jednym z czterech następujących stanów, które domyślnie oznacza " +
-                "się następującymi kolorami: \n\n*Pusta - kolor czarny, \n*Głowa elektronu - kolor czerwony, \n*Ogon elektronu " +
-                "- kolor niebieski, \n*Przewodnik - kolor żółty .\nW automacie stosuje się sąsiedztwo Moore'a, które za" +
+                "się następującymi kolorami: \n\n*Pusta - kolor czarny, \n*Głowa elektronu - kolor niebieski, \n*Ogon elektronu " +
+                "- kolor czerwony, \n*Przewodnik - kolor żółty .\nW automacie stosuje się sąsiedztwo Moore'a, które za" +
                 " sąsiada traktuje każdą komórkę położoną na: północ, północny-wschód, wschód, południowy-wschód, " +
                 "południe, południowy-zachód, zachód i północny-zachód od danej komórki. W 'WireWorld' stosuje się " +
                 "następujące zasady: \n\n1) Komórka pozostaje pusta jeśli była pusta. \n2) Komórka staje się ogonem elektronu," +
@@ -315,6 +321,30 @@ public class MainMenuController implements Initializable {
                 "\n";
 
         makeAlert("WireWorld", "Zasady Gry", content);
+
+    }
+
+    public void resetGame(ActionEvent event) {
+        game.setActualGeneration(new Generation());
+        currentGenNumber.setText("0");
+        game.setIsNumberOfGenerationSet(false);
+
+        setStylesForCells();
+
+    }
+
+    public void setTotalGenerationsNumber (ActionEvent event) {
+        TextInputDialog genNumberDialog = new TextInputDialog();
+        genNumberDialog.setTitle("Ustaw liczbę generacji");
+        genNumberDialog.setHeaderText("Wpisz ilość generacji");
+
+        Optional<String> result = genNumberDialog.showAndWait();
+
+        result.ifPresent(name -> {game.setNumberOfGenerations(Integer.parseInt(name));
+            game.setIsNumberOfGenerationSet(true);
+        });
+
+
 
     }
 
@@ -348,20 +378,28 @@ public class MainMenuController implements Initializable {
                 }
 
                 if (cells != null) {
-                    //game.getActualGeneration().setCells(cells);
+                    game.getActualGeneration().setCells(cells);
+                    setStylesForCells();
                     // ^^^ todo: Kasia, zobacz czy to ok. czy w ten sposob masz tam zapisywane komórki
                     break;
                 } else {
                     makeAlert("Wire World", "Plik konfiguracyjny", "Wczytywanie pliku konfiguracyjnego" +
                             " nie powiodło. Zły format pliku. Plik powinien mieć 20 wierszy i 24 kolumny.\n\n" +
-                            "Powinien składać się z cyfr 0 (pusta), 1 (przewód), 2 (głowa), 3 (ogon) oddzielonych spacjami" +
+                            "Powinien składać się z cyfr 0 (pusta), 1 (przewód), 2 (ogon), 3 (głowa) oddzielonych spacjami" +
                             " i podzielonych na wiersze oraz kolumny.\n\n");
                     file = fileChooser.showSaveDialog(new Stage());
                 }
 
             } else {
+                System.out.println("x");
                 break;
             }
+        }
+    }
+    public void setStylesForCells() {
+        for (Cell c : game.getActualGeneration().getCells()) {
+            int index = game.getActualGeneration().getCells().indexOf(c);
+            buttons.get(index).setStyle(game.setColor(c));
         }
     }
 
@@ -419,28 +457,56 @@ public class MainMenuController implements Initializable {
         }
     }
 
-    /*public void setGenerationNumberLabel (ActionEvent event) {
-        Label l = (Label) event.getSource();
-        l.setText(Integer.toString(game.getActualGenerationNumber()));
-    }*/
 
     class GameStarter implements Runnable {
         ImageSaver imageSaver;
 
         @Override
         public void run() {
-            try {
 
-                imageSaver = new ImageSaver(game, "PNG", "src/files/images" + game.getActualGenerationNumber() + ".png");
-                imageSaver.setColors(game.getHead(), game.getTail(), game.getConductor(), game.getBlank());
+            if(!game.getIsNumberOfGenerationSet()) {
+                try {
 
-                imageSaver.makeImage();
-                //setGenerationNumberLabel("0");
+                    imageSaver = new ImageSaver(game, "PNG", "src/files/images" + game.getActualGenerationNumber() + ".png");
+                    imageSaver.setColors(game.getHead(), game.getTail(), game.getConductor(), game.getBlank());
 
-                while (game.performGame()) {
-                    //if(game.isGameContinued() == false)
-                    //  game.setNumberOfGenerations(game.getActualGenerationNumber());
+                    imageSaver.makeImage();
+                    //setGenerationNumberLabel("0");
 
+                    while (game.performGame()) {
+                        //if(game.isGameContinued() == false)
+                        //  game.setNumberOfGenerations(game.getActualGenerationNumber());
+
+                        game.incrementActualGenerationNumber();
+                        imageSaver = new ImageSaver(game, "PNG", "src/files/images" + game.getActualGenerationNumber() + ".png");
+                        imageSaver.setColors(game.getHead(), game.getTail(), game.getConductor(), game.getBlank());
+                        imageSaver.makeImage();
+                        //setGenerationNumberLabel(Integer.toString(game.getActualGenerationNumber()));
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                setGenerationNumberLabel(Integer.toString(game.getActualGenerationNumber()));
+                            }
+                        });
+
+                        setStylesForCells();
+
+                        Thread.sleep(1000);
+                    }
+
+                    game.setNumberOfGenerations(game.getActualGenerationNumber());
+                    //włączenie przycisku zapisz animacje
+                    //animation.setDisable(false);
+                    //}while(game.isGameContinued());
+
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+            else {
+                try {
+                for(int i = 0; i < game.getNumberOfGenerations(); i++) {
+                    game.performGame();
                     game.incrementActualGenerationNumber();
                     imageSaver = new ImageSaver(game, "PNG", "src/files/images" + game.getActualGenerationNumber() + ".png");
                     imageSaver.setColors(game.getHead(), game.getTail(), game.getConductor(), game.getBlank());
@@ -453,10 +519,8 @@ public class MainMenuController implements Initializable {
                         }
                     });
 
-                    for (Cell c : game.getActualGeneration().getCells()) {
-                        int index = game.getActualGeneration().getCells().indexOf(c);
-                        buttons.get(index).setStyle(game.setColor(c));
-                    }
+                    setStylesForCells();
+
                     Thread.sleep(1000);
                 }
 
@@ -468,8 +532,10 @@ public class MainMenuController implements Initializable {
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
+                }
+            }
 
-        }
+
     }
 
 
