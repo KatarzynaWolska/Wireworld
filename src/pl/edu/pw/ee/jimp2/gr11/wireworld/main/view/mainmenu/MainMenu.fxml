@@ -3504,9 +3504,9 @@
             <HBox alignment="BOTTOM_CENTER" prefHeight="40.0" prefWidth="1006.0">
                 <children>
                     <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="160.0"
-                           styleClass="mylabel" text="Kolor Głowy" textAlignment="CENTER"/>
-                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="160.0"
                            styleClass="mylabel" text="Kolor Ogonu" textAlignment="CENTER"/>
+                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="160.0"
+                           styleClass="mylabel" text="Kolor Głowy" textAlignment="CENTER"/>
                     <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="160.0"
                            styleClass="mylabel" text="Kolor Przewodnika" textAlignment="CENTER"/>
                     <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="160.0"
@@ -3518,8 +3518,8 @@
             </HBox>
             <HBox alignment="TOP_CENTER" prefHeight="95.0" prefWidth="1006.0">
             <children>
-                <ColorPicker fx:id="headColor" onAction="#handleColor"/>
                 <ColorPicker fx:id="tailColor" onAction="#handleColor"/>
+                <ColorPicker fx:id="headColor" onAction="#handleColor"/>
                 <ColorPicker fx:id="conductorColor" onAction="#handleColor"/>
                 <ColorPicker fx:id="blankColor" onAction="#handleColor"/>
             </children>

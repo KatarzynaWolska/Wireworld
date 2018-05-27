@@ -77,8 +77,9 @@ public class Generation {
     public Cell getCellFromList(int x, int y) {
 
         for (Cell c : cells) {
-            if (c.getX() == x && c.getY() == y)
+            if (c.getX() == x && c.getY() == y) {
                 return c;
+            }
         }
         return null;
     }

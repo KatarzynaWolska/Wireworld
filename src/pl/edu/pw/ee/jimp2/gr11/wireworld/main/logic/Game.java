@@ -23,6 +23,8 @@ public class Game {
     private Color blank;//"rgb(0, 0, 0)";
     private Color conductor;
     private Color tail;
+    private Color head;
+
 
     public boolean isStopped() {
         return stopped;
@@ -32,7 +34,6 @@ public class Game {
         this.stopped = stopped;
     }
 
-    private Color head;
 
     public int getActualGenerationNumber() {
         return this.actualGenerationNumber;

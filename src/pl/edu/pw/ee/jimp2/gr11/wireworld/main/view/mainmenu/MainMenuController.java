@@ -6,10 +6,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
@@ -38,6 +42,9 @@ public class MainMenuController implements Initializable {
     private ColorPicker colorPicker;
     private Thread thread;
     private boolean stopped;
+    private boolean isDirectoryClean;
+    ImageSaver imageSaver;
+
 
     @FXML
     ColorPicker headColor;
@@ -67,11 +74,6 @@ public class MainMenuController implements Initializable {
     private Label currentGenNumber;
 
 
-    /*public MainMenuController() {
-        initialize();
-    }
-*/
-
 
     public void handleColor(ActionEvent event) { //todo: po wybraniu koloru tutaj trzeba tez zmienić kolor wszytskich komórek na planszy!
         colorPicker = (ColorPicker) event.getSource();
@@ -86,6 +88,16 @@ public class MainMenuController implements Initializable {
         if (colorPicker.getId().equals("tailColor")) {
             game.setTailColor(b.toString());
             game.setTail(newColor);
+            for (Button cell : buttons) {
+                if (cell.getBackground().toString() == tailColor.getBackground().toString()) {
+                    System.out.println(cell.getStyle());
+                    cell.setBackground(new Background(new BackgroundFill(newColor, CornerRadii.EMPTY, Insets.EMPTY)));
+                    //newColorForCell by zwracało newColor np  Color(12,12,12,11))
+                    //a tak by się ustawiało vvv
+                    //cellButton.setBackground(new Background(new BackgroundFill(newColor, CornerRadii.EMPTY, Insets.EMPTY)));
+                }
+
+            }
 
         } else if (colorPicker.getId().equals("headColor")) {
             game.setHeadColor(b.toString());
@@ -120,17 +132,11 @@ public class MainMenuController implements Initializable {
     public void pressSaveConfigurationFile(ActionEvent event) {
         Node node = (Node) event.getSource();
 
-
-        if (!game.isGameContinued()) {
-            makeAlert("Wire World", "Nie można teraz zapisać pliku konfiguracyjnego.",
-                    "Aby to zrobić musisz najpierw zatrzymać grę przyciskiem \"STOP\" na wybranej generacji.");
-
-        } else {
             Generation genToSaveIntoConfigFile = game.getActualGeneration();
 
             FileChooser dir = new FileChooser();
             dir.setTitle("Zapisz plik konfiguracyjny:");
-
+/*
             //testowa generacja
             Generation testGen = new Generation();
             testGen.setHeight(1);
@@ -143,6 +149,7 @@ public class MainMenuController implements Initializable {
             cells.add(new Blank(1, 0));
             cells.add(new Conductor(1, 1));
             //koniec testGen
+            */
 
             FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("tekstowy (*.txt)",
                     " *.txt");
@@ -151,8 +158,8 @@ public class MainMenuController implements Initializable {
 
             File file = dir.showSaveDialog(new Stage());
             //System.out.println(file.getAbsolutePath());
-            ConfigFileSaver configFileSaver = new ConfigFileSaver(file.getAbsolutePath(), testGen);//tu zmienic potem generacje
-        }
+        ConfigFileSaver configFileSaver = new ConfigFileSaver(file.getAbsolutePath(), game.getActualGeneration());//tu zmienic potem generacje
+
 
 
     }
@@ -178,31 +185,26 @@ public class MainMenuController implements Initializable {
         Node node = (Node) event.getSource();
 
 
-        if (game.isGameContinued() == false) {
-            makeAlert("Wire World", "Nie można teraz zapisać obrazu.",
-                    "Aby to zrobić musisz najpierw zatrzymać grę przyciskiem \"STOP\" na wybranej generacji.");
 
-        } else {
             FileChooser dir = new FileChooser();
             dir.setTitle("Zapisz obraz:");
 
             FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("plik PNG (*.png)",
                     " *.png");
             dir.getExtensionFilters().add(extFilter);
-            //extFilter = new FileChooser.ExtensionFilter("plik jpg (*.jpg)", " *.jpg");
 
             File file = dir.showSaveDialog(new Stage());
             if (file != null) {
 
-                ImageSaver imageSaver = new ImageSaver(game, "PNG", file.getAbsolutePath());
+                ImageSaver is = new ImageSaver(game, "PNG", file.getAbsolutePath());
                 //imageSaver.setHeadColor(game.getHeadColor());
-                imageSaver.setBlankColor(game.getBlank());
-                imageSaver.setHeadColor(game.getBlank());
-                imageSaver.setTailColor(game.getConductor());
-                imageSaver.setConductorColor(game.getConductor());
-                imageSaver.makeImage();
+                is.setBlankColor(game.getBlank());
+                is.setHeadColor(game.getHead());
+                is.setTailColor(game.getTail());
+                is.setConductorColor(game.getConductor());
+                is.makeImage();
             }
-        }
+
     }
 
     public void pressStart(ActionEvent event) {
@@ -228,47 +230,6 @@ public class MainMenuController implements Initializable {
         }
 
     }
-
-    /*@FXML
-    private void initialize() {
-
-        this.game = new Game();
-        buttons = new ArrayList<>();
-
-        for (int i = 0; i < 20; i++) {
-            for (int j = 0; j < 24; j++) {
-                Button b = new Button();
-                b.setMaxHeight(1.7976931348623157E308);
-                b.setMaxWidth(1.7976931348623157E308);
-                b.setMnemonicParsing(false);
-                b.setOnAction(this::pressTile);
-                b.setPrefHeight(0.0);
-                b.setPrefWidth(5.0);
-                if (i < 10) {
-                    if (j < 10) {
-                        b.setId("tile0" + i + "0" + j);
-                    } else {
-                        b.setId("tile0" + i + j);
-                    }
-                } else {
-                    if (j < 10) {
-                        b.setId("tile" + i + "0" + j);
-                    } else {
-                        b.setId("tile" + i + j);
-                    }
-                }
-                buttons.add(b);
-                grid.add(b, j, i);
-            }
-
-            startStop = new Button();
-            startStop.setOnAction(this::pressStart);
-
-            currentGenNumber.setText(Integer.toString(game.getActualGenerationNumber()));
-        }
-
-    }
-    */
 
     private void makeAlert(String title, String header, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -300,7 +261,6 @@ public class MainMenuController implements Initializable {
 
 
     public void showRules() { //todo zrobic to alertem albo tooltip
-        //tooltipu sie nie da , bo syzbko gasnie i nie da się ogarnac tekstu - jest jedna dluga linia
 
         String content = "Gra jest symulatorem automatu komórkowego 'WireWorld' autorstwa Briana Silvermana.\n" +
                 " Każda komórka na planszy może znajdować się w jednym z czterech następujących stanów, które domyślnie oznacza " +
@@ -331,13 +291,11 @@ public class MainMenuController implements Initializable {
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("plik tekstowy (*.txt)",
                 " *.txt");
         fileChooser.getExtensionFilters().add(extFilter);
-        //extFilter = new FileChooser.ExtensionFilter("plik jpg (*.jpg)", " *.jpg");
 
         File file = fileChooser.showSaveDialog(new Stage());
         while (true) {
             if (file != null) {
 
-                //tu trzeba podpiąć readera i monit jesli jest zly plik konfiguracyjny
                 ArrayList<Cell> cells = null;
                 ConfigFileReader configFileReader = new ConfigFileReader();
 
@@ -348,7 +306,7 @@ public class MainMenuController implements Initializable {
                 }
 
                 if (cells != null) {
-                    //game.getActualGeneration().setCells(cells);
+                    game.getActualGeneration().setCells(cells);
                     // ^^^ todo: Kasia, zobacz czy to ok. czy w ten sposob masz tam zapisywane komórki
                     break;
                 } else {
@@ -416,33 +374,27 @@ public class MainMenuController implements Initializable {
             game.setHead(new Color(1, 0, 0, 1));
             game.setConductor(new Color(1, 1, 0, 1));
             game.setBlank(new Color(0, 0, 0, 1));
+
+            isDirectoryClean = false;
         }
+
     }
 
-    /*public void setGenerationNumberLabel (ActionEvent event) {
-        Label l = (Label) event.getSource();
-        l.setText(Integer.toString(game.getActualGenerationNumber()));
-    }*/
-
     class GameStarter implements Runnable {
-        ImageSaver imageSaver;
 
         @Override
         public void run() {
             try {
-
-                imageSaver = new ImageSaver(game, "PNG", "src/files/images" + game.getActualGenerationNumber() + ".png");
+                imageSaver = new ImageSaver(game, "PNG", "src/files/images/image" + game.getActualGenerationNumber() + ".png");
+                if (isDirectoryClean == false)
+                    imageSaver.deletePreviousFiles();
                 imageSaver.setColors(game.getHead(), game.getTail(), game.getConductor(), game.getBlank());
-
                 imageSaver.makeImage();
-                //setGenerationNumberLabel("0");
 
                 while (game.performGame()) {
-                    //if(game.isGameContinued() == false)
-                    //  game.setNumberOfGenerations(game.getActualGenerationNumber());
 
                     game.incrementActualGenerationNumber();
-                    imageSaver = new ImageSaver(game, "PNG", "src/files/images" + game.getActualGenerationNumber() + ".png");
+                    imageSaver = new ImageSaver(game, "PNG", "src/files/images/image" + game.getActualGenerationNumber() + ".png");
                     imageSaver.setColors(game.getHead(), game.getTail(), game.getConductor(), game.getBlank());
                     imageSaver.makeImage();
                     //setGenerationNumberLabel(Integer.toString(game.getActualGenerationNumber()));
@@ -461,9 +413,7 @@ public class MainMenuController implements Initializable {
                 }
 
                 game.setNumberOfGenerations(game.getActualGenerationNumber());
-                //włączenie przycisku zapisz animacje
-                //animation.setDisable(false);
-                //}while(game.isGameContinued());
+
 
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
