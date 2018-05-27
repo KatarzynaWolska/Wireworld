@@ -108,6 +108,10 @@ public class Generation {
         return aliveCells;
     }*/
 
+    public Generation (List<Cell> cells) {
+        this.cells = cells;
+    }
+
     public Generation(int height, int width, List<Cell> cells) {
         this.height = height;
         this.width = width;
