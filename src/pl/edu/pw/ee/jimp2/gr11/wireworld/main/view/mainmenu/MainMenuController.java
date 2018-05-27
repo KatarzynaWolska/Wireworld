@@ -1,9 +1,11 @@
 package pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.mainmenu;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -13,6 +15,8 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.Game;
@@ -48,6 +52,9 @@ public class MainMenuController {
     @FXML
     private Button startStop;
 
+    @FXML
+    private Label currentGenNumber;
+
     public void handleColor(ActionEvent event) {
         colorPicker = (ColorPicker) event.getSource();
         Color newColor = colorPicker.getValue();
@@ -77,68 +84,39 @@ public class MainMenuController {
     }
 
 
-
-
-    public String newColorForCell(String color, String id) { //na razie nie działa jak powinno, jutro poprawię
-        String[] coords = id.split(("(?!^)"));
-        int x = 10 * Integer.parseInt(coords[4]) + Integer.parseInt(coords[5]);
-        int y = 10 * Integer.parseInt(coords[6]) + Integer.parseInt(coords[7]);
-//TODO: zamien te stringi w nawiasach na zmienne. BTW lepiej by było przenisc te metode do Game. zmienne kolorów też.
-// np. "private String headColor = "-fx-background-color: rgb(0, 0, 255)". dzieki temu będzie można
-// kolory w łatwy sposob przechwycić do pickera
-
-
-        Cell c = game.getActualGeneration().getCell(x, y);
-        int i = game.getActualGeneration().getCells().indexOf(c);
-        game.getActualGeneration().getCells().remove(i);
-
-        if (color.equals("0x000000ff")) {/**/
-            game.getActualGeneration().getCells().add(i, new Conductor(x, y));
-            return "-fx-background-color: rgb(255, 255, 0)";
-        } else if (color.equals("0xffff00ff")) {
-            game.getActualGeneration().getCells().add(i, new Tail(x, y));
-            return "-fx-background-color: rgb(255, 0, 0)";
-        } else if (color.equals("0xff0000ff")) {
-            game.getActualGeneration().getCells().add(i, new Head(x, y));
-            return "-fx-background-color: rgb(0, 0, 255)";
-        } else if (color.equals("0xff0000ff")) {
-            game.getActualGeneration().getCells().add(i, new Blank(x, y));
-            return "-fx-background-color: rgb(0, 0, 0)";
-        } else {
-            game.getActualGeneration().getCells().add(i, new Blank(x, y));
-            return "-fx-background-color: rgb(0, 0, 0)";
-        }
-    }
-
     public void pressTile(ActionEvent event) {
 
-        cellButton = (Button) event.getSource();
+        if(thread == null) {
 
-        Color color = (Color) cellButton.getBackground().getFills().get(0).getFill();
-        String id = cellButton.getId();
+            cellButton = (Button) event.getSource();
 
-        //newColorForCell by zwracało newColor np  Color(12,12,12,11))
-        //a tak by się ustawiało vvv
-        //cellButton.setBackground(new Background(new BackgroundFill(newColor, CornerRadii.EMPTY, Insets.EMPTY)));
+            Color color = (Color) cellButton.getBackground().getFills().get(0).getFill();
+            String id = cellButton.getId();
 
-
-
-
+            //newColorForCell by zwracało newColor np  Color(12,12,12,11))
+            //a tak by się ustawiało vvv
+            //cellButton.setBackground(new Background(new BackgroundFill(newColor, CornerRadii.EMPTY, Insets.EMPTY)));
 
 
-        cellButton.setStyle(game.newColorForCell(color.toString(), id, game));
-        //cellButton.setStyle(newColorForCell(color.toString(), id));
+            cellButton.setStyle(game.newColorForCell(color.toString(), id, game));
 
-        //System.out.println(color.toString());
+            //cellButton.setStyle(newColorForCell(color.toString(), id));
 
-        //cellButton.getStyleClass().add("headCell");//tak tez sie da ale tu trudniej bedzie zmienić paletę.
+            //System.out.println(color.toString());
 
-        //wywołanie metody która zwraca kolor do ustawienia, a pobiera aktualny + fxid
-        //tam w sordku sobie ustawia komorke ktora trzeba na stan ktory powinna i zwraca kolor stanu
-        // czyli zwraca String np  "-fx-background-color: rgb(0, 0, 0)" do zmiennej lokalnej jakiejs
-        //i wywoluje się dalej: cellButton.setStyle(newColorForCell);
-        // cos w tym stylu :
-        // cellButton.setStyle("-fx-background-color: rgb(0, 0, 0)");
+            //cellButton.getStyleClass().add("headCell");//tak tez sie da ale tu trudniej bedzie zmienić paletę.
+
+            //wywołanie metody która zwraca kolor do ustawienia, a pobiera aktualny + fxid
+            //tam w sordku sobie ustawia komorke ktora trzeba na stan ktory powinna i zwraca kolor stanu
+            // czyli zwraca String np  "-fx-background-color: rgb(0, 0, 0)" do zmiennej lokalnej jakiejs
+            //i wywoluje się dalej: cellButton.setStyle(newColorForCell);
+            // cos w tym stylu :
+            // cellButton.setStyle("-fx-background-color: rgb(0, 0, 0)");
+
+        }
+        else {
+
+        }
 
 
     }
@@ -247,13 +225,7 @@ public class MainMenuController {
     @FXML
     private void initialize() {
 
-        this.game = new Game();//NOTE: game powinno byc tu inicjowane, ale liczba generacji powinna
-        //być -1 albo cos( aby zaznaczyc ze maja sie wykonywac dopoki sie nie skoncza komorki). bo liczbe genracji
-        //bedziemy przecież przechwytywac przy starcie(najlepeij wyskakujace okno do tego, żeby nie mieszać poleceń
-        // z labelem do wyswietlania aktualnej.) i jak ktoś ustali to wtedy dopiero zmienić.
-        //currentGenNumber.setText("00");
-
-        //warningLabel.setText("kdkdkkdkd");*/
+        this.game = new Game();
         buttons = new ArrayList<>();
 
         for (int i = 0; i < 20; i++) {
@@ -284,6 +256,8 @@ public class MainMenuController {
 
             startStop = new Button();
             startStop.setOnAction(this::pressStart);
+
+            currentGenNumber.setText(Integer.toString(game.getActualGenerationNumber()));
         }
 
     }
@@ -330,11 +304,29 @@ public class MainMenuController {
 
     }
 
+    public synchronized void setGenerationNumber (String number) {
+        currentGenNumber.setText(number);
+    }
+
+    /*public void setGenerationNumber (ActionEvent event) {
+        Label l = (Label) event.getSource();
+        l.setText(Integer.toString(game.getActualGenerationNumber()));
+    }*/
+
     class GameStarter implements Runnable {
         @Override
         public void run() {
             try {
                 while (game.performGame()) {
+
+                    game.incrementActualGenerationNumber();
+                    //setGenerationNumber(Integer.toString(game.getActualGenerationNumber()));
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            setGenerationNumber(Integer.toString(game.getActualGenerationNumber()));
+                        }
+                    });
 
                     for (Cell c : game.getActualGeneration().getCells()) {
                         int index = game.getActualGeneration().getCells().indexOf(c);
@@ -345,9 +337,7 @@ public class MainMenuController {
 
                 }
             } catch (InterruptedException e) {
-                //System.exit(0);
                 Thread.currentThread().interrupt();
-                //e.printStackTrace();
             }
 
         }
