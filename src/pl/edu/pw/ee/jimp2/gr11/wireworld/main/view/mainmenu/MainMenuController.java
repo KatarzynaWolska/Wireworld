@@ -375,7 +375,7 @@ public class MainMenuController implements Initializable {
                     // ^^^ todo: Kasia, zobacz czy to ok. czy w ten sposob masz tam zapisywane komórki
                     break;
                 } else {
-                    makeAlert("Wire World", "Plik konfiguracyjy", "Wczytywanie pliku konfiguracyjnego" +
+                    makeAlert("Wire World", "Plik konfiguracyjny", "Wczytywanie pliku konfiguracyjnego" +
                             " nie powiodło. Zły format pliku. Plik powinien mieć 20 wierszy i 24 kolumny.\n\n" +
                             "Powinien składać się z cyfr 0 (pusta), 1 (przewód), 2 (głowa), 3 (ogon) oddzielonych spacjami" +
                             " i podzielonych na wiersze oraz kolumny.\n\n");
@@ -422,6 +422,8 @@ public class MainMenuController implements Initializable {
                 buttons.add(b);
                 grid.add(b, j, i);
             }
+
+            grid.setGridLinesVisible(true);
 
             startStop = new Button();
             startStop.setOnAction(this::pressStart);

@@ -15,9 +15,10 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="739.0" prefWidth="1006.0" styleClass="scene"
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="811.0" prefWidth="1006.0" styleClass="scene"
             xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.mainmenu.MainMenuController">
     <center>
@@ -3499,21 +3500,41 @@
         </GridPane> -->
     </center>
     <bottom>
-        <HBox alignment="CENTER" prefHeight="95.0" prefWidth="1006.0">
+        <VBox>
+            <HBox alignment="BOTTOM_CENTER" prefHeight="40.0" prefWidth="1006.0">
+                <children>
+                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="160.0"
+                           styleClass="mylabel" text="Kolor Głowy" textAlignment="CENTER"/>
+                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="160.0"
+                           styleClass="mylabel" text="Kolor Ogonu" textAlignment="CENTER"/>
+                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="160.0"
+                           styleClass="mylabel" text="Kolor Przewodnika" textAlignment="CENTER"/>
+                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="160.0"
+                           styleClass="mylabel" text="Kolor Pustej Komórki" textAlignment="CENTER"/>
+                </children>
+                <opaqueInsets>
+                    <Insets bottom="10.0"/>
+                </opaqueInsets>
+            </HBox>
+            <HBox alignment="TOP_CENTER" prefHeight="95.0" prefWidth="1006.0">
             <children>
                 <ColorPicker fx:id="headColor" onAction="#handleColor"/>
                 <ColorPicker fx:id="tailColor" onAction="#handleColor"/>
                 <ColorPicker fx:id="conductorColor" onAction="#handleColor"/>
                 <ColorPicker fx:id="blankColor" onAction="#handleColor"/>
             </children>
+                <opaqueInsets>
+                    <Insets top="10.0"/>
+                </opaqueInsets>
         </HBox>
+        </VBox>
     </bottom>
     <right>
         <FlowPane alignment="CENTER" columnHalignment="CENTER" prefHeight="608.0" prefWidth="240.0" vgap="40.0"
                   BorderPane.alignment="CENTER">
             <children>
                 <Label id="currentGenNumber" fx:id="currentGenNumber" alignment="CENTER" prefHeight="60.0"
-                       prefWidth="160.0" styleClass="mylabel" text="&lt;nr gen&gt;" textAlignment="CENTER">
+                       prefWidth="160.0" styleClass="mylabel" text="0" textAlignment="CENTER">
                     <font>
                         <Font size="18.0"/>
                     </font>
