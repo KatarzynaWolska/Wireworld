@@ -13,7 +13,7 @@ public class Generation {
     private int width = 24; // liczba kolumn 24
     private int numberOfGeneration;
     private List<Cell> cells;
-    private List<Cell> activeCells;
+    //private List<Cell> activeCells;
 
     public int getNumberOfGeneration() {
         return numberOfGeneration;
@@ -36,12 +36,12 @@ public class Generation {
     }
 
 
-    public Generation(int height, int width, List<Cell> cells, List<Cell> activeCells) {
+    /*public Generation(int height, int width, List<Cell> cells, List<Cell> activeCells) {
         this.height = height;
         this.width = width;
         this.cells = cells;
         this.activeCells = activeCells;
-    }
+    }*/
 
     public Generation() {
         this.cells = new ArrayList<>();
@@ -57,17 +57,17 @@ public class Generation {
         this.cells = cells;
     }
 
-    public void setActiveCells(List<Cell> activeCells) {
+    /*public void setActiveCells(List<Cell> activeCells) {
         this.activeCells = activeCells;
-    }
+    }*/
 
     public List<Cell> getCells() {
         return cells;
     }
 
-    public List<Cell> getActiveCells() {
+    /*public List<Cell> getActiveCells() {
         return activeCells;
-    }
+    }*/
 
     public Cell getCell(int x, int y) {
         return cells.get(x * width + y);//jesli x to numer wiersza to chyba powinno być x*height? moze mi sie cos pomylilo, nw
@@ -97,7 +97,7 @@ public class Generation {
         }
     }
 
-    public List<Cell> setActiveCells() {
+    /*public List<Cell> setActiveCells() {
         List<Cell> aliveCells = new ArrayList<>();
         for (Cell c : cells) {
             if ((c instanceof Blank) == false) {
@@ -106,13 +106,13 @@ public class Generation {
         }
 
         return aliveCells;
-    }
+    }*/
 
     public Generation(int height, int width, List<Cell> cells) {
         this.height = height;
         this.width = width;
         this.cells = cells;
-        this.activeCells = setActiveCells();
+        //this.activeCells = setActiveCells();
     }
 
     public int countNeighbours(int x, int y) {
@@ -260,20 +260,20 @@ public class Generation {
     public Generation createNextGeneration(Generation last) {
         Generation next = new Generation(last.getHeight(), last.getWidth(), new ArrayList<Cell>(last.getCells()));
 
-        List<Cell> nextActiveCells = new ArrayList<>();
+        //List<Cell> nextActiveCells = new ArrayList<>();
 
         for (Cell c : new ArrayList<Cell>(last.getCells())) {
             if (c instanceof Conductor) {
                 ((Conductor) c).setNumberOfHeadNeighbours(countNeighbours(c.getX(), c.getY()));
             }
             Cell newCell = c.checkStateOfNextGeneration();
-            nextActiveCells.add(newCell);
+            //nextActiveCells.add(newCell);
             next.getCells().remove(c.getX() * getWidth() + c.getY());
             next.getCells().add(c.getX() * getWidth() + c.getY(), newCell);
 
         }
 
-        next.setActiveCells(nextActiveCells);
+        //next.setActiveCells(nextActiveCells);
 
 
         return next;
