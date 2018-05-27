@@ -29,6 +29,7 @@ import pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils.ImageSaver;
 
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -89,7 +90,7 @@ public class MainMenuController implements Initializable {
             game.setTailColor(b.toString());
             game.setTail(newColor);
             setStylesForCells();
-            for (Button cell : buttons) { // wywalał się u mnie nullPointerException
+            /*for (Button cell : buttons) { // wywalał się u mnie nullPointerException
                 if (cell.getBackground().toString() == tailColor.getBackground().toString()) {
                     System.out.println(cell.getStyle());
                     cell.setBackground(new Background(new BackgroundFill(newColor, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -98,7 +99,7 @@ public class MainMenuController implements Initializable {
                     //cellButton.setBackground(new Background(new BackgroundFill(newColor, CornerRadii.EMPTY, Insets.EMPTY)));
                 }
 
-            }
+            }*/
 
         } else if (colorPicker.getId().equals("headColor")) {
             game.setHeadColor(b.toString());
@@ -282,9 +283,13 @@ public class MainMenuController implements Initializable {
     }
 
     public void resetGame(ActionEvent event) {
-        game.setActualGeneration(new Generation());
         currentGenNumber.setText("0");
+        //game = new Game();
+        game.setActualGeneration(new Generation());
         game.setIsNumberOfGenerationSet(false);
+        game.setNumberOfGenerations(0);
+        game.setActualGenerationNumber(0);
+
 
         setStylesForCells();
 
@@ -303,6 +308,28 @@ public class MainMenuController implements Initializable {
         });
 
 
+    }
+
+    public void insertDiode(ActionEvent event) {
+        ConfigFileReader reader = new ConfigFileReader();
+        try {
+            game.getActualGeneration().setCells(reader.readFile("src/files/configfiles/diode.txt"));
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+        setStylesForCells();
+    }
+
+    public void insertReversedDiode(ActionEvent event) {
+        ConfigFileReader reader = new ConfigFileReader();
+        try {
+            game.getActualGeneration().setCells(reader.readFile("src/files/configfiles/diode-reverse.txt"));
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+        setStylesForCells();
     }
 
     public void handleConfigFile(ActionEvent event) {
@@ -399,13 +426,13 @@ public class MainMenuController implements Initializable {
 
             currentGenNumber.setText(Integer.toString(game.getActualGenerationNumber()));
 
-            headColor.setValue(new Color(1, 0, 0, 1));
-            tailColor.setValue(new Color(0, 0, 1, 1));
+            headColor.setValue(new Color(0, 0, 1, 1));
+            tailColor.setValue(new Color(1, 0, 0, 1));
             conductorColor.setValue(new Color(1, 1, 0, 1));
             blankColor.setValue(new Color(0, 0, 0, 1));
 
-            game.setTail(new Color(0, 0, 1, 1));
-            game.setHead(new Color(1, 0, 0, 1));
+            game.setTail(new Color(1, 0, 0, 1));
+            game.setHead(new Color(0, 0, 1, 1));
             game.setConductor(new Color(1, 1, 0, 1));
             game.setBlank(new Color(0, 0, 0, 1));
 
@@ -426,7 +453,7 @@ public class MainMenuController implements Initializable {
                         if (isDirectoryClean == false)
                             imageSaver.deletePreviousFiles(); //wywalał się u mnie nullPoniterException
 
-                    imageSaver.setColors(game.getHead(), game.getTail(), game.getConductor(), game.getBlank());
+                        imageSaver.setColors(game.getHead(), game.getTail(), game.getConductor(), game.getBlank());
                         imageSaver.makeImage();
 
                         while (game.performGame()) {
@@ -434,7 +461,7 @@ public class MainMenuController implements Initializable {
                             //  game.setNumberOfGenerations(game.getActualGenerationNumber());
 
                             game.incrementActualGenerationNumber();
-                            imageSaver = new ImageSaver(game, "PNG", "src/files/images" + game.getActualGenerationNumber() + ".png");
+                            imageSaver = new ImageSaver(game, "PNG", "src/files/images/image" + game.getActualGenerationNumber() + ".png");
                             imageSaver.setColors(game.getHead(), game.getTail(), game.getConductor(), game.getBlank());
                             imageSaver.makeImage();
                             //setGenerationNumberLabel(Integer.toString(game.getActualGenerationNumber()));
