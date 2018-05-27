@@ -3567,6 +3567,8 @@
                             <items>
                                 <MenuItem mnemonicParsing="false" onAction="#handleConfigFile"
                                           text="Plik konfiguracyjny"/>
+                                <MenuItem mnemonicParsing="false" onAction="#insertDiode" text="Diodę"/>
+                                <MenuItem mnemonicParsing="false" onAction="#insertReversedDiode" text="Odwróconą diodę"/>
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Ustawienia">
