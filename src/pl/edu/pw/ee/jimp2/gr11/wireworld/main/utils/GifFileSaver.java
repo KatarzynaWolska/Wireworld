@@ -36,6 +36,7 @@ public class GifFileSaver {//każdy obraz z generacji musi zostać zapisany jako
         try {
             gifFile = new File(pathToGifFile);
 
+
             if (gifFile.isFile() == false)
                 gifFile.createNewFile();
 
@@ -43,7 +44,7 @@ public class GifFileSaver {//każdy obraz z generacji musi zostać zapisany jako
 
             BufferedImage image = ImageIO.read(new File(pathToImagesDir + "/image0.png"));
 
-            GifSequenceWriter writer = new GifSequenceWriter(output, image.getType(), 10, true);
+            GifSequenceWriter writer = new GifSequenceWriter(output, image.getType(), 100, true);
             writer.writeToSequence(image);
 
 
@@ -57,7 +58,7 @@ public class GifFileSaver {//każdy obraz z generacji musi zostać zapisany jako
 
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("Błąd podczas tworzenia pliku gif.");
+            //System.err.println("Błąd podczas tworzenia pliku gif.");
         }
     }
 }
