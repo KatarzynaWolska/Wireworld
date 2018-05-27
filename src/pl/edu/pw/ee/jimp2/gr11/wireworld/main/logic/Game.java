@@ -7,44 +7,13 @@ import pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.game.GameController;
 
 import java.util.List;
 
-public class Game extends Thread {
+public class Game {
 
-
-
-    /*
-        public Game(int totalNumberOfGenerations) {//to bedziemy wywoływać w GUI po naciśnięciu "start"
-            this.totalNumberOfGenerations = totalNumberOfGenerations;
-            goThroughGenerations();
-        }
-
-        private void goThroughGenerations() {
-            if (currentGeneration.getNumberOfGeneration() == 1)//lub 0
-                this.cellsOfFirstGeneration = currentGeneration.getAllCells();
-            //tu bedzie w pętelce nieskończonej wywowływane:
-            //gen = makeNextGeneration();
-        }
-        //metoda sprawdzająca czy nalezy przerwac generacje
-
-        private boolean isContinued() {
-            if (currentGeneration.isAnyHeadOrTailInActiveCells() == false) {
-                this.totalNumberOfGenerations = currentGeneration.getNumberOfGeneration();
-                if (isEarlyEndMonitDisplayed == false) {
-                    //tu tzreba jakoś podpiąć monit mowiacy o przedwczesnym zakonczeniu
-
-                    isEarlyEndMonitDisplayed = true;
-                }
-                return false;
-            }
-
-            return true;
-        }
-
-
-        //metoda inicjujaca piersza generacje i zapisujaca ja do cellsOfFirstGeneration
-        */
     private Generation actualGeneration;
     private Generation nextGeneration;
     private int numberOfGenerations;
+    private  int actualGenerationNumber = 0;
+    private boolean stopped = false;
     //newColor.toString() z pickera wywala coś takiego co masz niżej. a to w -fx nie działa :v
     private String blankColor = "rgb(0, 0, 0)";//"rgb(0, 0, 0)";
     private String conductorColor = "rgb(255, 255, 0)";// "rgb(255, 255, 0)";
@@ -55,6 +24,22 @@ public class Game extends Thread {
     private Color conductor;
     private Color tail;
     private Color head;
+
+    public int getActualGenerationNumber() {
+        return this.actualGenerationNumber;
+    }
+
+    public void setActualGenerationNumber(int number) {
+        this.actualGenerationNumber = number;
+    }
+
+    public void incrementActualGenerationNumber() {
+        this.actualGenerationNumber++;
+    }
+
+    public boolean getStopped () {
+        return this.stopped;
+    }
 
     public Color getBlank() {
         return blank;
@@ -91,8 +76,6 @@ public class Game extends Thread {
     public void setStopped(boolean stopped) {
         this.stopped = stopped;
     }
-
-    private boolean stopped = true;
 
     public String getBlankColor() {
         return blankColor;
@@ -186,24 +169,16 @@ public class Game extends Thread {
 
 
     public boolean performGame() {
+        stopped = false;
         setNextGeneration(actualGeneration.createNextGeneration(actualGeneration));
         if (checkEqualityOfGenerations(actualGeneration.getCells(), nextGeneration.getCells())) {
+            stopped = true;
             return false;
         }
         setActualGeneration(this.nextGeneration);
         return true;
     }
 
-    @Override
-    public void run() {
-        performGame();
-            try {
-                sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-    }
 
     public String setColor(Cell c) {
         if (c instanceof Blank) {
