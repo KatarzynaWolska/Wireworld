@@ -16,6 +16,11 @@ public class ConfigFileReader {
     private int heightOfMatrix = 0;
     private int widthOfMatrix = 0;
 
+    public ConfigFileReader() {
+
+
+    }
+
     public int getHeightOfMatrix() {
         return this.heightOfMatrix;
     }
@@ -30,10 +35,6 @@ public class ConfigFileReader {
 
     public void setWidthOfMatrix(int width) {
         this.widthOfMatrix = width;
-    }
-
-    public ConfigFileReader() {
-
     }
 
     void incrementHeight() {
@@ -65,7 +66,7 @@ public class ConfigFileReader {
 
             if (checkLine(data) == false) {
                 System.out.println("Błędny format pliku kofiguracyjnego.");
-                System.exit(1);
+                return null;
             }
 
             for (int i = 0; i < data.length; i++) {
@@ -76,8 +77,8 @@ public class ConfigFileReader {
         }
 
         if (this.prefferedHeight != this.heightOfMatrix) {
-          System.out.println("Błędny format pliku kofiguracyjnego.");
-          System.exit(1);
+            System.out.println("Błędny format pliku kofiguracyjnego.");
+            return null;
         }
 
         br.close();

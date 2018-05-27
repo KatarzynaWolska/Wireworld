@@ -39,7 +39,7 @@ public class App extends Application {
         //  root.getStylesheets().add("pl/edu/pw/ee/jimp2/gr11/wireworld/main/view/wireWorldStyle.css");
         root.getStyleClass().add("root");
         //System.out.println( root.isResizable());
-
+        //MainMenuController m = new MainMenuController();
         primaryStage.show();
     }
 

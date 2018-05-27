@@ -1,6 +1,7 @@
 package pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils;
 
 import javafx.scene.paint.Color;
+import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.Game;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.Generation;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells.*;
 
@@ -14,7 +15,7 @@ import java.util.List;
 public class ImageSaver {
     private Generation currentGen;
     private String formatName;
-    private String pathToFile = "src/pl/edu/pw/ee/jimp2/gr11/wireworld/test/java.files.testfiles/image.bmp";
+    private String pathToFile;// = "src/pl/edu/pw/ee/jimp2/gr11/wireworld/test/java.files.testfiles/image.bmp";
     private int tileSize;
     private File imageFile;
     private int headColor;
@@ -22,18 +23,35 @@ public class ImageSaver {
     private int conductorColor;
     private int blankColor;
 
-    public ImageSaver(Generation gen, String formatName, String path) {
-        currentGen = gen;
+    public ImageSaver(Game game, String formatName, String path) {
+        currentGen = game.getActualGeneration();
         this.formatName = formatName;
         this.pathToFile = path;
         this.tileSize = 20;
+    }
+
+    public void setColors(Color headColor, Color tailColor, Color conductorColor, Color blankColor) {
+        java.awt.Color transformation = new java.awt.Color((float) headColor.getRed(), (float) headColor.getGreen(),
+                (float) headColor.getBlue(), (float) headColor.getOpacity());
+        this.headColor = transformation.getRGB();
+
+        transformation = new java.awt.Color((float) tailColor.getRed(), (float) tailColor.getGreen(),
+                (float) tailColor.getBlue(), (float) tailColor.getOpacity());
+        this.tailColor = transformation.getRGB();
+
+        transformation = new java.awt.Color((float) conductorColor.getRed(), (float) conductorColor.getGreen(),
+                (float) conductorColor.getBlue(), (float) conductorColor.getOpacity());
+        this.conductorColor = transformation.getRGB();
+
+        transformation = new java.awt.Color((float) blankColor.getRed(), (float) blankColor.getGreen(),
+                (float) blankColor.getBlue(), (float) blankColor.getOpacity());
+        this.blankColor = transformation.getRGB();
     }
 
     public void setHeadColor(Color headColor) {
         java.awt.Color transformation = new java.awt.Color((float) headColor.getRed(), (float) headColor.getGreen(),
                 (float) headColor.getBlue(), (float) headColor.getOpacity());
         this.headColor = transformation.getRGB();
-
     }
 
     public void setTailColor(Color tailColor) {
@@ -103,20 +121,20 @@ public class ImageSaver {
     }
 
     public static void main(String[] args) {//przerzucić do testów
-
-
+        Game g = new Game(1);
         Generation testGen = new Generation();//tego maina trzeba przerzucić do testów
         testGen.setHeight(2);
         testGen.setWidth(2);
         List<Cell> cells = new ArrayList<Cell>();
         testGen.setCells(cells);
+        g.setActualGeneration(testGen);
+
 
         cells.add(new Tail(0, 0));
         cells.add(new Head(0, 1));
         cells.add(new Blank(1, 0));
         cells.add(new Conductor(1, 1));
 
-        ImageSaver is = new ImageSaver(testGen, "PNG", "src/files/image.png");
-        is.makeImage();
+        ImageSaver is = new ImageSaver(g, "PNG", "src/files/image.png");
     }
 }

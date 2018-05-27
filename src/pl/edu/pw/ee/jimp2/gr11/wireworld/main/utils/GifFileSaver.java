@@ -1,5 +1,6 @@
 package pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils;
 
+import javafx.scene.control.Alert;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.Game;
 
 import javax.imageio.*;
@@ -23,10 +24,11 @@ public class GifFileSaver {//każdy obraz z generacji musi zostać zapisany jako
         saveImagesIntoGif();
     }
 
-    public GifFileSaver(String pathToImagesDir, String pathToGifFile) {
-        this.pathToImagesDir = pathToImagesDir;
-        this.pathToGifFile = pathToGifFile;
-        saveImagesIntoGif();
+
+    public static void main(String[] args) { //przeniesc do testów!
+
+        // GifFileSaver gfs = new GifFileSaver("src/files/images",
+        //       "src/files/testfiles/ani3.gif");
 
     }
 
@@ -34,11 +36,8 @@ public class GifFileSaver {//każdy obraz z generacji musi zostać zapisany jako
         try {
             gifFile = new File(pathToGifFile);
 
-            if (gifFile.isFile() == false) {
+            if (gifFile.isFile() == false)
                 gifFile.createNewFile();
-            } else {
-                System.out.println("Plik już istniał, zatem został on nadpisany.");
-            }
 
             ImageOutputStream output = new FileImageOutputStream(gifFile);
 
@@ -48,7 +47,7 @@ public class GifFileSaver {//każdy obraz z generacji musi zostać zapisany jako
             writer.writeToSequence(image);
 
 
-            for (int i = 1; i < currentGame.getNumberOfGenerations(); i++) {
+            for (int i = 1; i < currentGame.getActualGenerationNumber(); i++) {
                 image = ImageIO.read(new File(pathToImagesDir + "/image" + i + ".png"));
                 writer.writeToSequence(image);
             }
@@ -60,12 +59,5 @@ public class GifFileSaver {//każdy obraz z generacji musi zostać zapisany jako
             e.printStackTrace();
             System.err.println("Błąd podczas tworzenia pliku gif.");
         }
-    }
-
-    public static void main(String[] args) { //przeniesc do testów!
-
-        GifFileSaver gfs = new GifFileSaver("src/pl/edu/pw/ee/jimp2/gr11/wireworld/test/java.files.images",
-                "src/pl/edu/pw/ee/jimp2/gr11/wireworld/test/java.files.testfiles/ani.gif");
-
     }
 }

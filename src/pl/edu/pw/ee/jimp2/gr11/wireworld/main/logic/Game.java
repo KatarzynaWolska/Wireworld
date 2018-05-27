@@ -3,7 +3,6 @@ package pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic;
 import javafx.scene.paint.Color;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.Generation;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells.*;
-import pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.game.GameController;
 
 import java.util.List;
 
@@ -13,6 +12,7 @@ public class Game {
     private Generation nextGeneration;
     private int numberOfGenerations;
     private  int actualGenerationNumber = 0;
+    private boolean isGameContinued = true;
     private boolean stopped = false;
     //newColor.toString() z pickera wywala coś takiego co masz niżej. a to w -fx nie działa :v
     private String blankColor = "rgb(0, 0, 0)";//"rgb(0, 0, 0)";
@@ -23,6 +23,15 @@ public class Game {
     private Color blank;//"rgb(0, 0, 0)";
     private Color conductor;
     private Color tail;
+
+    public boolean isStopped() {
+        return stopped;
+    }
+
+    public void setStopped(boolean stopped) {
+        this.stopped = stopped;
+    }
+
     private Color head;
 
     public int getActualGenerationNumber() {
@@ -37,9 +46,6 @@ public class Game {
         this.actualGenerationNumber++;
     }
 
-    public boolean getStopped () {
-        return this.stopped;
-    }
 
     public Color getBlank() {
         return blank;
@@ -73,8 +79,8 @@ public class Game {
         this.head = head;
     }
 
-    public void setStopped(boolean stopped) {
-        this.stopped = stopped;
+    public void setGameContinued(boolean gameContinued) {
+        isGameContinued = gameContinued;
     }
 
     public String getBlankColor() {
@@ -109,8 +115,8 @@ public class Game {
         this.headColor = headColor;
     }
 
-    public boolean isStopped() {
-        return stopped;
+    public boolean isGameContinued() {
+        return isGameContinued;
     }
 
     public Game(Generation actualGeneration, int numberOfGeneration) {
@@ -169,10 +175,8 @@ public class Game {
 
 
     public boolean performGame() {
-        stopped = false;
         setNextGeneration(actualGeneration.createNextGeneration(actualGeneration));
         if (checkEqualityOfGenerations(actualGeneration.getCells(), nextGeneration.getCells())) {
-            stopped = true;
             return false;
         }
         setActualGeneration(this.nextGeneration);
