@@ -14,16 +14,13 @@ public class ConfigFileSaver {
     private Generation genToSave;
     private List<Cell> cells;
 
-    public File getFile() {
-        return file;
-    }
-
-    public ConfigFileSaver(String pathToFile, Generation currentGeneration) {//macierz cell
+    public ConfigFileSaver(String pathToFile, Generation currentGeneration) {
         pathToSaveFile = pathToFile;
         genToSave = currentGeneration;
         this.cells = genToSave.getCells();
         makeConfigFile();
     }
+
 
     private void makeConfigFile() {
         file = new File(pathToSaveFile);
@@ -35,15 +32,14 @@ public class ConfigFileSaver {
                 saveDataToFile();
                 configFile.close();
             } catch (IOException e) {
-                System.out.println("Nie udało się zapisać pliku.");
+                e.printStackTrace();
             }
-        } else {
-            System.out.println("Plik już istniał, zatem został on nadpisany.");
         }
+
 
     }
 
-    private void saveDataToFile() {//macierz cell
+    private void saveDataToFile() {
         int i = 0;
         StringBuilder line = new StringBuilder("");
         for (Cell c : cells) {
@@ -54,22 +50,6 @@ public class ConfigFileSaver {
             }
         }
 
-    }
-
-    public static void main(String[] args) {//tego maina trzeba przerzucić do testów
-
-        Generation testGen = new Generation();
-        testGen.setHeight(1);
-        testGen.setWidth(2);
-        List<Cell> cells = new ArrayList<Cell>();
-        testGen.setCells(cells);
-
-        cells.add(new Tail(0, 0));
-        cells.add(new Head(0, 1));
-        cells.add(new Blank(1, 0));
-        cells.add(new Conductor(1, 1));
-
-        ConfigFileSaver c = new ConfigFileSaver("src/pl/edu/pw/ee/jimp2/gr11/wireworld/test/java.files.testfiles/file.txt", testGen);
     }
 
 }

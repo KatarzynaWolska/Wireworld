@@ -30,7 +30,6 @@ public class GifSequenceWriter {
             int imageType,
             int timeBetweenFramesMS,
             boolean loopContinuously) throws IIOException, IOException {
-        // my method to create a writer
         gifWriter = getWriter();
         imageWriteParam = gifWriter.getDefaultWriteParam();
         ImageTypeSpecifier imageTypeSpecifier = ImageTypeSpecifier.createFromBufferedImageType(imageType);
@@ -83,13 +82,6 @@ public class GifSequenceWriter {
         gifWriter.prepareWriteSequence(null);
     }
 
-    /**
-     * Returns the first available GIF ImageWriter using
-     * ImageIO.getImageWritersBySuffix("gif").
-     *
-     * @return a GIF ImageWriter object
-     * @throws IIOException if no GIF image writers are returned
-     */
     private static ImageWriter getWriter() throws IIOException {
         Iterator<ImageWriter> iter = ImageIO.getImageWritersBySuffix("gif");
         if (!iter.hasNext()) {
@@ -99,14 +91,7 @@ public class GifSequenceWriter {
         }
     }
 
-    /**
-     * Returns an existing child node, or creates and returns a new child node (if
-     * the requested node does not exist).
-     *
-     * @param rootNode the <tt>IIOMetadataNode</tt> to search for the child node.
-     * @param nodeName the name of the child node.
-     * @return the child node, if found or a new node created with the given name.
-     */
+
     private static IIOMetadataNode getNode(
             IIOMetadataNode rootNode,
             String nodeName) {
@@ -131,21 +116,10 @@ public class GifSequenceWriter {
                 imageWriteParam);
     }
 
-    /**
-     * Close this GifSequenceWriter object. This does not close the underlying
-     * stream, just finishes off the GIF.
-     */
     public void close() throws IOException {
         gifWriter.endWriteSequence();
     }
 
-    /**
-     public GifSequenceWriter(
-     BufferedOutputStream outputStream,
-     int imageType,
-     int timeBetweenFramesMS,
-     boolean loopContinuously) {
 
-     */
 }
 

@@ -1,24 +1,32 @@
-
+package test.java;
 
 //import org.junit.BeforeClass;
 //import org.junit.Test;
+
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.Generation;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells.*;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils.ConfigFileSaver;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class ConfigFileSaverTest {/*
-    private String path1 = "src/pl/edu/pw/ee/jimp2/gr11/wireworld/test/java.files.testfiles/file.txt";
+public class ConfigFileSaverTest {
+    private String path1 = "src/files/testfiles/file.txt";
     private String nullPath = "";
-    Generation testGen;
-    private List<Cell> cells;
+    private static Generation testGen;
+    private static List<Cell> cells;
 
     @BeforeClass
-    public void setUp() {
+    public static void setUp() {
         testGen = new Generation();
         testGen.setHeight(1);
         testGen.setWidth(4);
         testGen.setCells(cells);
+
+        cells = new ArrayList<Cell>();
 
         cells.add(new Tail(0, 0));
         cells.add(new Head(0, 1));
@@ -31,14 +39,15 @@ public class ConfigFileSaverTest {/*
     public void shouldSaveIntoFile() {
         ConfigFileSaver c = new ConfigFileSaver(path1, testGen);
 
+    }
+/*
+    @Test(expected = java.io.IOException.class)
+    public void shouldNotSaveIntoFile() {
         try {
             ConfigFileSaver cfs = new ConfigFileSaver(nullPath, testGen);
-            //fail();
+
         } catch (IllegalArgumentException e) {
 
         }
-
-
-    }
-*/
+    }*/
 }
