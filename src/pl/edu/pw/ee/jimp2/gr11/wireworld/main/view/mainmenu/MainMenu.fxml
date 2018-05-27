@@ -3571,7 +3571,8 @@
                         </Menu>
                         <Menu mnemonicParsing="false" text="Ustawienia">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Zresetuj aktualną grę"/>
+                                <MenuItem mnemonicParsing="false" onAction="#resetGame" text="Zresetuj aktualną grę"/>
+                                <MenuItem mnemonicParsing="false" onAction="#setTotalGenerationsNumber" text="Ustaw liczbę generacji"/>
                             </items>
                         </Menu>
 
