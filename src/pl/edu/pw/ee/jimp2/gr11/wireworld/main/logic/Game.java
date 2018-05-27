@@ -14,6 +14,7 @@ public class Game {
     private  int actualGenerationNumber = 0;
     private boolean isGameContinued = true;
     private boolean stopped = false;
+    private boolean isNumberOfGenerationSet = false;
     //newColor.toString() z pickera wywala coś takiego co masz niżej. a to w -fx nie działa :v
     private String blankColor = "rgb(0, 0, 0)";//"rgb(0, 0, 0)";
     private String conductorColor = "rgb(255, 255, 0)";// "rgb(255, 255, 0)";
@@ -25,6 +26,14 @@ public class Game {
     private Color tail;
     private Color head;
 
+
+    public boolean getIsNumberOfGenerationSet() {
+        return this.isNumberOfGenerationSet;
+    }
+
+    public void setIsNumberOfGenerationSet(boolean value) {
+        this.isNumberOfGenerationSet = value;
+    }
 
     public boolean isStopped() {
         return stopped;

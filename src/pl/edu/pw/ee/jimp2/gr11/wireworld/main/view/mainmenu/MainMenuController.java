@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainMenuController implements Initializable {
@@ -74,21 +75,21 @@ public class MainMenuController implements Initializable {
     private Label currentGenNumber;
 
 
-
     public void handleColor(ActionEvent event) { //todo: po wybraniu koloru tutaj trzeba tez zmienić kolor wszytskich komórek na planszy!
         colorPicker = (ColorPicker) event.getSource();
         Color newColor = colorPicker.getValue();
-        double redColor = newColor.getRed()*255;
-        double greenColor = newColor.getGreen()*255;
-        double blueColor = newColor.getBlue()*255;
+        double redColor = newColor.getRed() * 255;
+        double greenColor = newColor.getGreen() * 255;
+        double blueColor = newColor.getBlue() * 255;
         StringBuilder b = new StringBuilder("rgb( ");
         b.append(redColor).append(", ").append(greenColor).append(", ").append(blueColor);
-        b.append(")");
+        b.append(", 1)");
 
         if (colorPicker.getId().equals("tailColor")) {
             game.setTailColor(b.toString());
             game.setTail(newColor);
-            for (Button cell : buttons) {
+            setStylesForCells();
+            for (Button cell : buttons) { // wywalał się u mnie nullPointerException
                 if (cell.getBackground().toString() == tailColor.getBackground().toString()) {
                     System.out.println(cell.getStyle());
                     cell.setBackground(new Background(new BackgroundFill(newColor, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -102,13 +103,16 @@ public class MainMenuController implements Initializable {
         } else if (colorPicker.getId().equals("headColor")) {
             game.setHeadColor(b.toString());
             game.setHead(newColor);
+            setStylesForCells();
 
         } else if (colorPicker.getId().equals("conductorColor")) {
             game.setConductor(newColor);
             game.setConductorColor(b.toString());
+            setStylesForCells();
         } else {
             game.setBlank(newColor);
             game.setBlankColor(b.toString());
+            setStylesForCells();
         }
     }
 
@@ -119,7 +123,7 @@ public class MainMenuController implements Initializable {
 
             cellButton = (Button) event.getSource();
             String id = cellButton.getId();
-            cellButton.setStyle(game.newColorForCell( id, game));
+            cellButton.setStyle(game.newColorForCell(id, game));
 
         } else {
 
@@ -132,10 +136,10 @@ public class MainMenuController implements Initializable {
     public void pressSaveConfigurationFile(ActionEvent event) {
         Node node = (Node) event.getSource();
 
-            Generation genToSaveIntoConfigFile = game.getActualGeneration();
+        Generation genToSaveIntoConfigFile = game.getActualGeneration();
 
-            FileChooser dir = new FileChooser();
-            dir.setTitle("Zapisz plik konfiguracyjny:");
+        FileChooser dir = new FileChooser();
+        dir.setTitle("Zapisz plik konfiguracyjny:");
 /*
             //testowa generacja
             Generation testGen = new Generation();
@@ -151,15 +155,14 @@ public class MainMenuController implements Initializable {
             //koniec testGen
             */
 
-            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("tekstowy (*.txt)",
-                    " *.txt");
-            dir.getExtensionFilters().add(extFilter);
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("tekstowy (*.txt)",
+                " *.txt");
+        dir.getExtensionFilters().add(extFilter);
 
 
-            File file = dir.showSaveDialog(new Stage());
-            //System.out.println(file.getAbsolutePath());
+        File file = dir.showSaveDialog(new Stage());
+        //System.out.println(file.getAbsolutePath());
         ConfigFileSaver configFileSaver = new ConfigFileSaver(file.getAbsolutePath(), game.getActualGeneration());//tu zmienic potem generacje
-
 
 
     }
@@ -185,25 +188,24 @@ public class MainMenuController implements Initializable {
         Node node = (Node) event.getSource();
 
 
+        FileChooser dir = new FileChooser();
+        dir.setTitle("Zapisz obraz:");
 
-            FileChooser dir = new FileChooser();
-            dir.setTitle("Zapisz obraz:");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("plik PNG (*.png)",
+                " *.png");
+        dir.getExtensionFilters().add(extFilter);
 
-            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("plik PNG (*.png)",
-                    " *.png");
-            dir.getExtensionFilters().add(extFilter);
+        File file = dir.showSaveDialog(new Stage());
+        if (file != null) {
 
-            File file = dir.showSaveDialog(new Stage());
-            if (file != null) {
-
-                ImageSaver is = new ImageSaver(game, "PNG", file.getAbsolutePath());
-                //imageSaver.setHeadColor(game.getHeadColor());
-                is.setBlankColor(game.getBlank());
-                is.setHeadColor(game.getHead());
-                is.setTailColor(game.getTail());
-                is.setConductorColor(game.getConductor());
-                is.makeImage();
-            }
+            ImageSaver is = new ImageSaver(game, "PNG", file.getAbsolutePath());
+            //imageSaver.setHeadColor(game.getHeadColor());
+            is.setBlankColor(game.getBlank());
+            is.setHeadColor(game.getHead());
+            is.setTailColor(game.getTail());
+            is.setConductorColor(game.getConductor());
+            is.makeImage();
+        }
 
     }
 
@@ -239,6 +241,7 @@ public class MainMenuController implements Initializable {
         alert.setContentText(content);
         alert.setResizable(true);
 
+
         DialogPane dialogPane = alert.getDialogPane();
         dialogPane.getStylesheets().add(getClass().getResource("wireWorldStyle.css").toExternalForm());
         dialogPane.getStyleClass().add("myDialog");
@@ -251,7 +254,7 @@ public class MainMenuController implements Initializable {
                 "Aby zobaczyć zasady gry kliknij w przycisk \"Zasady gry\". \n Aby wstawić własną konfigurację kliknij " +
                 "Wstaw->Plik konfiguracyjny, a następnie wybierz plik w formacie tekstowym (*.txt).\n" +
                 "\nAby rozpocząć grę ustaw komórki na planszy za pomocą kliknięć. Plansza domyslnie ma wszytskie komórki puste." +
-                " Jedno kliknięcie na wybraną komórkę ustawia ją jako głowę, dwa - ogon, trzy - przewodnik, a cztery - " +
+                " Jedno kliknięcie na wybraną komórkę ustawia ją jako przewodnik, dwa - ogon, trzy - głowę, a cztery - " +
                 "ponownie jako pustą.\n\n Istnieje możliwość ustawienia własnych kolorów dla wybranych typów komórek." +
                 "" +
                 "\n";
@@ -264,8 +267,8 @@ public class MainMenuController implements Initializable {
 
         String content = "Gra jest symulatorem automatu komórkowego 'WireWorld' autorstwa Briana Silvermana.\n" +
                 " Każda komórka na planszy może znajdować się w jednym z czterech następujących stanów, które domyślnie oznacza " +
-                "się następującymi kolorami: \n\n*Pusta - kolor czarny, \n*Głowa elektronu - kolor czerwony, \n*Ogon elektronu " +
-                "- kolor niebieski, \n*Przewodnik - kolor żółty .\nW automacie stosuje się sąsiedztwo Moore'a, które za" +
+                "się następującymi kolorami: \n\n*Pusta - kolor czarny, \n*Głowa elektronu - kolor niebieski, \n*Ogon elektronu " +
+                "- kolor czerwony, \n*Przewodnik - kolor żółty .\nW automacie stosuje się sąsiedztwo Moore'a, które za" +
                 " sąsiada traktuje każdą komórkę położoną na: północ, północny-wschód, wschód, południowy-wschód, " +
                 "południe, południowy-zachód, zachód i północny-zachód od danej komórki. W 'WireWorld' stosuje się " +
                 "następujące zasady: \n\n1) Komórka pozostaje pusta jeśli była pusta. \n2) Komórka staje się ogonem elektronu," +
@@ -275,6 +278,30 @@ public class MainMenuController implements Initializable {
                 "\n";
 
         makeAlert("WireWorld", "Zasady Gry", content);
+
+    }
+
+    public void resetGame(ActionEvent event) {
+        game.setActualGeneration(new Generation());
+        currentGenNumber.setText("0");
+        game.setIsNumberOfGenerationSet(false);
+
+        setStylesForCells();
+
+    }
+
+    public void setTotalGenerationsNumber(ActionEvent event) {
+        TextInputDialog genNumberDialog = new TextInputDialog();
+        genNumberDialog.setTitle("Ustaw liczbę generacji");
+        genNumberDialog.setHeaderText("Wpisz ilość generacji");
+
+        Optional<String> result = genNumberDialog.showAndWait();
+
+        result.ifPresent(name -> {
+            game.setNumberOfGenerations(Integer.parseInt(name));
+            game.setIsNumberOfGenerationSet(true);
+        });
+
 
     }
 
@@ -307,12 +334,12 @@ public class MainMenuController implements Initializable {
 
                 if (cells != null) {
                     game.getActualGeneration().setCells(cells);
-                    // ^^^ todo: Kasia, zobacz czy to ok. czy w ten sposob masz tam zapisywane komórki
+                    setStylesForCells();
                     break;
                 } else {
                     makeAlert("Wire World", "Plik konfiguracyjny", "Wczytywanie pliku konfiguracyjnego" +
                             " nie powiodło. Zły format pliku. Plik powinien mieć 20 wierszy i 24 kolumny.\n\n" +
-                            "Powinien składać się z cyfr 0 (pusta), 1 (przewód), 2 (głowa), 3 (ogon) oddzielonych spacjami" +
+                            "Powinien składać się z cyfr 0 (pusta), 1 (przewód), 2 (ogon), 3 (głowa) oddzielonych spacjami" +
                             " i podzielonych na wiersze oraz kolumny.\n\n");
                     file = fileChooser.showSaveDialog(new Stage());
                 }
@@ -320,6 +347,13 @@ public class MainMenuController implements Initializable {
             } else {
                 break;
             }
+        }
+    }
+
+    public void setStylesForCells() {
+        for (Cell c : game.getActualGeneration().getCells()) {
+            int index = game.getActualGeneration().getCells().indexOf(c);
+            buttons.get(index).setStyle(game.setColor(c));
         }
     }
 
@@ -380,47 +414,89 @@ public class MainMenuController implements Initializable {
 
     }
 
+
     class GameStarter implements Runnable {
 
         @Override
         public void run() {
-            try {
-                imageSaver = new ImageSaver(game, "PNG", "src/files/images/image" + game.getActualGenerationNumber() + ".png");
-                if (isDirectoryClean == false)
-                    imageSaver.deletePreviousFiles();
-                imageSaver.setColors(game.getHead(), game.getTail(), game.getConductor(), game.getBlank());
-                imageSaver.makeImage();
 
-                while (game.performGame()) {
+            if (!game.getIsNumberOfGenerationSet()) {
+                try {
+                        imageSaver = new ImageSaver(game, "PNG", "src/files/images/image" + game.getActualGenerationNumber() + ".png");
+                        if (isDirectoryClean == false)
+                            imageSaver.deletePreviousFiles(); //wywalał się u mnie nullPoniterException
+                        imageSaver.setColors(game.getHead(), game.getTail(), game.getConductor(), game.getBlank());
+                        imageSaver.makeImage();
 
-                    game.incrementActualGenerationNumber();
-                    imageSaver = new ImageSaver(game, "PNG", "src/files/images/image" + game.getActualGenerationNumber() + ".png");
-                    imageSaver.setColors(game.getHead(), game.getTail(), game.getConductor(), game.getBlank());
-                    imageSaver.makeImage();
-                    //setGenerationNumberLabel(Integer.toString(game.getActualGenerationNumber()));
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            setGenerationNumberLabel(Integer.toString(game.getActualGenerationNumber()));
+                        while (game.performGame()) {
+                            //if(game.isGameContinued() == false)
+                            //  game.setNumberOfGenerations(game.getActualGenerationNumber());
+
+                            game.incrementActualGenerationNumber();
+                            imageSaver = new ImageSaver(game, "PNG", "src/files/images" + game.getActualGenerationNumber() + ".png");
+                            imageSaver.setColors(game.getHead(), game.getTail(), game.getConductor(), game.getBlank());
+                            imageSaver.makeImage();
+                            //setGenerationNumberLabel(Integer.toString(game.getActualGenerationNumber()));
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    setGenerationNumberLabel(Integer.toString(game.getActualGenerationNumber()));
+                                }
+                            });
+
+                            setStylesForCells();
+
+                            Thread.sleep(1000);
                         }
-                    });
 
-                    for (Cell c : game.getActualGeneration().getCells()) {
-                        int index = game.getActualGeneration().getCells().indexOf(c);
-                        buttons.get(index).setStyle(game.setColor(c));
+                        game.setNumberOfGenerations(game.getActualGenerationNumber());
+                        //włączenie przycisku zapisz animacje
+                        //animation.setDisable(false);
+                        //}while(game.isGameContinued());
+
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
                     }
-                    Thread.sleep(1000);
+
                 }
 
-                game.setNumberOfGenerations(game.getActualGenerationNumber());
+            else{
+                    try {
+                        for (int i = 0; i < game.getNumberOfGenerations(); i++) {
+                            game.performGame();
+                            game.incrementActualGenerationNumber();
+                            imageSaver = new ImageSaver(game, "PNG", "src/files/images" + game.getActualGenerationNumber() + ".png");
+                            if (isDirectoryClean == false)
+                                imageSaver.deletePreviousFiles();
+                            imageSaver.setColors(game.getHead(), game.getTail(), game.getConductor(), game.getBlank());
+                            imageSaver.makeImage();
+                            //setGenerationNumberLabel(Integer.toString(game.getActualGenerationNumber()));
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    setGenerationNumberLabel(Integer.toString(game.getActualGenerationNumber()));
+                                }
+                            });
+
+                            setStylesForCells();
+
+                            Thread.sleep(1000);
+                        }
+
+                        game.setNumberOfGenerations(game.getActualGenerationNumber());
 
 
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
             }
 
+
         }
+
+
     }
 
 
-}
+
