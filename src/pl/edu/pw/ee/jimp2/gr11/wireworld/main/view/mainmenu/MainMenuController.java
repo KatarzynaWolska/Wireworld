@@ -76,28 +76,27 @@ public class MainMenuController implements Initializable {
     public void handleColor(ActionEvent event) { //todo: po wybraniu koloru tutaj trzeba tez zmienić kolor wszytskich komórek na planszy!
         colorPicker = (ColorPicker) event.getSource();
         Color newColor = colorPicker.getValue();
-        // System.out.println((new java.awt.Color((float)newColor.getRed(), (float)newColor.getGreen(),
-        //       (float)newColor.getBlue(), (float)newColor.getOpacity())));
-        //StringBuilder b = new StringBuilder("rgb(");
-        //b.append(newColor.getRed()).append(", ").append(newColor.getGreen()).append(", ").append(newColor.getBlue());
-        //b.append(")");
-        //System.out.println(b.toString());
-        //System.out.println(newColor.getBlue());
+        double redColor = newColor.getRed()*255;
+        double greenColor = newColor.getGreen()*255;
+        double blueColor = newColor.getBlue()*255;
+        StringBuilder b = new StringBuilder("rgb( ");
+        b.append(redColor).append(", ").append(greenColor).append(", ").append(blueColor);
+        b.append(")");
 
         if (colorPicker.getId().equals("tailColor")) {
-            game.setTailColor(newColor.toString());
+            game.setTailColor(b.toString());
             game.setTail(newColor);
 
         } else if (colorPicker.getId().equals("headColor")) {
-            game.setHeadColor(newColor.toString());
+            game.setHeadColor(b.toString());
             game.setHead(newColor);
 
         } else if (colorPicker.getId().equals("conductorColor")) {
             game.setConductor(newColor);
-            game.setConductorColor(newColor.toString());
+            game.setConductorColor(b.toString());
         } else {
             game.setBlank(newColor);
-            game.setBlankColor(newColor.toString());
+            game.setBlankColor(b.toString());
         }
     }
 
@@ -107,29 +106,8 @@ public class MainMenuController implements Initializable {
         if (thread == null) {
 
             cellButton = (Button) event.getSource();
-
-            Color color = (Color) cellButton.getBackground().getFills().get(0).getFill();
             String id = cellButton.getId();
-
-            //newColorForCell by zwracało newColor np  Color(12,12,12,11))
-            //a tak by się ustawiało vvv
-            //cellButton.setBackground(new Background(new BackgroundFill(newColor, CornerRadii.EMPTY, Insets.EMPTY)));
-
-
-            cellButton.setStyle(game.newColorForCell(color.toString(), id, game));
-
-            //cellButton.setStyle(newColorForCell(color.toString(), id));
-
-            //System.out.println(color.toString());
-
-            //cellButton.getStyleClass().add("headCell");//tak tez sie da ale tu trudniej bedzie zmienić paletę.
-
-            //wywołanie metody która zwraca kolor do ustawienia, a pobiera aktualny + fxid
-            //tam w sordku sobie ustawia komorke ktora trzeba na stan ktory powinna i zwraca kolor stanu
-            // czyli zwraca String np  "-fx-background-color: rgb(0, 0, 0)" do zmiennej lokalnej jakiejs
-            //i wywoluje się dalej: cellButton.setStyle(newColorForCell);
-            // cos w tym stylu :
-            // cellButton.setStyle("-fx-background-color: rgb(0, 0, 0)");
+            cellButton.setStyle(game.newColorForCell( id, game));
 
         } else {
 
@@ -140,7 +118,6 @@ public class MainMenuController implements Initializable {
 
 
     public void pressSaveConfigurationFile(ActionEvent event) {
-        //saver = (Button) event.getSource();
         Node node = (Node) event.getSource();
 
 

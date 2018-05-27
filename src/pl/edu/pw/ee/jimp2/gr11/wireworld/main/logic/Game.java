@@ -198,7 +198,7 @@ public class Game {
         }
     }
 
-    public String newColorForCell(String color, String id, Game game) {
+    public String newColorForCell(String id, Game game) {
 
         String[] coords = id.split(("(?!^)"));
 
@@ -215,16 +215,16 @@ public class Game {
         int i = game.getActualGeneration().getCells().indexOf(c);
         game.getActualGeneration().getCells().remove(i);
 
-        if (color.equals("0x000000ff")) {
+        if (c instanceof Blank) {
             game.getActualGeneration().getCells().add(i, new Conductor(x, y));
             return "-fx-background-color: " + conductorColor;
-        } else if (color.equals("0xffff00ff")) {
+        } else if (c instanceof Conductor) {
             game.getActualGeneration().getCells().add(i, new Tail(x, y));
             return "-fx-background-color: " + tailColor;
-        } else if (color.equals("0xff0000ff")) {
+        } else if (c instanceof  Tail) {
             game.getActualGeneration().getCells().add(i, new Head(x, y));
             return "-fx-background-color: " + headColor;
-        } else if (color.equals("0xff0000ff")) {
+        } else if (c instanceof Head) {
             game.getActualGeneration().getCells().add(i, new Blank(x, y));
             return "-fx-background-color: " + blankColor;
         } else {
