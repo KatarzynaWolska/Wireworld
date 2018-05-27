@@ -75,13 +75,12 @@ public class MainMenuController implements Initializable {
     private Label currentGenNumber;
 
 
-
     public void handleColor(ActionEvent event) { //todo: po wybraniu koloru tutaj trzeba tez zmienić kolor wszytskich komórek na planszy!
         colorPicker = (ColorPicker) event.getSource();
         Color newColor = colorPicker.getValue();
-        double redColor = newColor.getRed()*255;
-        double greenColor = newColor.getGreen()*255;
-        double blueColor = newColor.getBlue()*255;
+        double redColor = newColor.getRed() * 255;
+        double greenColor = newColor.getGreen() * 255;
+        double blueColor = newColor.getBlue() * 255;
         StringBuilder b = new StringBuilder("rgb( ");
         b.append(redColor).append(", ").append(greenColor).append(", ").append(blueColor);
         b.append(", 1)");
@@ -90,7 +89,7 @@ public class MainMenuController implements Initializable {
             game.setTailColor(b.toString());
             game.setTail(newColor);
             setStylesForCells();
-            for (Button cell : buttons) {
+            for (Button cell : buttons) { // wywalał się u mnie nullPointerException
                 if (cell.getBackground().toString() == tailColor.getBackground().toString()) {
                     System.out.println(cell.getStyle());
                     cell.setBackground(new Background(new BackgroundFill(newColor, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -124,7 +123,7 @@ public class MainMenuController implements Initializable {
 
             cellButton = (Button) event.getSource();
             String id = cellButton.getId();
-            cellButton.setStyle(game.newColorForCell( id, game));
+            cellButton.setStyle(game.newColorForCell(id, game));
 
         } else {
 
@@ -137,10 +136,10 @@ public class MainMenuController implements Initializable {
     public void pressSaveConfigurationFile(ActionEvent event) {
         Node node = (Node) event.getSource();
 
-            Generation genToSaveIntoConfigFile = game.getActualGeneration();
+        Generation genToSaveIntoConfigFile = game.getActualGeneration();
 
-            FileChooser dir = new FileChooser();
-            dir.setTitle("Zapisz plik konfiguracyjny:");
+        FileChooser dir = new FileChooser();
+        dir.setTitle("Zapisz plik konfiguracyjny:");
 /*
             //testowa generacja
             Generation testGen = new Generation();
@@ -156,15 +155,14 @@ public class MainMenuController implements Initializable {
             //koniec testGen
             */
 
-            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("tekstowy (*.txt)",
-                    " *.txt");
-            dir.getExtensionFilters().add(extFilter);
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("tekstowy (*.txt)",
+                " *.txt");
+        dir.getExtensionFilters().add(extFilter);
 
 
-            File file = dir.showSaveDialog(new Stage());
-            //System.out.println(file.getAbsolutePath());
+        File file = dir.showSaveDialog(new Stage());
+        //System.out.println(file.getAbsolutePath());
         ConfigFileSaver configFileSaver = new ConfigFileSaver(file.getAbsolutePath(), game.getActualGeneration());//tu zmienic potem generacje
-
 
 
     }
@@ -190,25 +188,24 @@ public class MainMenuController implements Initializable {
         Node node = (Node) event.getSource();
 
 
+        FileChooser dir = new FileChooser();
+        dir.setTitle("Zapisz obraz:");
 
-            FileChooser dir = new FileChooser();
-            dir.setTitle("Zapisz obraz:");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("plik PNG (*.png)",
+                " *.png");
+        dir.getExtensionFilters().add(extFilter);
 
-            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("plik PNG (*.png)",
-                    " *.png");
-            dir.getExtensionFilters().add(extFilter);
+        File file = dir.showSaveDialog(new Stage());
+        if (file != null) {
 
-            File file = dir.showSaveDialog(new Stage());
-            if (file != null) {
-
-                ImageSaver is = new ImageSaver(game, "PNG", file.getAbsolutePath());
-                //imageSaver.setHeadColor(game.getHeadColor());
-                is.setBlankColor(game.getBlank());
-                is.setHeadColor(game.getHead());
-                is.setTailColor(game.getTail());
-                is.setConductorColor(game.getConductor());
-                is.makeImage();
-            }
+            ImageSaver is = new ImageSaver(game, "PNG", file.getAbsolutePath());
+            //imageSaver.setHeadColor(game.getHeadColor());
+            is.setBlankColor(game.getBlank());
+            is.setHeadColor(game.getHead());
+            is.setTailColor(game.getTail());
+            is.setConductorColor(game.getConductor());
+            is.makeImage();
+        }
 
     }
 
@@ -293,17 +290,17 @@ public class MainMenuController implements Initializable {
 
     }
 
-    public void setTotalGenerationsNumber (ActionEvent event) {
+    public void setTotalGenerationsNumber(ActionEvent event) {
         TextInputDialog genNumberDialog = new TextInputDialog();
         genNumberDialog.setTitle("Ustaw liczbę generacji");
         genNumberDialog.setHeaderText("Wpisz ilość generacji");
 
         Optional<String> result = genNumberDialog.showAndWait();
 
-        result.ifPresent(name -> {game.setNumberOfGenerations(Integer.parseInt(name));
+        result.ifPresent(name -> {
+            game.setNumberOfGenerations(Integer.parseInt(name));
             game.setIsNumberOfGenerationSet(true);
         });
-
 
 
     }
@@ -338,7 +335,6 @@ public class MainMenuController implements Initializable {
                 if (cells != null) {
                     game.getActualGeneration().setCells(cells);
                     setStylesForCells();
-                    // ^^^ todo: Kasia, zobacz czy to ok. czy w ten sposob masz tam zapisywane komórki
                     break;
                 } else {
                     makeAlert("Wire World", "Plik konfiguracyjny", "Wczytywanie pliku konfiguracyjnego" +
@@ -353,6 +349,7 @@ public class MainMenuController implements Initializable {
             }
         }
     }
+
     public void setStylesForCells() {
         for (Cell c : game.getActualGeneration().getCells()) {
             int index = game.getActualGeneration().getCells().indexOf(c);
@@ -423,83 +420,83 @@ public class MainMenuController implements Initializable {
         @Override
         public void run() {
 
-            if(!game.getIsNumberOfGenerationSet()) {
+            if (!game.getIsNumberOfGenerationSet()) {
                 try {
-
-                    imageSaver = new ImageSaver(game, "PNG", "src/files/images" + game.getActualGenerationNumber() + ".png");
-                    imageSaver.setColors(game.getHead(), game.getTail(), game.getConductor(), game.getBlank());
-
-                    imageSaver.makeImage();
-                    //setGenerationNumberLabel("0");
-            try {
-                imageSaver = new ImageSaver(game, "PNG", "src/files/images/image" + game.getActualGenerationNumber() + ".png");
-                if (isDirectoryClean == false)
-                    imageSaver.deletePreviousFiles();
-                imageSaver.setColors(game.getHead(), game.getTail(), game.getConductor(), game.getBlank());
-                imageSaver.makeImage();
-
-                    while (game.performGame()) {
-                        //if(game.isGameContinued() == false)
-                        //  game.setNumberOfGenerations(game.getActualGenerationNumber());
-
-                        game.incrementActualGenerationNumber();
-                        imageSaver = new ImageSaver(game, "PNG", "src/files/images" + game.getActualGenerationNumber() + ".png");
+                        imageSaver = new ImageSaver(game, "PNG", "src/files/images/image" + game.getActualGenerationNumber() + ".png");
+                        if (isDirectoryClean == false)
+                            imageSaver.deletePreviousFiles(); //wywalał się u mnie nullPoniterException
                         imageSaver.setColors(game.getHead(), game.getTail(), game.getConductor(), game.getBlank());
                         imageSaver.makeImage();
-                        //setGenerationNumberLabel(Integer.toString(game.getActualGenerationNumber()));
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                setGenerationNumberLabel(Integer.toString(game.getActualGenerationNumber()));
-                            }
-                        });
 
-                        setStylesForCells();
+                        while (game.performGame()) {
+                            //if(game.isGameContinued() == false)
+                            //  game.setNumberOfGenerations(game.getActualGenerationNumber());
 
-                        Thread.sleep(1000);
+                            game.incrementActualGenerationNumber();
+                            imageSaver = new ImageSaver(game, "PNG", "src/files/images" + game.getActualGenerationNumber() + ".png");
+                            imageSaver.setColors(game.getHead(), game.getTail(), game.getConductor(), game.getBlank());
+                            imageSaver.makeImage();
+                            //setGenerationNumberLabel(Integer.toString(game.getActualGenerationNumber()));
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    setGenerationNumberLabel(Integer.toString(game.getActualGenerationNumber()));
+                                }
+                            });
+
+                            setStylesForCells();
+
+                            Thread.sleep(1000);
+                        }
+
+                        game.setNumberOfGenerations(game.getActualGenerationNumber());
+                        //włączenie przycisku zapisz animacje
+                        //animation.setDisable(false);
+                        //}while(game.isGameContinued());
+
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
                     }
 
-                    game.setNumberOfGenerations(game.getActualGenerationNumber());
-                    //włączenie przycisku zapisz animacje
-                    //animation.setDisable(false);
-                    //}while(game.isGameContinued());
-
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
                 }
-            }
-            else {
-                try {
-                for(int i = 0; i < game.getNumberOfGenerations(); i++) {
-                    game.performGame();
-                    game.incrementActualGenerationNumber();
-                    imageSaver = new ImageSaver(game, "PNG", "src/files/images" + game.getActualGenerationNumber() + ".png");
-                    imageSaver.setColors(game.getHead(), game.getTail(), game.getConductor(), game.getBlank());
-                    imageSaver.makeImage();
-                    //setGenerationNumberLabel(Integer.toString(game.getActualGenerationNumber()));
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            setGenerationNumberLabel(Integer.toString(game.getActualGenerationNumber()));
+
+            else{
+                    try {
+                        for (int i = 0; i < game.getNumberOfGenerations(); i++) {
+                            game.performGame();
+                            game.incrementActualGenerationNumber();
+                            imageSaver = new ImageSaver(game, "PNG", "src/files/images" + game.getActualGenerationNumber() + ".png");
+                            if (isDirectoryClean == false)
+                                imageSaver.deletePreviousFiles();
+                            imageSaver.setColors(game.getHead(), game.getTail(), game.getConductor(), game.getBlank());
+                            imageSaver.makeImage();
+                            //setGenerationNumberLabel(Integer.toString(game.getActualGenerationNumber()));
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    setGenerationNumberLabel(Integer.toString(game.getActualGenerationNumber()));
+                                }
+                            });
+
+                            setStylesForCells();
+
+                            Thread.sleep(1000);
                         }
-                    });
 
-                    setStylesForCells();
-
-                    Thread.sleep(1000);
-                }
-
-                game.setNumberOfGenerations(game.getActualGenerationNumber());
+                        game.setNumberOfGenerations(game.getActualGenerationNumber());
 
 
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
                 }
             }
+
+
+        }
 
 
     }
 
 
-}
+
