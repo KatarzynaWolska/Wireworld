@@ -425,7 +425,8 @@ public class MainMenuController implements Initializable {
                         imageSaver = new ImageSaver(game, "PNG", "src/files/images/image" + game.getActualGenerationNumber() + ".png");
                         if (isDirectoryClean == false)
                             imageSaver.deletePreviousFiles(); //wywalał się u mnie nullPoniterException
-                        imageSaver.setColors(game.getHead(), game.getTail(), game.getConductor(), game.getBlank());
+
+                    imageSaver.setColors(game.getHead(), game.getTail(), game.getConductor(), game.getBlank());
                         imageSaver.makeImage();
 
                         while (game.performGame()) {

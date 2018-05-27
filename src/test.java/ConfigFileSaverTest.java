@@ -1,4 +1,3 @@
-package test.java;
 
 //import org.junit.BeforeClass;
 //import org.junit.Test;
@@ -40,6 +39,7 @@ public class ConfigFileSaverTest {
         ConfigFileSaver c = new ConfigFileSaver(path1, testGen);
 
     }
+
 /*
     @Test(expected = java.io.IOException.class)
     public void shouldNotSaveIntoFile() {
@@ -49,5 +49,6 @@ public class ConfigFileSaverTest {
         } catch (IllegalArgumentException e) {
 
         }
-    }*/
+    }
+    */
 }
