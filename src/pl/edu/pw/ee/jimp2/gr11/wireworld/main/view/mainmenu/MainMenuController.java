@@ -1,35 +1,24 @@
 package pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.mainmenu;
 
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.Game;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.Generation;
-import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells.*;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells.Cell;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils.ConfigFileReader;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils.ConfigFileSaver;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils.GifFileSaver;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils.ImageSaver;
-
-
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -38,7 +27,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainMenuController implements Initializable {
-    Parent root;
     private Button cellButton;
     private Game game;
     private ColorPicker colorPicker;
@@ -76,7 +64,7 @@ public class MainMenuController implements Initializable {
     private Label currentGenNumber;
 
 
-    public void handleColor(ActionEvent event) { //todo: po wybraniu koloru tutaj trzeba tez zmienić kolor wszytskich komórek na planszy!
+    public void handleColor(ActionEvent event) {
         colorPicker = (ColorPicker) event.getSource();
         Color newColor = colorPicker.getValue();
         double redColor = newColor.getRed() * 255;
@@ -90,16 +78,6 @@ public class MainMenuController implements Initializable {
             game.setTailColor(b.toString());
             game.setTail(newColor);
             setStylesForCells();
-            /*for (Button cell : buttons) { // wywalał się u mnie nullPointerException
-                if (cell.getBackground().toString() == tailColor.getBackground().toString()) {
-                    System.out.println(cell.getStyle());
-                    cell.setBackground(new Background(new BackgroundFill(newColor, CornerRadii.EMPTY, Insets.EMPTY)));
-                    //newColorForCell by zwracało newColor np  Color(12,12,12,11))
-                    //a tak by się ustawiało vvv
-                    //cellButton.setBackground(new Background(new BackgroundFill(newColor, CornerRadii.EMPTY, Insets.EMPTY)));
-                }
-
-            }*/
 
         } else if (colorPicker.getId().equals("headColor")) {
             game.setHeadColor(b.toString());
@@ -135,26 +113,10 @@ public class MainMenuController implements Initializable {
 
 
     public void pressSaveConfigurationFile(ActionEvent event) {
-        Node node = (Node) event.getSource();
 
-        Generation genToSaveIntoConfigFile = game.getActualGeneration();
 
         FileChooser dir = new FileChooser();
         dir.setTitle("Zapisz plik konfiguracyjny:");
-/*
-            //testowa generacja
-            Generation testGen = new Generation();
-            testGen.setHeight(1);
-            testGen.setWidth(2);
-            List<Cell> cells = new ArrayList<Cell>();
-            testGen.setCells(cells);
-
-            cells.add(new Tail(0, 0));
-            cells.add(new Head(0, 1));
-            cells.add(new Blank(1, 0));
-            cells.add(new Conductor(1, 1));
-            //koniec testGen
-            */
 
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("tekstowy (*.txt)",
                 " *.txt");
@@ -162,14 +124,12 @@ public class MainMenuController implements Initializable {
 
 
         File file = dir.showSaveDialog(new Stage());
-        //System.out.println(file.getAbsolutePath());
-        ConfigFileSaver configFileSaver = new ConfigFileSaver(file.getAbsolutePath(), game.getActualGeneration());//tu zmienic potem generacje
+        ConfigFileSaver configFileSaver = new ConfigFileSaver(file.getAbsolutePath(), game.getActualGeneration());
 
 
     }
 
     public void pressSaveAnimation(ActionEvent event) {
-        Node node = (Node) event.getSource();
 
         FileChooser dir = new FileChooser();
         dir.setTitle("Zapisz animację:");
@@ -186,8 +146,6 @@ public class MainMenuController implements Initializable {
     }
 
     public void pressSaveImage(ActionEvent event) {
-        Node node = (Node) event.getSource();
-
 
         FileChooser dir = new FileChooser();
         dir.setTitle("Zapisz obraz:");
@@ -200,7 +158,6 @@ public class MainMenuController implements Initializable {
         if (file != null) {
 
             ImageSaver is = new ImageSaver(game, "PNG", file.getAbsolutePath());
-            //imageSaver.setHeadColor(game.getHeadColor());
             is.setBlankColor(game.getBlank());
             is.setHeadColor(game.getHead());
             is.setTailColor(game.getTail());
@@ -264,8 +221,7 @@ public class MainMenuController implements Initializable {
     }
 
 
-    public void showRules() { //todo zrobic to alertem albo tooltip
-
+    public void showRules() { 
         String content = "Gra jest symulatorem automatu komórkowego 'WireWorld' autorstwa Briana Silvermana.\n" +
                 " Każda komórka na planszy może znajdować się w jednym z czterech następujących stanów, które domyślnie oznacza " +
                 "się następującymi kolorami: \n\n*Pusta - kolor czarny, \n*Głowa elektronu - kolor niebieski, \n*Ogon elektronu " +
@@ -284,7 +240,6 @@ public class MainMenuController implements Initializable {
 
     public void resetGame(ActionEvent event) {
         currentGenNumber.setText("0");
-        //game = new Game();
         game.setActualGeneration(new Generation());
         game.setIsNumberOfGenerationSet(false);
         game.setNumberOfGenerations(0);
@@ -314,7 +269,7 @@ public class MainMenuController implements Initializable {
         ConfigFileReader reader = new ConfigFileReader();
         try {
             game.getActualGeneration().setCells(reader.readFile("src/files/configfiles/diode.txt"));
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -325,7 +280,7 @@ public class MainMenuController implements Initializable {
         ConfigFileReader reader = new ConfigFileReader();
         try {
             game.getActualGeneration().setCells(reader.readFile("src/files/configfiles/diode-reverse.txt"));
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -451,20 +406,17 @@ public class MainMenuController implements Initializable {
                 try {
                         imageSaver = new ImageSaver(game, "PNG", "src/files/images/image" + game.getActualGenerationNumber() + ".png");
                         if (isDirectoryClean == false)
-                            imageSaver.deletePreviousFiles(); //wywalał się u mnie nullPoniterException
+                            imageSaver.deletePreviousFiles();
 
-                        imageSaver.setColors(game.getHead(), game.getTail(), game.getConductor(), game.getBlank());
+                    imageSaver.setColors(game.getHead(), game.getTail(), game.getConductor(), game.getBlank());
                         imageSaver.makeImage();
 
                         while (game.performGame()) {
-                            //if(game.isGameContinued() == false)
-                            //  game.setNumberOfGenerations(game.getActualGenerationNumber());
 
                             game.incrementActualGenerationNumber();
                             imageSaver = new ImageSaver(game, "PNG", "src/files/images/image" + game.getActualGenerationNumber() + ".png");
                             imageSaver.setColors(game.getHead(), game.getTail(), game.getConductor(), game.getBlank());
                             imageSaver.makeImage();
-                            //setGenerationNumberLabel(Integer.toString(game.getActualGenerationNumber()));
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
@@ -478,9 +430,7 @@ public class MainMenuController implements Initializable {
                         }
 
                         game.setNumberOfGenerations(game.getActualGenerationNumber());
-                        //włączenie przycisku zapisz animacje
-                        //animation.setDisable(false);
-                        //}while(game.isGameContinued());
+
 
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
@@ -493,12 +443,11 @@ public class MainMenuController implements Initializable {
                         for (int i = 0; i < game.getNumberOfGenerations(); i++) {
                             game.performGame();
                             game.incrementActualGenerationNumber();
-                            imageSaver = new ImageSaver(game, "PNG", "src/files/images" + game.getActualGenerationNumber() + ".png");
+                            imageSaver = new ImageSaver(game, "PNG", "src/files/images/image" + game.getActualGenerationNumber() + ".png");
                             if (isDirectoryClean == false)
                                 imageSaver.deletePreviousFiles();
                             imageSaver.setColors(game.getHead(), game.getTail(), game.getConductor(), game.getBlank());
                             imageSaver.makeImage();
-                            //setGenerationNumberLabel(Integer.toString(game.getActualGenerationNumber()));
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
