@@ -221,7 +221,7 @@ public class MainMenuController implements Initializable {
     }
 
 
-    public void showRules() { 
+    public void showRules() {
         String content = "Gra jest symulatorem automatu komórkowego 'WireWorld' autorstwa Briana Silvermana.\n" +
                 " Każda komórka na planszy może znajdować się w jednym z czterech następujących stanów, które domyślnie oznacza " +
                 "się następującymi kolorami: \n\n*Pusta - kolor czarny, \n*Głowa elektronu - kolor niebieski, \n*Ogon elektronu " +
@@ -254,6 +254,11 @@ public class MainMenuController implements Initializable {
         TextInputDialog genNumberDialog = new TextInputDialog();
         genNumberDialog.setTitle("Ustaw liczbę generacji");
         genNumberDialog.setHeaderText("Wpisz ilość generacji");
+
+        DialogPane dialogPane = genNumberDialog.getDialogPane();
+        dialogPane.getStylesheets().add(getClass().getResource("wireWorldStyle.css").toExternalForm());
+        dialogPane.getStyleClass().add("myDialog");
+
 
         Optional<String> result = genNumberDialog.showAndWait();
 
