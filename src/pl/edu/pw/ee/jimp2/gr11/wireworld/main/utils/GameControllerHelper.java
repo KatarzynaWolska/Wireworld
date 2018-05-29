@@ -2,7 +2,11 @@ package pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.DialogPane;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 
 public class GameControllerHelper {
     private String style = "../view/wireWorldStyle.css";
@@ -26,6 +30,18 @@ public class GameControllerHelper {
         setStyleForPane(dialogPane);
 
         return dialog;
+    }
+
+    public void setPreviewForConfig(MenuItem diode) {
+
+        Image image = new Image("files/configfiles/preview/" + diode.getId() + ".JPG");
+
+        Rectangle rect = new Rectangle();
+        rect.setHeight(95);
+        rect.setWidth(100);
+        rect.setFill(new ImagePattern(image));
+
+        diode.setGraphic(rect);
     }
 
 
@@ -52,12 +68,20 @@ public class GameControllerHelper {
     public void helpWindow() {
         String content = "Gra jest symulatorem automatu komórkowego 'WireWorld' autorstwa Briana Silvermana.\n" +
                 "Aby zobaczyć zasady gry kliknij w przycisk \"Zasady gry\". \n Aby wstawić własną konfigurację kliknij " +
-                "Wstaw->Plik konfiguracyjny, a następnie wybierz plik w formacie tekstowym (*.txt).\n" +
-                "\nAby rozpocząć grę ustaw komórki na planszy za pomocą kliknięć. Plansza domyslnie ma wszytskie komórki puste." +
+                "Wstaw->Plik konfiguracyjny, a następnie wybierz plik w formacie tekstowym (*.txt). Istnieje mozliwość" +
+                "dodania gotowych bramke logicznych i struktur. W tym celu nalezy kliknąć Wstaw i wybrać odpowiednią " +
+                "opcję. Każdy schemat ma jest przedstawiony na miniaturze z boku.\n" +
+                "\nAby rozpocząć grę ustaw komórki na planszy za pomocą kliknięć. Plansza domyslnie ma wszystkie komórki puste." +
                 " Jedno kliknięcie na wybraną komórkę ustawia ją jako przewodnik, dwa - ogon, trzy - głowę, a cztery - " +
-                "ponownie jako pustą.\n\n Istnieje możliwość ustawienia własnych kolorów dla wybranych typów komórek." +
-                "" +
-                "\n";
+                "ponownie jako pustą.\n\n Istnieje możliwość ustawienia własnych kolorów dla wybranych typów komórek.\n" +
+                "Po ustawieniu komórek można ustawić preferowaną liczbę generacji (Ustawienia->Ustaw liczbę generacji)," +
+                " a następnie należy kliknąć przycisk \"START\" - wtedy gra się rozpocznie. " +
+                "Aby zapisać animację z dotychczasowego przebiegu gry nalezy nacisnąć przycisk \"Zapisz animację\"." +
+                "Istnieje także mozliwość zapisu obrazu w formacie PNG (za pomocą przycisku \"Zapisz obraz" +
+                "\") oraz pliku konfiguracyjnego w formacie TXT (opcja \"Zapisz plik konfiguracyjny\"). Uprzednio nalezy" +
+                "zatrzymać grę przyciskiem \"STOP\". \n" +
+                "\nŻeby wznowić grę należ wcisnąć \"START\". \n\n Aby rozpocząć nową grę kliknij Ustawienia->" +
+                " Zresetuj aktualną grę.";
 
         makeAlert("Wire World", "Pomoc", content);
     }
@@ -73,8 +97,7 @@ public class GameControllerHelper {
                 "następujące zasady: \n\n1) Komórka pozostaje pusta jeśli była pusta. \n2) Komórka staje się ogonem elektronu," +
                 " jeśli była głową elektronu. \n3) Komórka staje się przewodnikiem, jeśli była ogonem elektronu. \n4) " +
                 "Komórka staje się głową elektronu tylko wtedy, gdy dokładnie 1 lub 2 sąsiadujące komórki są głowami " +
-                "elektronu. \n5) Komórka staje się przewodnikiem w każdym innym wypadku." +
-                "\n";
+                "elektronu. \n5) Komórka staje się przewodnikiem w każdym innym wypadku.";
 
         makeAlert("WireWorld", "Zasady Gry", content);
 

@@ -3539,13 +3539,13 @@
                         <Font size="18.0"/>
                     </font>
                 </Label>
-                <Button mnemonicParsing="false" onAction="#pressStart" prefHeight="60.0" prefWidth="160.0"
-                        styleClass="buttons" text="START/STOP" textAlignment="CENTER"/>
+                <Button fx:id="startStop" mnemonicParsing="false" onAction="#pressStart" prefHeight="60.0"
+                        prefWidth="160.0" styleClass="buttons" text="START" textAlignment="CENTER"/>
                 <Button fx:id="animation" disable="true" mnemonicParsing="false" onAction="#pressSaveAnimation"
-                        prefHeight="60.0" prefWidth="160.0" styleClass="buttons" text="Zapisz animację..."/>
-                <Button fx:id="image" disable="true" mnemonicParsing="false" onAction="#pressSaveImage"
-                        prefHeight="60.0" prefWidth="160.0" styleClass="buttons" text="Zapisz obraz..."/>
-                <Button fx:id="configuration" alignment="CENTER" contentDisplay="CENTER" disable="true"
+                        prefHeight="60.0" prefWidth="160.0" styleClass="buttons" text="Zapisz animację"/>
+                <Button fx:id="image" disable="false" mnemonicParsing="false" onAction="#pressSaveImage"
+                        prefHeight="60.0" prefWidth="160.0" styleClass="buttons" text="Zapisz obraz"/>
+                <Button fx:id="configuration" alignment="CENTER" contentDisplay="CENTER" disable="false"
                         mnemonicParsing="false" onAction="#pressSaveConfigurationFile" prefHeight="60.0"
                         prefWidth="160.0" styleClass="buttons" text="Zapisz plik konfiguracyjny" textAlignment="CENTER"
                         wrapText="true"/>
@@ -3563,7 +3563,7 @@
             <children>
                 <MenuBar minHeight="43.0" minWidth="170.0" prefHeight="43.0" prefWidth="431.0" HBox.hgrow="ALWAYS">
                     <menus>
-                        <Menu mnemonicParsing="false" text="Wstaw">
+                        <Menu id="insertMenu" fx:id="insertMenu" mnemonicParsing="false" text="Wstaw">
                             <items>
                                 <MenuItem mnemonicParsing="false" onAction="#handleConfigFile"
                                           text="Plik konfiguracyjny"/>
@@ -3571,6 +3571,10 @@
                                           text="Diodę"/>
                                 <MenuItem id="reversedDiode" fx:id="reversedDiode" mnemonicParsing="false"
                                           onAction="#insertDiode" text="Odwróconą diodę"/>
+                                <MenuItem id="doubleDiode" fx:id="doubleDiode" mnemonicParsing="false"
+                                          onAction="#insertDiode" text="Podwójną diodę"/>
+                                <MenuItem id="doubleLoop" fx:id="doubleLoop" mnemonicParsing="false"
+                                          onAction="#insertDiode" text="Podwójną pętlę"/>
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Ustawienia">

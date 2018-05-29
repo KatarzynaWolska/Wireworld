@@ -5,8 +5,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.Game;
@@ -35,13 +39,14 @@ public class GameController implements Initializable {
     ColorPicker conductorColor;
     @FXML
     ColorPicker blankColor;
-    private Button cellButton;
-    private Game game;
-    private ColorPicker colorPicker;
-    private Thread thread;
-    private boolean stopped;
-    private boolean isDirectoryClean;
-    private GameControllerHelper gameControllerHelper;
+    @FXML
+    MenuItem diode;
+    @FXML
+    MenuItem reversedDiode;
+    @FXML
+    MenuItem doubleLoop;
+    @FXML
+    MenuItem doubleDiode;
     @FXML
     private Button animation;
     @FXML
@@ -56,6 +61,16 @@ public class GameController implements Initializable {
     private Button startStop;
     @FXML
     private Label currentGenNumber;
+    @FXML
+    Menu insertMenu;
+    private GameControllerHelper gameControllerHelper;
+    private Button cellButton;
+    private Game game;
+    private ColorPicker colorPicker;
+    private Thread thread;
+    // private boolean stopped;
+    private boolean isDirectoryClean;
+
 
     public void handleColor(ActionEvent event) {
         colorPicker = (ColorPicker) event.getSource();
@@ -145,10 +160,10 @@ public class GameController implements Initializable {
 
     public void pressStart(ActionEvent event) {
         if (thread == null) {
-            stopped = false;
             animation.setDisable(true);
             image.setDisable(true);
             configuration.setDisable(true);
+            startStop.setText("STOP");
 
             GameStarter startGame = new GameStarter();
 
@@ -156,11 +171,11 @@ public class GameController implements Initializable {
             thread.start();
 
         } else {
+            startStop.setText("START");
             animation.setDisable(false);
             image.setDisable(false);
             configuration.setDisable(false);
 
-            stopped = true;
             thread.interrupt();
             thread = null;
         }
@@ -197,10 +212,11 @@ public class GameController implements Initializable {
 
     public void insertDiode(ActionEvent event) {
         MenuItem diode = (MenuItem) event.getSource();
+        String path = "src/files/configfiles/" + diode.getId() + ".txt";
+
         ConfigFileReader reader = new ConfigFileReader();
         try {
-            game.getActualGeneration().setCells(reader.readFile(diode.getId().equalsIgnoreCase("diode")
-                    ? "src/files/configfiles/diode.txt" : "src/files/configfiles/diode-reverse.txt"));
+            game.getActualGeneration().setCells(reader.readFile(path));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -295,7 +311,6 @@ public class GameController implements Initializable {
 
         grid.getStyleClass().add("grid");
 
-        startStop = new Button();
         startStop.setOnAction(this::pressStart);
 
         currentGenNumber.setText(Integer.toString(game.getActualGenerationNumber()));
@@ -313,8 +328,12 @@ public class GameController implements Initializable {
         isDirectoryClean = false;
 
         gameControllerHelper = new GameControllerHelper();
-    }
 
+        gameControllerHelper.setPreviewForConfig(diode);
+        gameControllerHelper.setPreviewForConfig(reversedDiode);
+        gameControllerHelper.setPreviewForConfig(doubleDiode);
+        gameControllerHelper.setPreviewForConfig(doubleLoop);
+    }
 
     class GameStarter implements Runnable {
 
@@ -323,7 +342,8 @@ public class GameController implements Initializable {
 
             if (!game.getIsNumberOfGenerationSet()) {
                 try {
-                    imageSaver = new ImageSaver(game, "PNG", "src/files/images/image" + game.getActualGenerationNumber() + ".png");
+                    imageSaver = new ImageSaver(game, "PNG", "src/files/images/image" +
+                            game.getActualGenerationNumber() + ".png");
                     if (!isDirectoryClean)
                         imageSaver.deletePreviousFiles();
 
@@ -333,7 +353,8 @@ public class GameController implements Initializable {
                     while (game.performGame()) {
 
                         game.incrementActualGenerationNumber();
-                        imageSaver = new ImageSaver(game, "PNG", "src/files/images/image" + game.getActualGenerationNumber() + ".png");
+                        imageSaver = new ImageSaver(game, "PNG", "src/files/images/image" +
+                                game.getActualGenerationNumber() + ".png");
                         imageSaver.setColors(game.getHead(), game.getTail(), game.getConductor(), game.getBlank());
                         imageSaver.makeImage();
                         Platform.runLater(new Runnable() {
@@ -345,7 +366,7 @@ public class GameController implements Initializable {
 
                         setStylesForCells();
 
-                        Thread.sleep(1000);
+                        Thread.sleep(100);
                     }
 
                     game.setNumberOfGenerations(game.getActualGenerationNumber());
@@ -360,7 +381,8 @@ public class GameController implements Initializable {
                     for (int i = 0; i < game.getNumberOfGenerations(); i++) {
                         game.performGame();
                         game.incrementActualGenerationNumber();
-                        imageSaver = new ImageSaver(game, "PNG", "src/files/images/image" + game.getActualGenerationNumber() + ".png");
+                        imageSaver = new ImageSaver(game, "PNG", "src/files/images/image" +
+                                game.getActualGenerationNumber() + ".png");
                         if (!isDirectoryClean)
                             imageSaver.deletePreviousFiles();
                         imageSaver.setColors(game.getHead(), game.getTail(), game.getConductor(), game.getBlank());
@@ -374,7 +396,7 @@ public class GameController implements Initializable {
 
                         setStylesForCells();
 
-                        Thread.sleep(1000);
+                        Thread.sleep(100);
                     }
 
                     game.setNumberOfGenerations(game.getActualGenerationNumber());
