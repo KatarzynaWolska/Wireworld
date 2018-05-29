@@ -4,11 +4,9 @@ import org.junit.Test;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.Game;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.Generation;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells.*;
-import pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils.GifFileSaver;
-import pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils.ImageSaver;
+import pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils.savers.GifFileSaver;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 public class GifFileSaverTest {

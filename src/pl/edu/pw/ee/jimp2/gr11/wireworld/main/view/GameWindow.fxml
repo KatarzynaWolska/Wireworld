@@ -20,7 +20,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="811.0" prefWidth="1006.0" styleClass="scene"
             xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.mainmenu.MainMenuController">
+            fx:controller="pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.GameController">
     <center>
         <GridPane fx:id="grid" alignment="CENTER" gridLinesVisible="true" maxHeight="-Infinity" maxWidth="-Infinity"
                   prefHeight="511.0" prefWidth="719.0" styleClass="grid" stylesheets="@wireWorldStyle.css"
@@ -3567,15 +3567,17 @@
                             <items>
                                 <MenuItem mnemonicParsing="false" onAction="#handleConfigFile"
                                           text="Plik konfiguracyjny"/>
-                                <MenuItem mnemonicParsing="false" onAction="#insertDiode" text="Diodę"/>
-                                <MenuItem mnemonicParsing="false" onAction="#insertReversedDiode"
-                                          text="Odwróconą diodę"/>
+                                <MenuItem id="diode" fx:id="diode" mnemonicParsing="false" onAction="#insertDiode"
+                                          text="Diodę"/>
+                                <MenuItem id="reversedDiode" fx:id="reversedDiode" mnemonicParsing="false"
+                                          onAction="#insertDiode" text="Odwróconą diodę"/>
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Ustawienia">
                             <items>
                                 <MenuItem mnemonicParsing="false" onAction="#resetGame" text="Zresetuj aktualną grę"/>
-                                <MenuItem mnemonicParsing="false" onAction="#setTotalGenerationsNumber" text="Ustaw liczbę generacji"/>
+                                <MenuItem mnemonicParsing="false" onAction="#setTotalGenerationsNumber"
+                                          text="Ustaw liczbę generacji"/>
                             </items>
                         </Menu>
 

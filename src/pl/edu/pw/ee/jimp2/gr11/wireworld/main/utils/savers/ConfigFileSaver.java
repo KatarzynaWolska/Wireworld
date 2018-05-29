@@ -1,4 +1,4 @@
-package pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils;
+package pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils.savers;
 
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.Generation;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells.*;
@@ -18,14 +18,18 @@ public class ConfigFileSaver {
         pathToSaveFile = pathToFile;
         genToSave = currentGeneration;
         this.cells = genToSave.getCells();
+        file = new File(pathToSaveFile);
+
         makeConfigFile();
     }
 
+    public File getFile() {
+        return file;
+    }
 
     private void makeConfigFile() {
-        file = new File(pathToSaveFile);
 
-        if (file.isFile() == false) {
+        if (file.exists() == false) {
             try {
                 file.createNewFile();
                 configFile = new PrintWriter(file);
@@ -34,6 +38,8 @@ public class ConfigFileSaver {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        } else {
+
         }
 
 

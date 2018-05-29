@@ -1,4 +1,4 @@
-package pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils;
+package pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils.savers;
 
 import javax.imageio.*;
 import javax.imageio.metadata.IIOMetadata;

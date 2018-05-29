@@ -1,4 +1,4 @@
-package pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils;
+package pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils.savers;
 
 import javafx.scene.paint.Color;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.Game;

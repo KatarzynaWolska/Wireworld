@@ -5,7 +5,7 @@ import org.junit.Test;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.Game;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.Generation;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.generations.cells.*;
-import pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils.ImageSaver;
+import pl.edu.pw.ee.jimp2.gr11.wireworld.main.utils.savers.ImageSaver;
 
 import java.io.File;
 import java.util.ArrayList;
