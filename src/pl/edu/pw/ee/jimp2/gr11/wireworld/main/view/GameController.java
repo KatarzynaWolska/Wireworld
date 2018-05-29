@@ -70,22 +70,19 @@ public class GameController implements Initializable {
         if (colorPicker.getId().equals("tailColor")) {
             game.setTailColor(b.toString());
             game.setTail(newColor);
-            setStylesForCells();
 
         } else if (colorPicker.getId().equals("headColor")) {
             game.setHeadColor(b.toString());
             game.setHead(newColor);
-            setStylesForCells();
 
         } else if (colorPicker.getId().equals("conductorColor")) {
             game.setConductor(newColor);
             game.setConductorColor(b.toString());
-            setStylesForCells();
         } else {
             game.setBlank(newColor);
             game.setBlankColor(b.toString());
-            setStylesForCells();
         }
+        setStylesForCells();
     }
 
     public void pressTile(ActionEvent event) {
@@ -277,6 +274,7 @@ public class GameController implements Initializable {
                 b.setOnAction(this::pressTile);
                 b.setPrefHeight(0.0);
                 b.setPrefWidth(5.0);
+                b.getStyleClass().add("gridbutton");
                 if (i < 10) {
                     if (j < 10) {
                         b.setId("tile0" + i + "0" + j);
@@ -295,7 +293,7 @@ public class GameController implements Initializable {
             }
         }
 
-        grid.setGridLinesVisible(true);
+        grid.getStyleClass().add("grid");
 
         startStop = new Button();
         startStop.setOnAction(this::pressStart);
