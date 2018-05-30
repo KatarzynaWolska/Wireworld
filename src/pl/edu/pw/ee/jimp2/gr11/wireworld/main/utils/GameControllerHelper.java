@@ -81,7 +81,8 @@ public class GameControllerHelper {
                 "\") oraz pliku konfiguracyjnego w formacie TXT (opcja \"Zapisz plik konfiguracyjny\"). Uprzednio nalezy" +
                 "zatrzymać grę przyciskiem \"STOP\". \n" +
                 "\nŻeby wznowić grę należ wcisnąć \"START\". \n\n Aby rozpocząć nową grę kliknij Ustawienia->" +
-                " Zresetuj aktualną grę.";
+                " Zresetuj aktualną grę.\n\n" + "(UWAGA: Plansza wytwarza generację wolniej niż animacja je przedstawia, aby użytkownik miał szansę " +
+                "zatrzymać i zapisać wybraną przez siebie planszę bądź plik konfiguracyjny.)";
 
         makeAlert("Wire World", "Pomoc", content);
     }

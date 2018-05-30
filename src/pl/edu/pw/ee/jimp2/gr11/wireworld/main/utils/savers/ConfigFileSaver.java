@@ -38,10 +38,7 @@ public class ConfigFileSaver {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else {
-
         }
-
 
     }
 

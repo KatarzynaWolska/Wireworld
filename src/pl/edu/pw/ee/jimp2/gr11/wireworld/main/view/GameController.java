@@ -48,6 +48,8 @@ public class GameController implements Initializable {
     @FXML
     MenuItem doubleDiode;
     @FXML
+    Menu insertMenu;
+    @FXML
     private Button animation;
     @FXML
     private Button image;
@@ -61,16 +63,11 @@ public class GameController implements Initializable {
     private Button startStop;
     @FXML
     private Label currentGenNumber;
-    @FXML
-    Menu insertMenu;
     private GameControllerHelper gameControllerHelper;
     private Button cellButton;
     private Game game;
     private ColorPicker colorPicker;
     private Thread thread;
-    // private boolean stopped;
-    private boolean isDirectoryClean;
-
 
     public void handleColor(ActionEvent event) {
         colorPicker = (ColorPicker) event.getSource();
@@ -121,8 +118,11 @@ public class GameController implements Initializable {
 
 
         File file = dir.showSaveDialog(new Stage());
-        ConfigFileSaver configFileSaver = new ConfigFileSaver(file.getAbsolutePath(), game.getActualGeneration());
+        if (file != null) {
+            ConfigFileSaver configFileSaver = new ConfigFileSaver(file.getAbsolutePath(), game.getActualGeneration());
+        }
     }
+
 
     public void pressSaveAnimation() {
         FileChooser dir = new FileChooser();
@@ -196,6 +196,7 @@ public class GameController implements Initializable {
         game.setIsNumberOfGenerationSet(false);
         game.setNumberOfGenerations(0);
         game.setActualGenerationNumber(0);
+        GifFileSaver.deletePreviousFiles();
 
         setStylesForCells();
     }
@@ -212,6 +213,7 @@ public class GameController implements Initializable {
 
     public void insertDiode(ActionEvent event) {
         MenuItem diode = (MenuItem) event.getSource();
+        resetGame();
         String path = "src/files/configfiles/" + diode.getId() + ".txt";
 
         ConfigFileReader reader = new ConfigFileReader();
@@ -222,25 +224,19 @@ public class GameController implements Initializable {
         }
 
         setStylesForCells();
+
     }
 
-    public void handleConfigFile(ActionEvent event) {
-        MenuItem item = (MenuItem) event.getSource();
+    public void handleConfigFile() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Wybierz plik konfiguracyjny:");
 
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("tekstowy (*.txt)",
                 " *.txt"));
-        fileChooser.showOpenDialog(new Stage());
 
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("plik tekstowy (*.txt)",
-                " *.txt");
-        fileChooser.getExtensionFilters().add(extFilter);
-
-        File file = fileChooser.showSaveDialog(new Stage());
+        File file = fileChooser.showOpenDialog(new Stage());
         while (true) {
             if (file != null) {
-
                 ArrayList<Cell> cells = null;
                 ConfigFileReader configFileReader = new ConfigFileReader();
 
@@ -251,12 +247,14 @@ public class GameController implements Initializable {
                 }
 
                 if (cells != null) {
+                    resetGame();
+
                     game.getActualGeneration().setCells(cells);
                     setStylesForCells();
-                    break;
+                    return;
                 } else {
                     gameControllerHelper.makeAlertForWrongConfigFile();
-                    file = fileChooser.showSaveDialog(new Stage());
+                    file = fileChooser.showOpenDialog(new Stage());
                 }
 
             } else {
@@ -325,7 +323,7 @@ public class GameController implements Initializable {
         game.setConductor(new Color(1, 1, 0, 1));
         game.setBlank(new Color(0, 0, 0, 1));
 
-        isDirectoryClean = false;
+        GifFileSaver.deletePreviousFiles();
 
         gameControllerHelper = new GameControllerHelper();
 
@@ -333,6 +331,8 @@ public class GameController implements Initializable {
         gameControllerHelper.setPreviewForConfig(reversedDiode);
         gameControllerHelper.setPreviewForConfig(doubleDiode);
         gameControllerHelper.setPreviewForConfig(doubleLoop);
+
+
     }
 
     class GameStarter implements Runnable {
@@ -344,8 +344,6 @@ public class GameController implements Initializable {
                 try {
                     imageSaver = new ImageSaver(game, "PNG", "src/files/images/image" +
                             game.getActualGenerationNumber() + ".png");
-                    if (!isDirectoryClean)
-                        imageSaver.deletePreviousFiles();
 
                     imageSaver.setColors(game.getHead(), game.getTail(), game.getConductor(), game.getBlank());
                     imageSaver.makeImage();
@@ -383,8 +381,7 @@ public class GameController implements Initializable {
                         game.incrementActualGenerationNumber();
                         imageSaver = new ImageSaver(game, "PNG", "src/files/images/image" +
                                 game.getActualGenerationNumber() + ".png");
-                        if (!isDirectoryClean)
-                            imageSaver.deletePreviousFiles();
+
                         imageSaver.setColors(game.getHead(), game.getTail(), game.getConductor(), game.getBlank());
                         imageSaver.makeImage();
                         Platform.runLater(new Runnable() {

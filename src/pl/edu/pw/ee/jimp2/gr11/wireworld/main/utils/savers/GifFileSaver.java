@@ -26,6 +26,13 @@ public class GifFileSaver {
         saveImagesIntoGif();
     }
 
+
+    public static void deletePreviousFiles() {
+        for (File file : (new java.io.File("src/files/images").listFiles()))
+            if (!file.isDirectory())
+                file.delete();
+    }
+
     public void saveImagesIntoGif() {
         try {
             gifFile = new File(pathToGifFile);
@@ -42,7 +49,7 @@ public class GifFileSaver {
             writer.writeToSequence(image);
 
 
-            for (int i = 1; i < currentGame.getActualGenerationNumber(); i++) {
+            for (int i = 1; i <= currentGame.getActualGenerationNumber(); i++) {
                 image = ImageIO.read(new File(pathToImagesDir + "/image" + i + ".png"));
                 writer.writeToSequence(image);
             }

@@ -30,11 +30,6 @@ public class ImageSaver {
         this.tileSize = 20;
     }
 
-    public void deletePreviousFiles() {
-        for (File file : (new java.io.File("src/files/images").listFiles()))
-            if (!file.isDirectory())
-                file.delete();
-    }
 
     public void setColors(Color headColor, Color tailColor, Color conductorColor, Color blankColor) {
         this.headColor = 65536 * ((int) (headColor.getRed() * 255)) + 256 * ((int) (headColor.getGreen() * 255)) + ((int)
