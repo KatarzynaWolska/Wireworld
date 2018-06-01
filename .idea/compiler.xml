@@ -3,6 +3,7 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
       <module name="WW" target="1.8" />
+      <module name="WWrepo" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

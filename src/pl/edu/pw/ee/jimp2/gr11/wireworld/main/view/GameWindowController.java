@@ -5,12 +5,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import pl.edu.pw.ee.jimp2.gr11.wireworld.main.logic.Game;
@@ -63,7 +59,7 @@ public class GameWindowController implements Initializable {
     private Button startStop;
     @FXML
     private Label currentGenNumber;
-    private GameControllerHelper gameControllerHelper;
+    private DialogMaker dialogMaker;
     private Button cellButton;
     private Game game;
     private ColorPicker colorPicker;
@@ -182,12 +178,12 @@ public class GameWindowController implements Initializable {
     }
 
     public void showHelp() {
-        gameControllerHelper.helpWindow();
+        dialogMaker.helpWindow();
     }
 
 
     public void showRules() {
-        gameControllerHelper.rulesWindow();
+        dialogMaker.rulesWindow();
     }
 
     public void resetGame() {
@@ -202,7 +198,7 @@ public class GameWindowController implements Initializable {
     }
 
     public void setTotalGenerationsNumber() {
-        TextInputDialog genNumberDialog = gameControllerHelper.setTextInputDialogForGenNumber();
+        TextInputDialog genNumberDialog = dialogMaker.setTextInputDialogForGenNumber();
         Optional<String> result = genNumberDialog.showAndWait();
 
         result.ifPresent(name -> {
@@ -253,7 +249,7 @@ public class GameWindowController implements Initializable {
                     setStylesForCells();
                     return;
                 } else {
-                    gameControllerHelper.makeAlertForWrongConfigFile();
+                    dialogMaker.makeAlertForWrongConfigFile();
                     file = fileChooser.showOpenDialog(new Stage());
                 }
 
@@ -325,12 +321,12 @@ public class GameWindowController implements Initializable {
 
         GifFileSaver.deletePreviousFiles();
 
-        gameControllerHelper = new GameControllerHelper();
+        dialogMaker = new DialogMaker();
 
-        gameControllerHelper.setPreviewForConfig(diode);
-        gameControllerHelper.setPreviewForConfig(reversedDiode);
-        gameControllerHelper.setPreviewForConfig(doubleDiode);
-        gameControllerHelper.setPreviewForConfig(doubleLoop);
+        dialogMaker.setPreviewForConfig(diode);
+        dialogMaker.setPreviewForConfig(reversedDiode);
+        dialogMaker.setPreviewForConfig(doubleDiode);
+        dialogMaker.setPreviewForConfig(doubleLoop);
 
 
     }

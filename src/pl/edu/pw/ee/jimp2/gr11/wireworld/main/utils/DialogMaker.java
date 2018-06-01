@@ -8,10 +8,10 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
-public class GameControllerHelper {
+public class DialogMaker {
     private String style = "../view/wireWorldStyle.css";
 
-    public GameControllerHelper() {
+    public DialogMaker() {
     }
 
     public void makeAlertForWrongConfigFile() {
