@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class GameController implements Initializable {
+public class GameWindowController implements Initializable {
     ImageSaver imageSaver;
     @FXML
     ColorPicker headColor;

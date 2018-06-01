@@ -18,7 +18,7 @@ public class GifFileSaverTest {
     @BeforeClass
     public static void setUp() {
         g = new Game();
-        g.setActualGenerationNumber(4);
+        g.setActualGenerationNumber(3);
         testGen = new Generation();
         testGen.setHeight(1);
         testGen.setWidth(4);

@@ -20,7 +20,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="811.0" prefWidth="1006.0" styleClass="scene"
             xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.GameController">
+            fx:controller="pl.edu.pw.ee.jimp2.gr11.wireworld.main.view.GameWindowController">
     <center>
         <GridPane fx:id="grid" alignment="CENTER" gridLinesVisible="true" maxHeight="-Infinity" maxWidth="-Infinity"
                   prefHeight="511.0" prefWidth="719.0" styleClass="grid" stylesheets="@wireWorldStyle.css"
